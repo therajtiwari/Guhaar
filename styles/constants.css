@@ -1,0 +1,40 @@
+/* primay colors */
+@value primary-1: #1dc071;
+@value primary-2: #4acd8d;
+@value primary-3: #77d9aa;
+@value primary-4: #a5e6c6;
+@value primary-5: #d2f2e3;
+@value primary-6: #fifbf7;
+
+/* secondary colors */
+@value secondary-1: #6f49fd;
+@value secondary-2: #8c6dfd;
+@value secondary-3: #a992fe;
+@value secondary-4: #c5b6fe;
+@value secondary-5: #e2dbff;
+
+/* dark modes */
+@value dark-1: #13131a;
+@value dark-2: #1c1c24;
+@value dark-3: #22222c;
+@value dark-4: #24242c;
+@value dark-5: #3a3a43;
+@value dark-6: #422c32;
+
+/* neutral */
+@value neutral-1: #171725;
+@value neutral-2: #4b5264;
+@value neutral-3: #808181;
+@value neutral-4: #a2a2a8;
+@value neutral-5: #b2b3bd;
+
+/* whitish */
+@value whitish-1: #ffffff;
+@value whitish-2: #fcfbff;
+@value whitish-3: #fcfcfc;
+@value whitish-4: #f1f1f3;
+@value whitish-5: #fcfcfd;
+
+/* error */
+@value error-1: #eb5757;
+
