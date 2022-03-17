@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useMoralis } from "react-moralis";
-// import styles from "../styles/Home.module.css";
+import styles from "../styles/Home.module.css";
 // import Logo from "./images/Web3Auth.svg";
 import { useState } from "react";
 
