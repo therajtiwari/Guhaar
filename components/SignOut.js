@@ -1,6 +1,6 @@
 import { useMoralis } from "react-moralis";
-// import signOutStyle from "../styles/SignOut.module.css";
-// import styles from "../styles/Home.module.css";
+import signOutStyle from "../styles/SignOut.module.css";
+import styles from "../styles/Home.module.css";
 import { useEffect, useState } from "react";
 
 export const SignOut = () => {
