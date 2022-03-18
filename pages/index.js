@@ -1,18 +1,23 @@
-import styles from "../styles/Home.module.css";
+// import styles from "../styles/Home.module.css";
 import PrimarySearchAppBar from "../components/home/Appbar"
 import Slider from "../components/home/Slider"
 import HomeCard from "../components/home/HomeCard"
 import CardCarousel from "../components/home/CardCarousel";
 
+import { useMoralis } from "react-moralis";
+import styles from "../styles/Home.module.css";
+
+
 
 export default function Home() {
-  // const { isAuthenticated } = useMoralis();
+  const { isAuthenticated } = useMoralis();
 
 
 
   return (
     <div>
-      <PrimarySearchAppBar />
+      
+      <PrimarySearchAppBar isAuthenticated ={isAuthenticated}/>
       <h2>Popular Campaigns</h2>
       <Slider />
       <div style={{ margin: "100px" }}></div>
@@ -28,11 +33,6 @@ export default function Home() {
       <div style={{ margin: "100px" }}></div>
 
 
-
-
-    </div>
+    </div >
   );
 }
-// /newcampai]
-
-
