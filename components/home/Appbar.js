@@ -15,6 +15,8 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import SignIn from "../SignIn";
+import { SignOut } from "../SignOut";
 
 const Search = styled('div')(({ theme }) => ({
 
@@ -82,7 +84,7 @@ const appBarStyle = {
 
 }
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -145,6 +147,9 @@ export default function PrimarySearchAppBar() {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
+            <MenuItem>
+                {props.isAuthenticated ? <SignOut /> : <SignIn />}
+            </MenuItem>
             <MenuItem>
                 <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                     <Badge badgeContent={4} color="error">
@@ -211,6 +216,8 @@ export default function PrimarySearchAppBar() {
                     </Search>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                   
+                        {props.isAuthenticated ? <SignOut /> : <SignIn />}
                         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                             <Badge badgeContent={1} color="error">
                                 <MailIcon />

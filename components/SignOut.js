@@ -31,32 +31,32 @@ export const SignOut = () => {
   };
 
   return (
-    <div className={signOutStyle.signOutCard}>
-      <h4>Welcome To Moralis x Web3Auth!</h4>
-      <button className={`${signOutStyle.refresh}`} onClick={fetchBalance}>
-        Refresh
-      </button>
-      <p className={signOutStyle.subHeader}>Details:</p>
+    // <div className={signOutStyle.signOutCard}>
+    //   <h4>Welcome To Moralis x Web3Auth!</h4>
+    //   <button className={`${signOutStyle.refresh}`} onClick={fetchBalance}>
+    //     Refresh
+    //   </button>
+    //   <p className={signOutStyle.subHeader}>Details:</p>
 
-      <div className={signOutStyle.detailsDiv}>
-        <div>
-          <h5>Account:</h5>
-          <p>{user.attributes.accounts}</p>
-        </div>
-        <div>
-          <h5>Balance (Eth)</h5>
-          <p>{balance} </p>
-        </div>
-      </div>
+    //   <div className={signOutStyle.detailsDiv}>
+    //     <div>
+    //       <h5>Account:</h5>
+    //       <p>{user.attributes.accounts}</p>
+    //     </div>
+    //     <div>
+    //       <h5>Balance (Eth)</h5>
+    //       <p>{balance} </p>
+    //     </div>
+    //   </div>
 
-      <div className={signOutStyle.fotter}>
-        <button className={styles.loginButton} onClick={handleTransfer}>
-          Test Transfer
-        </button>
+    //   <div className={signOutStyle.fotter}>
+    //     <button className={styles.loginButton} onClick={handleTransfer}>
+    //       Test Transfer
+    //     </button>
         <button className={styles.loginButton} onClick={logout}>
           Sign Out
         </button>
-      </div>
-    </div>
+    //  </div>
+    //</div>
   );
 };

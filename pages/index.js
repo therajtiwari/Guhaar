@@ -6,8 +6,6 @@ import CardCarousel from "../components/home/CardCarousel";
 
 import { useMoralis } from "react-moralis";
 import styles from "../styles/Home.module.css";
-import SignIn from "../components/SignIn";
-import { SignOut } from "../components/SignOut";
 
 
 export default function Home() {
@@ -17,10 +15,8 @@ export default function Home() {
 
   return (
     <div>
-      <div className={styles.backgroundParent}>
-        {isAuthenticated ? <SignOut /> : <SignIn />}
-      </div>
-      <PrimarySearchAppBar />
+
+      <PrimarySearchAppBar isAuthenticated={isAuthenticated} />
       <h2>Popular Campaigns</h2>
       <Slider />
       <div style={{ margin: "100px" }}></div>
