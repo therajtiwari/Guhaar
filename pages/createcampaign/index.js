@@ -4,7 +4,11 @@ import countries from "./countries";
 import { useMoralis } from "react-moralis";
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import { Typography, Container, FormControl, Card, Grid, CardContent, TextField, Button, Box , Select, InputLabel, MenuItem, OutlinedInput} from '@mui/material';
+import { Typography, Container, FormControl, Card, Grid, CardContent, TextField, Button, Box , Select, InputLabel, MenuItem, OutlinedInput } from '@mui/material';
+// import { DateTimePicker, LocalizationProvider, AdapterDateFns, DesktopDatePicker } from "@mui/lab";
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DateTimePicker from '@mui/lab/DateTimePicker';
 
 const MenuProps = {
   PaperProps: {
@@ -32,23 +36,15 @@ const category = [
 ];
 
 const country = countries
-  
-const handleChange = (event) => {
-  const {
-    target: { value },
-  } = event;
-  setmcategory(
-    // On autofill we get a stringified value.
-    typeof value === 'string' ? value.split(',') : value,
-  );
-};
 
 const create = () => {
 
   const [mcategory, setmcategory] = useState([]);
   const [mcountry, setmcountry] = useState([]);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
-  const handleChange = (event) => {
+  const handleCategoryChange = (event) => {
     const {
       target: { value },
     } = event;
@@ -58,6 +54,18 @@ const create = () => {
     );
   };
 
+  const handleCountryChange = (event) => {
+    setmcountry(event.target.value);
+  };
+  
+  const handleStartDateChange = (date) => {
+    setStartDate(date);
+  };
+
+  const handleEndDateChange = (date) => {
+    setEndDate(date);
+  };
+  
   return ( 
     <div className="createCampaign">
       <Container maxWidth="sm" style={{
@@ -107,7 +115,7 @@ const create = () => {
                       id="category"
                       multiple
                       value={mcategory}
-                      onChange={handleChange}
+                      onChange={handleCategoryChange}
                       input={<OutlinedInput label="Category" />}
                       MenuProps={MenuProps}
                     >
@@ -151,13 +159,13 @@ const create = () => {
                 </Grid>
                 <Grid xs={12} sm={6} item>
                 <FormControl variant="outlined" fullWidth>
-                    <InputLabel id="Select country">country</InputLabel>
+                    <InputLabel id="Select country">Country</InputLabel>
                     <Select
                       labelId="Select country"
                       id="country"
                       multiple
                       value={mcountry}
-                      onChange={handleChange}
+                      onChange={handleCountryChange}
                       input={<OutlinedInput label="country" />}
                       MenuProps={MenuProps}
                     >
@@ -174,10 +182,24 @@ const create = () => {
                   </FormControl>
                 </Grid>
                 <Grid xs={12} sm={6} item>
-                  <TextField label="Start Date" placeholder="Start Date" variant="outlined" fullWidth required />
+                  <LocalizationProvider dateAdapter={AdapterDateFns} >
+                    <DateTimePicker
+                      label="Select Start Date and Time"
+                      value={startDate}
+                      onChange={handleStartDateChange}
+                      renderInput={(params) => <TextField {...params} fullWidth />}
+                    />
+                  </LocalizationProvider>
                 </Grid>
                 <Grid xs={12} sm={6} item>
-                  <TextField label="End Date" placeholder="End Date" variant="outlined" fullWidth required />
+                  <LocalizationProvider dateAdapter={AdapterDateFns} >
+                    <DateTimePicker
+                      label="Select End Date and Time"
+                      value={endDate}
+                      onChange={handleEndDateChange}
+                      renderInput={(params) => <TextField {...params} fullWidth />}
+                    />
+                </LocalizationProvider>
                 </Grid>
 
                 <Grid item xs={12} sm={4} />
