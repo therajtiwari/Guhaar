@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { Typography, Container, FormControl, Card, Grid, CardContent, TextField, Button, Box } from '@mui/material';
 
+
 const create = () => {
   return ( 
     <div className="createCampaign">
@@ -36,7 +37,8 @@ const create = () => {
           maxWidth: "1500px"
         }}
       >
- 
+          
+        
         <Grid>
         <Card style={{ maxWidth: 2000, padding: "20px 5px", margin: "0 auto" }}>
           <CardContent>
@@ -100,3 +102,4 @@ const create = () => {
 }
  
 export default create;
+// /newcampai
