@@ -1,5 +1,6 @@
 
 import "../../styles/Create.module.css";
+import countries from "./countries";
 import { useMoralis } from "react-moralis";
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
@@ -30,6 +31,8 @@ const category = [
   "Security",
 ];
 
+const country = countries
+  
 const handleChange = (event) => {
   const {
     target: { value },
@@ -43,6 +46,7 @@ const handleChange = (event) => {
 const create = () => {
 
   const [mcategory, setmcategory] = useState([]);
+  const [mcountry, setmcountry] = useState([]);
 
   const handleChange = (event) => {
     const {
@@ -97,7 +101,7 @@ const create = () => {
                 <Grid xs={12} sm={6} item>
                   {/*formcontrol maxwidth */}
                   <FormControl variant="outlined" fullWidth>
-                    <InputLabel id="Select Category">Select Category</InputLabel>
+                    <InputLabel id="Select Category">Category</InputLabel>
                     <Select
                       labelId="Select Category"
                       id="category"
@@ -146,7 +150,28 @@ const create = () => {
                   <TextField label="Campaign End Method" placeholder="Select One" variant="outlined" fullWidth required />
                 </Grid>
                 <Grid xs={12} sm={6} item>
-                  <TextField label="Country" placeholder="Select a Country" variant="outlined" fullWidth required />
+                <FormControl variant="outlined" fullWidth>
+                    <InputLabel id="Select country">country</InputLabel>
+                    <Select
+                      labelId="Select country"
+                      id="country"
+                      multiple
+                      value={mcountry}
+                      onChange={handleChange}
+                      input={<OutlinedInput label="country" />}
+                      MenuProps={MenuProps}
+                    >
+                      {country.map((country) => (
+                        <MenuItem
+                          key={country}
+                          value={country}
+                          // style={getStyles(country, mcountry, theme)}
+                        >
+                          {country}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Grid>
                 <Grid xs={12} sm={6} item>
                   <TextField label="Start Date" placeholder="Start Date" variant="outlined" fullWidth required />
