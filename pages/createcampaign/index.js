@@ -3,9 +3,57 @@ import "../../styles/Create.module.css";
 import { useMoralis } from "react-moralis";
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import { Typography, Container, FormControl, Card, Grid, CardContent, TextField, Button, Box } from '@mui/material';
+import { Typography, Container, FormControl, Card, Grid, CardContent, TextField, Button, Box , Select, InputLabel, MenuItem, OutlinedInput} from '@mui/material';
+
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: 48 * 4.5 + 8,
+      width: 250,
+    },
+  },
+};
+
+const category = [
+  "Education",
+  "Environment",
+  "Health",
+  "Human Rights",
+  "Humanitarian",
+  "International",
+  "Justice",
+  "Local",
+  "Media",
+  "Peace",
+  "Refugees",
+  "Relief",
+  "Security",
+];
+
+const handleChange = (event) => {
+  const {
+    target: { value },
+  } = event;
+  setmcategory(
+    // On autofill we get a stringified value.
+    typeof value === 'string' ? value.split(',') : value,
+  );
+};
 
 const create = () => {
+
+  const [mcategory, setmcategory] = useState([]);
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setmcategory(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+
   return ( 
     <div className="createCampaign">
       <Container maxWidth="sm" style={{
@@ -47,7 +95,29 @@ const create = () => {
                   <TextField label="Campaign Title" placeholder="Write a Title" variant="outlined" fullWidth required />
                 </Grid>
                 <Grid xs={12} sm={6} item>
-                  <TextField label="Select a Category" placeholder="Select a Category" variant="outlined" fullWidth required />
+                  {/*formcontrol maxwidth */}
+                  <FormControl variant="outlined" fullWidth>
+                    <InputLabel id="Select Category">Select Category</InputLabel>
+                    <Select
+                      labelId="Select Category"
+                      id="category"
+                      multiple
+                      value={mcategory}
+                      onChange={handleChange}
+                      input={<OutlinedInput label="Category" />}
+                      MenuProps={MenuProps}
+                    >
+                      {category.map((category) => (
+                        <MenuItem
+                          key={category}
+                          value={category}
+                          // style={getStyles(category, mcategory, theme)}
+                        >
+                          {category}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Grid>
                 <br />
                 <Grid item xs={12}>
