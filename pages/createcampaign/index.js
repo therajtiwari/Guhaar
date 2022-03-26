@@ -67,8 +67,21 @@ const create = () => {
   };
   
   return ( 
+    <div className="wrapper" style={{
+      zIndex: "1",
+      marginTop: "2vh",
+      marginBottom: "10vh",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      borderRadius: "10px",
+      padding: "10px",
+      boxShadow: "0px 0px 10px #000000",
+      maxWidth: "1600px"
+    }}>
     <div className="createCampaign">
       <Container maxWidth="sm" style={{
+          zIndex: "1",
           marginTop: "10vh",
           marginBottom: "2vh",
           display: "flex",
@@ -84,21 +97,23 @@ const create = () => {
       </Container>
       <Container maxWidth="sm"
         style={{
+          zIndex: "1",
           marginTop: "2vh",
           marginBottom: "10vh",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          backgroundColor: "#181111",
-          borderRadius: "10px",
+          // backgroundColor: "#181111",
+          backgroundColor: "#ffffff",
+          // borderRadius: "10px",
           padding: "10px",
-          boxShadow: "0px 0px 10px #000000",
+          // boxShadow: "0px 0px 10px #000000",
           maxWidth: "1500px"
         }}
       >
  
         <Grid>
-        <Card style={{ maxWidth: 2000, padding: "20px 5px", margin: "0 auto" }}>
+        <Card style={{ maxWidth: 2000, padding: "20px 5px", margin: "0 auto", boxShadow: "none" }}>
           <CardContent>
   
             <form>
@@ -204,7 +219,13 @@ const create = () => {
 
                 <Grid item xs={12} sm={4} />
                 <Grid item xs={12} sm={4} >
-                  <Button type="submit" variant="contained" color="primary" multiline="true" rows={3} fullWidth>Submit</Button>
+                  <Button type="submit" variant="contained" color="primary" multiline="true" rows={3} fullWidth
+                  style = {{ 
+                    backgroundColor: "#1DC071", 
+                    height: "50px", 
+                    marginTop: "10px"
+                  }}
+                  >Submit</Button>
                 </Grid>
               </Grid>
             </form>
@@ -212,6 +233,7 @@ const create = () => {
         </Card>
       </Grid>
       </Container>
+    </div>
     </div>
    );
 }
