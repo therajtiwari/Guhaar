@@ -223,7 +223,8 @@ const create = () => {
                   style = {{ 
                     backgroundColor: "#1DC071", 
                     height: "50px", 
-                    marginTop: "10px"
+                    marginTop: "10px",
+                    fontSize: "20px",
                   }}
                   >Submit</Button>
                 </Grid>
