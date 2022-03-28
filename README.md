@@ -54,8 +54,7 @@ npx hardhat compile
 npx hardhat node
 
 # deploy smart contract and start frontend
-npx hardhat run --network localhost scripts/deploy.js
-npm run dev
+npx hardhat run --network localhost scripts/deploy.js && npm run dev
 
 
 ```

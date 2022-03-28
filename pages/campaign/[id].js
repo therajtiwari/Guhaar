@@ -15,11 +15,38 @@ import { FormHelperText } from "@mui/material";
 import { Button } from "@mui/material";
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 
+import {ethers, Contract} from 'ethers'
+import CampaignArtifact from "../../artifacts/contracts/Campaign.sol/Campaign.json";
+
+import { useEffect } from "react";
+
 export default function Home(props) {
-  //   const { isAuthenticated } = useMoralis();
-  const [convert, setConvert] = useState(null);
-  const router = useRouter();
-  const { id } = router.query;
+    // const { isAuthenticated } = useMoralis();
+    var customHttpProvider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
+    const [convert, setConvert] = useState(null);
+    const router = useRouter();
+    const { id } = router.query;
+
+    async function _intializeContract(init, artifacts,address) {
+      console.log(id)
+      const contract = new Contract(
+        address,
+        artifacts,
+        init
+      );
+    
+      return contract
+    }
+
+    useEffect(async () => {
+      if (id!=undefined){
+      const campaignContract = await _intializeContract(customHttpProvider,CampaignArtifact.abi,id)
+    console.log(await campaignContract.getDetails())
+      }
+    })
+
+    
+  
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
