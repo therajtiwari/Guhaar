@@ -58,7 +58,7 @@ export default function Home() {
     const contract = await _intializeContract(customHttpProvider,FactoryArtifact.abi, contractAddress)
     let final = await _getCampaigns(contract)
     setCampaigns(final)
-    console.log(final)
+    // console.log(final)
     // console.log(final[0][0]);
     // // convert big number to ethers
     

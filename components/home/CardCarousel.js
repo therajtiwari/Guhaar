@@ -26,7 +26,7 @@ const responsive = {
 };
 export default function CardCarousel({ campaigns }) {
     
-    console.log(campaigns)
+    // console.log(campaigns)
 
     const campaign = []
 
