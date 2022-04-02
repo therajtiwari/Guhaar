@@ -13,6 +13,8 @@ export default function HomeCard({ campaign }) {
     const imgURL = campaign[4]
     const target = ethers.utils.formatEther(campaign[0].toString())
     const category = "Education"
+    const creator = "Creator"
+    const daysLeft = 25
 
     return (
         <div className={styles.homeCard}>
@@ -31,12 +33,12 @@ export default function HomeCard({ campaign }) {
                             <p>To be Raised ⧫{target}</p>
                         </div>
                         <div className="daysLeft">
-                            <h3>25</h3>
+                            <h3>{daysLeft}</h3>
                             <p>days left</p>
                         </div>
                     </div>
                     <div className="campaigner">
-                        <p>By Anon</p>
+                        <p>By {creator}</p>
                     </div>
                 </div>
             </div>
