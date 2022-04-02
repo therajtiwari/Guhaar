@@ -1,8 +1,8 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "C:\\Users\\redhe\\Documents\\Github\\Guhaar\\contracts\\Campaign.sol": {
-      "lastModificationDate": 1647770384041,
+    "D:\\NodeJs\\Sem6-mini\\Guhaar\\contracts\\Campaign.sol": {
+      "lastModificationDate": 1648269734498,
       "contentHash": "86174a4f1242e6791f27a1be3bc112e4",
       "sourceName": "contracts/Campaign.sol",
       "solcConfig": {
@@ -35,41 +35,6 @@
       "artifacts": [
         "Campaign",
         "CampaignFactory"
-      ]
-    },
-    "C:\\Users\\redhe\\Documents\\Github\\Guhaar\\node_modules\\hardhat\\console.sol": {
-      "lastModificationDate": 1647591512929,
-      "contentHash": "cc4777addd464ea56fa35b1c45df0591",
-      "sourceName": "hardhat/console.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.4.22 <0.9.0"
-      ],
-      "artifacts": [
-        "console"
       ]
     }
   }

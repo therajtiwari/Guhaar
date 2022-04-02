@@ -1,17 +1,9 @@
-import { de } from 'date-fns/locale';
 import react from 'react';
 import styles from "../../styles/Home.module.css";
-import {ethers, Contract} from 'ethers'
 
 
-export default function HomeCard({ campaign }) {
 
-    const minimum = ethers.utils.formatEther(campaign[0].toString())
-    const approveCount = campaign[1].toString()
-    const title = campaign[2]
-    const description = campaign[3]
-    const imgURL = campaign[4]
-    const target = ethers.utils.formatEther(campaign[0].toString())
+export default function HomeCard({ imgURL }) {
 
     return (
         <div className={styles.homeCard}>
@@ -20,14 +12,14 @@ export default function HomeCard({ campaign }) {
             </div>
             <div className={styles.homeCardInfo}>
                 <div className={styles.infoContainer}>
-                    <h4>{title}</h4>
+                    <h4>Architecture</h4>
                     <h3>Donate and help the poor</h3>
-                    <p>{description}</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo iure eveniet dolores mollitia voluptatem quasi</p>
 
                     <div className={styles.addInfo}>
                         <div className="raised">
-                            <h3>👍 {approveCount}</h3>
-                            <p>Raised of ⧫{target}</p>
+                            <h3>Rs 10000</h3>
+                            <p>Raised of 100000</p>
                         </div>
                         <div className="daysLeft">
                             <h3>25</h3>
@@ -35,7 +27,7 @@ export default function HomeCard({ campaign }) {
                         </div>
                     </div>
                     <div className="campaigner">
-                        <p>By Anon</p>
+                        <p>By Raj</p>
                     </div>
                 </div>
             </div>

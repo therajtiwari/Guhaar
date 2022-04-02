@@ -4,7 +4,7 @@ import Slider from "../components/home/Slider"
 import HomeCard from "../components/home/HomeCard"
 import CardCarousel from "../components/home/CardCarousel";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useMoralis } from "react-moralis";
 import styles from "../styles/Home.module.css";
@@ -17,7 +17,7 @@ const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
 
 export default function Home() {
   const { isAuthenticated } = useMoralis();
-
+  const [campaigns, setCampaigns] = useState([]);
   async function _intializeContract(init, artifacts,address) {
     const contract = new Contract(
       address,
@@ -57,9 +57,14 @@ export default function Home() {
     // console.log(customHttpProvider)
     const contract = await _intializeContract(customHttpProvider,FactoryArtifact.abi, contractAddress)
     let final = await _getCampaigns(contract)
-
+    setCampaigns(final)
     console.log(final)
-
+    // console.log(final[0][0]);
+    // // convert big number to ethers
+    
+    // console.log(ethers.utils.formatEther(final[0][0].toString()))
+    // console.log(final[0][1].toString())
+    // console.log(ethers.utils.formatEther(final[0][5].toString()))
   }
   );
 
@@ -72,12 +77,12 @@ export default function Home() {
       <div style={{ margin: "100px" }}></div> */}
 
       <h2>Recent Campaigns</h2>
-      <CardCarousel />
+      <CardCarousel campaigns={campaigns}/>
 
       <div style={{ margin: "200px" }}></div>
 
       <h2>Other Campaigns</h2>
-      <CardCarousel />
+      <CardCarousel campaigns={campaigns}/>
 
       <div style={{ margin: "100px" }}></div>
 

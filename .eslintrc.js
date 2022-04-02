@@ -11,7 +11,7 @@ module.exports = {
     "plugin:node/recommended",
   ],
   parserOptions: {
-    ecmaVersion: 12,
+    ecmaVersion: 5,
   },
   overrides: [
     {
