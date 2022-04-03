@@ -65,8 +65,7 @@ export default function Home() {
     // console.log(ethers.utils.formatEther(final[0][0].toString()))
     // console.log(final[0][1].toString())
     // console.log(ethers.utils.formatEther(final[0][5].toString()))
-  }
-  );
+  },[]);
 
   return (
     <div>

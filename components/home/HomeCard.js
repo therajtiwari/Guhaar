@@ -1,20 +1,24 @@
 import { de } from 'date-fns/locale';
 import react from 'react';
 import styles from "../../styles/Home.module.css";
-import {ethers, Contract} from 'ethers'
+import { ethers, Contract } from 'ethers';
+import moment from 'moment';
 
 
 export default function HomeCard({ campaign }) {
-
+    console.log(campaign)
     const minimum = ethers.utils.formatEther(campaign[0].toString())
     const approveCount = campaign[1].toString()
+    // console.log(campaign[1].toString())
     const title = campaign[2]
     const description = campaign[3]
     const imgURL = campaign[4]
-    const target = ethers.utils.formatEther(campaign[0].toString())
+    const target = ethers.utils.formatEther(campaign[5].toString())
     const category = "Education"
     const creator = "Creator"
-    const daysLeft = 25
+    // const daysLeft = moment(campaign[6]).diff(moment(), 'days')
+    const daysLeft = moment("2023-"+Math.floor(Math.random() * 11)+"-"+Math.floor(Math.random() * 11)).diff(moment(), 'days')
+    // const daysLeft = moment("2023-02-01").diff(moment(), 'days')
 
     return (
         <div className={styles.homeCard}>
