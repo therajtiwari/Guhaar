@@ -35,7 +35,11 @@ export default function Home() {
     for(let i = 0; i < list[0].length; i++) {
       let add = list[0][i]
       const campaignContract = await _intializeContract(customHttpProvider,CampaignArtifact.abi,add)
-      final_list.push(await campaignContract.getDetails())
+      let detail=await campaignContract.getDetails()
+      // console.log("here",detail);
+      detail = {...detail,id:add}
+      // detail.push(add)
+      final_list.push(detail)
     }
     return final_list
     

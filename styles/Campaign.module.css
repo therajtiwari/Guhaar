@@ -1,0 +1,19 @@
+.another
+{
+    margin-top: 0;
+}
+.boxer
+{
+    margin-top: 30px;
+}
+.main
+{
+    padding-bottom: 50px;
+}
+@media screen and (min-width: 600px)
+{
+    .another
+    {
+        margin-top: -200px;
+    }
+}

@@ -3,6 +3,7 @@ import react from 'react';
 import styles from "../../styles/Home.module.css";
 import { ethers, Contract } from 'ethers';
 import moment from 'moment';
+import Link from 'next/link';
 
 
 export default function HomeCard({ campaign }) {
@@ -16,11 +17,13 @@ export default function HomeCard({ campaign }) {
     const target = ethers.utils.formatEther(campaign[5].toString())
     const category = "Education"
     const creator = "Creator"
+    const id=campaign['id']
     // const daysLeft = moment(campaign[6]).diff(moment(), 'days')
     const daysLeft = moment("2023-"+Math.floor(Math.random() * 11)+"-"+Math.floor(Math.random() * 11)).diff(moment(), 'days')
     // const daysLeft = moment("2023-02-01").diff(moment(), 'days')
 
     return (
+        <Link href={"/campaign/"+id}>
         <div className={styles.homeCard}>
             <div className={styles.homeCardImage} >
                 <img src={imgURL} alt="" />
@@ -48,5 +51,6 @@ export default function HomeCard({ campaign }) {
             </div>
 
         </div >
+        </Link>
     )
 }
