@@ -10,10 +10,28 @@
 {
     padding-bottom: 50px;
 }
+.test
+{
+    background: blue;
+}
+.grey
+{
+    color: gray;
+}
+.imager
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    object-fit: fill;
+    width: 70%;
+    height: 50rem;
+    margin-bottom: 2.5em;
+}
 @media screen and (min-width: 600px)
 {
     .another
     {
-        margin-top: -200px;
+        margin-top: -100px;
     }
 }
