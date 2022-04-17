@@ -9,24 +9,15 @@ import { useEffect, useState } from "react";
 import { useMoralis } from "react-moralis";
 import styles from "../styles/Home.module.css";
 
-import {ethers, Contract} from 'ethers'
-import FactoryArtifact from "../artifacts/contracts/Campaign.sol/CampaignFactory.json";
-import CampaignArtifact from "../artifacts/contracts/Campaign.sol/Campaign.json";
-const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+
+import _intializeContract from "./api/utils/contractconnector";
+
 
 
 export default function Home() {
   const { isAuthenticated } = useMoralis();
   const [campaigns, setCampaigns] = useState([]);
-  async function _intializeContract(init, artifacts,address) {
-    const contract = new Contract(
-      address,
-      artifacts,
-      init
-    );
   
-    return contract
-  }
 
   async function _getCampaigns(contract) {
     let list = await contract.functions.getDeployedCampaigns()
@@ -34,7 +25,7 @@ export default function Home() {
     let final_list = []
     for(let i = 0; i < list[0].length; i++) {
       let add = list[0][i]
-      const campaignContract = await _intializeContract(customHttpProvider,CampaignArtifact.abi,add)
+      const campaignContract = await _intializeContract(null, false, add)
       let detail=await campaignContract.getDetails()
       // console.log("here",detail);
       detail = {...detail,id:add}
@@ -47,28 +38,17 @@ export default function Home() {
   }
 
   const { logout, Moralis, user } = useMoralis();
-  var customHttpProvider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
+  
   useEffect(async () => {
-    
-    
-
     if (isAuthenticated){
       var account = user.attributes.accounts
-      // console.log(account)
-    
-    
     }
-    // console.log(customHttpProvider)
-    const contract = await _intializeContract(customHttpProvider,FactoryArtifact.abi, contractAddress)
+
+    const contract = await _intializeContract(account)
     let final = await _getCampaigns(contract)
     setCampaigns(final)
-    // console.log(final)
-    // console.log(final[0][0]);
-    // // convert big number to ethers
-    
-    // console.log(ethers.utils.formatEther(final[0][0].toString()))
-    // console.log(final[0][1].toString())
-    // console.log(ethers.utils.formatEther(final[0][5].toString()))
+    console.log(final)
+
   },[]);
 
   return (
