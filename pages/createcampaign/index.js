@@ -9,6 +9,13 @@ import { Typography, Container, FormControl, Card, Grid, CardContent, TextField,
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
+import DatePicker from '@mui/lab/DatePicker';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import { PhotoCamera } from "@mui/icons-material";
+import Axios from 'axios';
+// import { cloudinary } from "../api/utils/cloudinary";
+// import cloudinary from 'cloudinary';
 
 const MenuProps = {
   PaperProps: {
@@ -39,7 +46,13 @@ const country = countries
 
 const create = () => {
 
+  const [title, setTitle] = useState();
   const [mcategory, setmcategory] = useState([]);
+  const [description, setDescription] = useState();
+  const [story, setStory] = useState();
+  const [goal, setGoal] = useState(0);
+  const [imgURL, setImgURL] = useState();
+  const [raised, setRaised] = useState(0);
   const [mcountry, setmcountry] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -66,6 +79,27 @@ const create = () => {
     setEndDate(date);
   };
 
+  const uploadImage = async (files) => {
+    console.log(files[0])
+    const formData = new FormData();
+    formData.append('file', files[0]);
+    formData.append('upload_preset', 'ds3bk4hk');
+    Axios.post('https://api.cloudinary.com/v1_1/decbsxlyq/image/upload', formData).then(res => {
+      console.log(res.data.secure_url)
+      setImgURL(res.data.secure_url)
+    }).catch(err => {
+      console.log(err)
+    })
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (imgURL === "" || imgURL === undefined || imgURL === null) {
+      setImgURL("https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg")
+    };
+    console.log(title, mcategory, description, story, goal, imgURL, raised, mcountry, startDate, endDate);
+  };
+
   return (
     <div className="wrapper" style={{
       zIndex: "1",
@@ -77,7 +111,12 @@ const create = () => {
       borderRadius: "10px",
       padding: "10px",
       boxShadow: "0px 0px 10px #000000",
-      maxWidth: "1600px"
+      maxWidth: "900px",
+      // centre the container
+      marginLeft: "auto",
+      marginRight: "auto",
+      width: "100%",
+      backgroundColor: "#ffffff",
     }}>
       <div className="createCampaign">
         <Container maxWidth="sm" style={{
@@ -120,11 +159,13 @@ const create = () => {
                 <form>
                   <Grid container spacing={5}>
                     <Grid xs={12} sm={6} item>
-                      <TextField label="Campaign Title" placeholder="Write a Title" variant="outlined" fullWidth required />
+                      <TextField label="Campaign Title" placeholder="Write a Title" variant="outlined" fullWidth required
+                        onChange={(e) => setTitle(e.target.value)}
+                      />
                     </Grid>
                     <Grid xs={12} sm={6} item>
                       {/*formcontrol maxwidth */}
-                      <FormControl variant="outlined" fullWidth>
+                      <FormControl variant="outlined" fullWidth required>
                         <InputLabel id="Select Category">Category</InputLabel>
                         <Select
                           labelId="Select Category"
@@ -149,32 +190,67 @@ const create = () => {
                     </Grid>
                     <br />
                     <Grid item xs={12}>
-                      <TextField type="text" label="Short Description" placeholder="Write a Short Description" variant="outlined" multiline={true} rows={8} fullWidth required style={{ innerHeight: 200 }} />
+                      <TextField type="text" label="Short Description" placeholder="Write a Short Description" variant="outlined" multiline={true} rows={6} fullWidth required style={{ innerHeight: 200 }}
+                        onChange={(e) => setDescription(e.target.value)}
+                      />
                     </Grid>
                     <br />
                     <Grid item xs={12}>
-                      <TextField type="text" label="Story" placeholder="Write Your Story" variant="outlined" multiline={true} rows={12} fullWidth required />
+                      <TextField type="text" label="Story" placeholder="Write Your Story" variant="outlined" multiline={true} rows={8} fullWidth
+                        onChange={(e) => setStory(e.target.value)}
+                      />
                     </Grid>
                     <br />
 
                     {/* add a giant box here */}
                     <Grid xs={12} sm={6} item>
-                      <TextField label="Goal" placeholder="$0.00 USD" variant="outlined" fullWidth required />
+                      <TextField label="Goal" variant="outlined" fullWidth required
+                        InputProps={{
+                          startAdornment: <InputAdornment position="start">⧫</InputAdornment>,
+                        }}
+                        type="number"
+                        validators={['required', 'isNumber']}
+                        errorMessages={['this field is required', 'please enter a valid number']}
+                        value={goal}
+                        onChange={(e) => setGoal(e.target.value)}
+                      />
                     </Grid>
                     <Grid xs={12} sm={6} item>
-                      <TextField label="Raised Amount" placeholder="$0.00 USD" variant="outlined" fullWidth required />
+                      <TextField label="Raised Amount" variant="outlined" fullWidth required
+                        InputProps={{
+                          startAdornment: <InputAdornment position="start">⧫</InputAdornment>,
+                        }}
+                        type="number"
+                        validators={['required', 'isNumber']}
+                        errorMessages={['this field is required', 'please enter a valid number']}
+                        value={raised}
+                        onChange={(e) => setRaised(e.target.value)}
+                      />
+                    </Grid>
+                    {/* <Grid xs={12} sm={6} item>
+                  <TextField label="Amount Prefilled" placeholder="It will help fill amount box by click,place each amount by comma, eg: 10,20,30,40" variant="outlined" fullWidth required />
+                </Grid>
+                <Grid xs={12} sm={6} item>
+                  <TextField label="Campaign End Method" placeholder="Select One" variant="outlined" fullWidth required />
+                </Grid> */}
+                    <Grid xs={12} sm={6} item>
+                      <TextField label="Image" placeholder="Enter a URL or Upload an Image" variant="outlined" value={imgURL} fullWidth
+                        InputProps={{
+                          endAdornment:
+                            <InputAdornment position="end">
+                              <input accept="image/*" style={{ display: 'none' }} id="raised-button-file" type="file"
+                                onChange={(e) => uploadImage(e.target.files)} />
+                              <label htmlFor="raised-button-file">
+                                <IconButton aria-label="upload picture" component="span">
+                                  < PhotoCamera />
+                                </IconButton>
+                              </label>
+                            </InputAdornment>,
+                        }}
+                      />
                     </Grid>
                     <Grid xs={12} sm={6} item>
-                      <TextField label="Amount Prefilled" placeholder="It will help fill amount box by click,place each amount by comma, eg: 10,20,30,40" variant="outlined" fullWidth required />
-                    </Grid>
-                    <Grid xs={12} sm={6} item>
-                      <TextField label="Video" placeholder="Place a link to your Campaign's Youtube Channel" variant="outlined" fullWidth required />
-                    </Grid>
-                    <Grid xs={12} sm={6} item>
-                      <TextField label="Campaign End Method" placeholder="Select One" variant="outlined" fullWidth required />
-                    </Grid>
-                    <Grid xs={12} sm={6} item>
-                      <FormControl variant="outlined" fullWidth>
+                      <FormControl variant="outlined" fullWidth required>
                         <InputLabel id="Select country">Country</InputLabel>
                         <Select
                           labelId="Select country"
@@ -199,7 +275,7 @@ const create = () => {
                     </Grid>
                     <Grid xs={12} sm={6} item>
                       <LocalizationProvider dateAdapter={AdapterDateFns} >
-                        <DateTimePicker
+                        <DatePicker
                           label="Select Start Date and Time"
                           value={startDate}
                           onChange={handleStartDateChange}
@@ -209,7 +285,7 @@ const create = () => {
                     </Grid>
                     <Grid xs={12} sm={6} item>
                       <LocalizationProvider dateAdapter={AdapterDateFns} >
-                        <DateTimePicker
+                        <DatePicker
                           label="Select End Date and Time"
                           value={endDate}
                           onChange={handleEndDateChange}
@@ -227,16 +303,18 @@ const create = () => {
                           marginTop: "10px",
                           fontSize: "20px",
                         }}
+                        onClick={(event) => { handleSubmit(event) }}
                       >Submit</Button>
                     </Grid>
+                    <Grid item xs={12} sm={4} />
+                  </Grid>
                 </form>
               </CardContent>
             </Card>
           </Grid>
         </Container>
       </div>
-    </div>
-  );
+      );
 }
 
-export default create;
+      export default create;
