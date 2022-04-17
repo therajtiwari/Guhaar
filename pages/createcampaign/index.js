@@ -13,6 +13,9 @@ import DatePicker from '@mui/lab/DatePicker';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import { PhotoCamera } from "@mui/icons-material";
+import Axios from 'axios';
+// import { cloudinary } from "../api/utils/cloudinary";
+// import cloudinary from 'cloudinary';
 
 const MenuProps = {
   PaperProps: {
@@ -48,7 +51,7 @@ const create = () => {
   const [description, setDescription] = useState();
   const [story, setStory] = useState();
   const [goal, setGoal] = useState(0);
-  const [imgURL, setImgURL] = useState("https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg");
+  const [imgURL, setImgURL] = useState();
   const [raised, setRaised] = useState(0);
   const [mcountry, setmcountry] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
@@ -76,17 +79,24 @@ const create = () => {
     setEndDate(date);
   };
 
-  const uploadImage = async (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      setImgURL(reader.result);
-    };
+  const uploadImage = async (files) => {
+    console.log(files[0])
+    const formData = new FormData();
+    formData.append('file', files[0]);
+    formData.append('upload_preset', 'ds3bk4hk');
+    Axios.post('https://api.cloudinary.com/v1_1/decbsxlyq/image/upload', formData).then(res => {
+      console.log(res.data.secure_url)
+      setImgURL(res.data.secure_url)
+    }).catch(err => {
+      console.log(err)
+    })
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if(imgURL === "" || imgURL === undefined || imgURL === null){
+      setImgURL("https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg")
+    };
     console.log(title, mcategory, description, story, goal, imgURL, raised, mcountry, startDate, endDate);
   };
   
@@ -223,15 +233,17 @@ const create = () => {
                   <TextField label="Campaign End Method" placeholder="Select One" variant="outlined" fullWidth required />
                 </Grid> */}
                 <Grid xs={12} sm={6} item>
-                  <TextField label="Image" placeholder="Enter a URL or Upload an Image" variant="outlined" fullWidth 
+                  <TextField label="Image" placeholder="Enter a URL or Upload an Image" variant="outlined" value={imgURL} fullWidth 
                     InputProps={{
                       endAdornment: 
                       <InputAdornment position="end"> 
-                        <IconButton aria-label="upload picture" component="span"
-                            onClick={() => uploadImage()}
-                            > 
-                          <PhotoCamera /> 
+                      <input accept="image/*"  style={{ display: 'none' }} id="raised-button-file" type="file" 
+                      onChange={(e)=>uploadImage(e.target.files)}/>
+                        <label htmlFor="raised-button-file">
+                        <IconButton aria-label="upload picture" component="span"> 
+                          < PhotoCamera /> 
                         </IconButton> 
+                        </label>
                       </InputAdornment>,
                     }}
                   />
@@ -290,7 +302,7 @@ const create = () => {
                     marginTop: "10px",
                     fontSize: "20px",
                   }}
-                  onClick = {() => {handleSubmit(event)}}
+                  onClick = {(event) => {handleSubmit(event)}}
                   >Submit</Button>
                 </Grid>
                 <Grid item xs={12} sm={4} />
