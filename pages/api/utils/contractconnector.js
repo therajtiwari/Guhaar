@@ -6,7 +6,7 @@ import {ethers, Contract} from 'ethers'
 
 const customHttpProvider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
 
-async function _intializeContract(wallet, factory = true, campaignaddress) {
+async function _intializeContract(wallet, factory = true, campaignaddress = null) {
     let abi
     if (factory) {
         abi = FactoryArtifact.abi
