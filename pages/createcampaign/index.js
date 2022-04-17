@@ -98,6 +98,7 @@ const create = () => {
       setImgURL("https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg")
     };
     console.log(title, mcategory, description, story, goal, imgURL, raised, mcountry, startDate, endDate);
+    
   };
   
   return ( 
@@ -203,7 +204,7 @@ const create = () => {
                 
                 {/* add a giant box here */}
                 <Grid xs={12} sm={6} item>
-                  <TextField label="Goal"  variant="outlined" fullWidth required 
+                  <TextField label="Target"  variant="outlined" fullWidth required 
                     InputProps={{
                       startAdornment: <InputAdornment position="start">⧫</InputAdornment>,
                     }}

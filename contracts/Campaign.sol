@@ -4,8 +4,8 @@ pragma solidity ^0.8;
 contract CampaignFactory {
     address[] public deployedCampaigns;
 
-    function createCampaign(uint minimum,string memory name,string memory description,string memory imageUrl,uint target) public {
-        Campaign newCampaign = new Campaign(minimum, msg.sender, name, description, imageUrl, target);
+    function createCampaign(uint minimum,string memory name,string memory description,string memory imageUrl,uint target, string memory category, uint lastdate) public {
+        Campaign newCampaign = new Campaign(minimum, msg.sender, name, description, imageUrl, target, category, lastdate);
         deployedCampaigns.push(address(newCampaign));
     }
 
@@ -30,18 +30,22 @@ contract Campaign {
   string public campaignName;
   string public campaignDescription;
   string public imageUrl;
+  string public campaignCategory;
+  uint256 public campaignLastDate;
   uint public targetToAchieve;
   address[] public contributers;
   mapping(address => bool) public approvers;
   uint public approversCount;
 
-  constructor(uint minimun, address creator,string memory name,string memory description,string memory image,uint target){
+  constructor(uint minimun, address creator,string memory name,string memory description,string memory image,uint target, string memory category, uint lastDate)  {
       recipient = creator;
       minimunContribution = minimun;
       campaignName=name;
       campaignDescription=description;
       imageUrl=image;
       targetToAchieve=target;
+      campaignCategory=category;
+      campaignLastDate = lastDate;
   }
 
   function contibute() external payable {
@@ -82,14 +86,16 @@ contract Campaign {
   }
 
 
-    function getDetails() public view returns (uint,uint,string memory,string memory,string memory,uint) {
+    function getDetails() public view returns (uint,uint,string memory,string memory,string memory,uint, string memory, uint) {
         return(
             minimunContribution,
             approversCount,
             campaignName,
             campaignDescription,
             imageUrl,
-            targetToAchieve
+            targetToAchieve,
+            campaignCategory,
+            campaignLastDate
           );
     }
 }
