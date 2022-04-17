@@ -23,6 +23,8 @@ import PrimarySearchAppBar from "../../components/home/Appbar";
 import { useMoralis } from "react-moralis";
 import {INRPrice} from "../api/Ether_to_Dollar"
 
+import _intializeContract from "../api/utils/contractconnector";
+
 // const responsive = {
 //   xl: {
 //       // the naming can be any, depends on you.
@@ -49,9 +51,6 @@ import {INRPrice} from "../api/Ether_to_Dollar"
 
 export default function Home(props) {
   //   const { isAuthenticated } = useMoralis();
-  var customHttpProvider = new ethers.providers.JsonRpcProvider(
-    "http://localhost:8545"
-  );
   const [convert, setConvert] = useState(null);
   const [details, setDetails] = useState(null);
   const [flag, setFlag] = useState(false);
@@ -59,19 +58,9 @@ export default function Home(props) {
   const router = useRouter();
   const { id } = router.query;
 
-  async function _intializeContract(init, artifacts, address) {
-    // console.log(id);
-    const contract = new Contract(address, artifacts, init);
-    return contract;
-  }
-
   useEffect(async () => {
     if (id != undefined) {
-      const campaignContract = await _intializeContract(
-        customHttpProvider,
-        CampaignArtifact.abi,
-        id
-      );
+      const campaignContract = await _intializeContract(null, false, id);
       let details= await campaignContract.getDetails();
       const price=await INRPrice();
       if(flag==false)
