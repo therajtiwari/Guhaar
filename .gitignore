@@ -4,6 +4,11 @@ node_modules
 .env
 
 
+#Hardhat files
+cache
+artifacts
+.next/
+
 # Allow a dummy project in this directory for testing purposes
 myproject
 
