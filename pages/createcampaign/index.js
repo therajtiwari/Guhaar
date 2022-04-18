@@ -14,6 +14,9 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import { PhotoCamera } from "@mui/icons-material";
 import Axios from 'axios';
+
+import _intializeContract from "../../pages/api/utils/contractconnector";
+
 // import { cloudinary } from "../api/utils/cloudinary";
 // import cloudinary from 'cloudinary';
 
@@ -98,6 +101,12 @@ const create = () => {
       setImgURL("https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg")
     };
     console.log(title, mcategory, description, story, goal, imgURL, raised, mcountry, startDate, endDate);
+    const contract = _intializeContract();
+    contract.functions.createCampaign(title, mcategory, description, story, goal, imgURL, raised, mcountry, startDate, endDate).then(res => { // insert arguments according to contract
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
     
   };
   
