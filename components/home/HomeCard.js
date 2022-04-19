@@ -1,4 +1,3 @@
-import { de } from 'date-fns/locale';
 import react from 'react';
 import styles from "../../styles/Home.module.css";
 import { ethers, Contract } from 'ethers';
@@ -15,11 +14,13 @@ export default function HomeCard({ campaign }) {
     const description = campaign[3]
     const imgURL = campaign[4]
     const target = ethers.utils.formatEther(campaign[5].toString())
-    const category = "Education"
+    const category = campaign[6]
     const creator = "Creator"
     const id=campaign['id']
+    const lastDay = new Date(campaign[7] * 1000)
+    console.log(lastDay);
     // const daysLeft = moment(campaign[6]).diff(moment(), 'days')
-    const daysLeft = moment("2023-"+Math.floor(Math.random() * 11)+"-"+Math.floor(Math.random() * 11)).diff(moment(), 'days')
+    const daysLeft = moment(lastDay).diff(moment(), 'days')
     // const daysLeft = moment("2023-02-01").diff(moment(), 'days')
 
     return (

@@ -7,6 +7,11 @@
 const hre = require("hardhat");
 const ethers = require("ethers");
 
+function dateToUnix(date) {
+  date = new Date(date);
+  return date.getTime() / 1000;
+}
+
 async function main() {
   // Hardhat always runs the compile task when running scripts with its command
   // line interface.
@@ -22,6 +27,8 @@ async function main() {
   await campaignFactory.deployed();
 
   // for testing
+
+  
 
   // await campaignFactory.createCampaign(ethers.utils.parseEther("0.01") , "Campaign 1", "Description 1",
   // "https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg", ethers.utils.parseEther("1"));
@@ -40,7 +47,8 @@ async function main() {
     "Help save the tigers",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuBGRDsmxh6rqIpg4FdiGBik_8RzwpoiDNfA&usqp=CAU",
     ethers.utils.parseEther("5"),
-    // "2025-06-01",
+    "Environment",
+    dateToUnix("2023-06-01")
   );
 
   await campaignFactory.createCampaign(
@@ -49,7 +57,8 @@ async function main() {
     "Help prevent forest fires",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTwTm9HscE3oC7cQqImN4_2EKCGf7enDgiHQ&usqp=CAU",
     ethers.utils.parseEther("8"),
-    // "2022-06-01",
+    "Environment",
+    dateToUnix("2022-06-01")
   );
 
   await campaignFactory.createCampaign(
@@ -58,7 +67,8 @@ async function main() {
     "Help save the earth",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQpFbgAqevfuH6zOTM2xh10UV9mqB3YZV9nA&usqp=CAU",
     ethers.utils.parseEther("10"),
-    // "2023-06-01",
+    "International",
+    dateToUnix("2025-06-01")
   );
 
   await campaignFactory.createCampaign(
@@ -67,7 +77,9 @@ async function main() {
     "Help protect elephants",
     "https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg",
     ethers.utils.parseEther("15"),
+    "Local",
     // "2024-06-01",
+    dateToUnix("2024-06-01")
   );
 
   await campaignFactory.createCampaign(
@@ -76,7 +88,8 @@ async function main() {
     "Support covid relief funds",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLdv2l3d2FIlTG2eMGpzkvTLIZElJYtL073A&usqp=CAU",
     ethers.utils.parseEther("20"),
-    // "2026-06-01",
+    "Health",
+    dateToUnix("2021-06-01")
   );
 
 
