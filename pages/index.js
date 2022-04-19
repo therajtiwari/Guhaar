@@ -59,9 +59,9 @@ export default function Home() {
       <div style={{ margin: "100px" }}></div> */}
 
       <h2>Recent Campaigns</h2>
-      <CardCarousel campaigns={campaigns} />
+      <CardCarousel campaigns={campaigns} style={{ margin: "auto" }} />
 
-      <div style={{ margin: "200px" }}></div>
+      <div style={{ margin: "100px" }}></div>
 
       <h2>Other Campaigns</h2>
       <CardCarousel campaigns={campaigns} />
