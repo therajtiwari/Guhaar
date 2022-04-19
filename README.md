@@ -43,7 +43,6 @@ npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
 
 ## Important commands
 
-
 ```
 
 
@@ -55,9 +54,5 @@ npx hardhat node
 
 # deploy smart contract and start frontend
 npx hardhat run --network localhost scripts/deploy.js && npm run dev
-
-# start next server without deploying smart contract
-npm run dev
-
 
 ```

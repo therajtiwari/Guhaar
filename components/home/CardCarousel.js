@@ -5,7 +5,8 @@ const responsive = {
     superLargeDesktop: {
         // the naming can be any, depends on you.
         breakpoint: { max: 4000, min: 3000 },
-        items: 8
+        items: 8,
+
     },
     desktop: {
         breakpoint: { max: 3000, min: 1500 },
@@ -16,23 +17,26 @@ const responsive = {
         items: 3
     },
     tablet2: {
-        breakpoint: { max: 1200, min: 800 },
-        items: 2
+        breakpoint: { max: 1200, min: 600 },
+        items: 2,
+        partialVisibilityGutter: 200
+
     },
     mobile: {
-        breakpoint: { max: 800, min: 0 },
-        items: 1
+        breakpoint: { max: 600, min: 0 },
+        items: 1,
+        partialVisibilityGutter: 100
     }
 };
 export default function CardCarousel({ campaigns }) {
-    
+
     // console.log(campaigns)
 
     const campaign = []
 
-    for(let i = 0; i < campaigns.length; i++) {
+    for (let i = 0; i < campaigns.length; i++) {
         campaign.push(
-            <HomeCard 
+            <HomeCard
                 campaign={campaigns[i]}
             />
         )
@@ -42,8 +46,8 @@ export default function CardCarousel({ campaigns }) {
         <div>
             <Carousel
                 responsive={responsive}
-                swipeable={true}
-                draggable={true}
+                // swipeable={false}
+                // draggable={false}
                 // showDots={true}
                 ssr={true} // means to render carousel on server-side.
                 infinite={true}
@@ -55,6 +59,8 @@ export default function CardCarousel({ campaigns }) {
                 containerClass="carousel-container"
                 removeArrowOnDeviceType={["tablet", "mobile", "desktop"]}
                 itemClass="carousel-item-padding-4-px"
+
+
             // deviceType={this.props.deviceType}
             >
                 {/* <HomeCard imgURL={"https://preview.redd.it/kn1sczuqbp961.png?width=640&crop=smart&auto=webp&s=37ecfcefc65d92383e181d0883aaea5699bb13b0"} />

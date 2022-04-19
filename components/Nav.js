@@ -15,8 +15,8 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import SignIn from "../SignIn";
-import { SignOut } from "../SignOut";
+import SignIn from "./SignIn";
+import { SignOut } from "./SignOut";
 
 const Search = styled('div')(({ theme }) => ({
 
@@ -55,7 +55,6 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
-
     minWidth: '100%',
 
     '& .MuiInputBase-input': {
@@ -77,16 +76,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const appBarStyle = {
     bgcolor: '#fcfcfd',
-    marginTop: '5px',
+    marginTop: '3px',
     color: 'text.primary',
     boxShadow: 0,
     borderRadius: 0,
-    height: '100px',
 
 
 }
 
-export default function PrimarySearchAppBar(props) {
+export default function Nav(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -202,20 +200,7 @@ export default function PrimarySearchAppBar(props) {
                     >
                         Guhaar
                     </Typography>
-                    <Search
-                        sx={{
-                            boxShadow: 3,
-                            elevation: 0,
-                        }}
-                    >
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
+
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 

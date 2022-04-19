@@ -16,42 +16,46 @@ export default function HomeCard({ campaign }) {
     const target = ethers.utils.formatEther(campaign[5].toString())
     const category = campaign[6]
     const creator = "Creator"
-    const id=campaign['id']
+    const id = campaign['id']
     const lastDay = new Date(campaign[7] * 1000)
     console.log(lastDay);
     // const daysLeft = moment(campaign[6]).diff(moment(), 'days')
     const daysLeft = moment(lastDay).diff(moment(), 'days')
     // const daysLeft = moment("2023-02-01").diff(moment(), 'days')
+    const handleClick = () => {
+        // redirect to /campaign/id
+        console.log("clicked")
+        window.location.href = `/campaign/${id}`
+    }
 
     return (
-        <Link href={"/campaign/"+id}>
-        <div className={styles.homeCard}>
+
+        <div className={styles.homeCard} onClick={handleClick}>
             <div className={styles.homeCardImage} >
                 <img src={imgURL} alt="" />
             </div>
             <div className={styles.homeCardInfo}>
                 <div className={styles.infoContainer}>
-                    <h4>{category}</h4>
-                    <h3>{title}</h3>
-                    <p>{description}</p>
+                    <h4 style={{ color: '#606060', marginBottom: "10px" }}>{category}</h4>
+                    <h3 style={{ margin: "8px auto", fontSize: "1.25rem" }}>{title}</h3>
+                    <p style={{ margin: "8px auto", color: '#606060' }}>{description}</p>
 
                     <div className={styles.addInfo}>
-                        <div className="raised">
-                            <h3>👍 {approveCount}</h3>
-                            <p>To be Raised ⧫{target}</p>
+                        <div className="raised" style={{ marginRight: "auto" }}>
+                            <h3 style={{ margin: "8px auto" }}>₹ {approveCount}</h3>
+                            <p style={{ margin: "8px auto", color: '#606060' }}>To be Raised ⧫{target}</p>
                         </div>
-                        <div className="daysLeft">
-                            <h3>{daysLeft}</h3>
-                            <p>days left</p>
+                        <div className="daysLeft" style={{ marginRight: "auto" }}>
+                            <h3 style={{ margin: "8px auto" }}>{daysLeft}</h3>
+                            <p style={{ margin: "8px auto", color: '#606060' }}>days left</p>
                         </div>
                     </div>
                     <div className="campaigner">
-                        <p>By {creator}</p>
+                        <p>By <b>{creator}</b></p>
                     </div>
                 </div>
             </div>
 
         </div >
-        </Link>
     )
 }
