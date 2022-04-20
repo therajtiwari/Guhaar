@@ -21,9 +21,9 @@ import CampaignArtifact from "../../artifacts/contracts/Campaign.sol/Campaign.js
 import { useEffect } from "react";
 import PrimarySearchAppBar from "../../components/home/Appbar";
 import { useMoralis } from "react-moralis";
-import {INRPrice} from "../api/Ether_to_Dollar"
+import fetch from "node-fetch"
 
-import _intializeContract from "../api/utils/contractconnector";
+import _intializeContract from "../../components/contractconnector";
 
 // const responsive = {
 //   xl: {
@@ -290,4 +290,16 @@ export default function Home(props) {
       </Box>
     </div>:""
   );
+}
+
+
+const INRPrice = async ()=>{
+    try{
+        const response= await fetch("https://api.coinstats.app/public/v1/tickers?exchange=WazirX&pair=ETH-INR")
+        const value= await response.json()
+        return value['tickers'][0]['price'];
+    }catch(e)
+    {
+        console.log(e);
+    }
 }

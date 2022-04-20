@@ -3,11 +3,19 @@ pragma solidity ^0.8;
 
 contract CampaignFactory {
     address[] public deployedCampaigns;
+    // address[] public blacklistedaddress;
 
     function createCampaign(uint minimum,string memory name,string memory description,string memory imageUrl,uint target, string memory category, uint lastdate) public {
+        // msg.sender not in blacklistedaddress
         Campaign newCampaign = new Campaign(minimum, msg.sender, name, description, imageUrl, target, category, lastdate);
         deployedCampaigns.push(address(newCampaign));
     }
+
+    // function deleteCampaign() onlyOwner{
+    //     Campaign campaign = Campaign(msg.sender);
+    //     campaign.delete();
+    //     deployedCampaigns.remove(msg.sender);
+    // }
 
     function getDeployedCampaigns() public view returns (address[] memory) {
         return deployedCampaigns;
@@ -60,6 +68,7 @@ contract Campaign {
 
   function createRequest(string memory description, uint value) public {
       require(msg.sender == recipient, "You can't create a request if you are not the recipient");
+      // address(this).balance >= value
       Request storage newRequest = requests.push();
       newRequest.description = description;
       newRequest.value = value;
@@ -68,6 +77,7 @@ contract Campaign {
   function approveRequest(uint index) public {
       require(approvers[msg.sender],"You can't approve a request");
       require(!requests[index].approvals[msg.sender],"You already approved this request");
+      // complete = true already request completed
 
       requests[index].approvals[msg.sender] = true;
       requests[index].approvalCount++;
@@ -85,9 +95,12 @@ contract Campaign {
 
   }
 
+    // function getRequests() public view returns (Request[] memory) {
+    //     return requests;
 
-    function getDetails() public view returns (uint,uint,string memory,string memory,string memory,uint, string memory, uint) {
-        return(
+
+    function getDetails() public view returns (uint,uint,string memory,string memory,string memory,uint, string memory, uint, uint) {
+        return (
             minimunContribution,
             approversCount,
             campaignName,
@@ -95,7 +108,8 @@ contract Campaign {
             imageUrl,
             targetToAchieve,
             campaignCategory,
-            campaignLastDate
+            campaignLastDate,
+            address(this).balance
           );
     }
 }

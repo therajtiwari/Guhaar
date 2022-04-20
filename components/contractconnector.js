@@ -1,6 +1,6 @@
 
-import FactoryArtifact from "../../../artifacts/contracts/Campaign.sol/CampaignFactory.json";
-import CampaignArtifact from "../../../artifacts/contracts/Campaign.sol/Campaign.json";
+import FactoryArtifact from "../artifacts/contracts/Campaign.sol/CampaignFactory.json";
+import CampaignArtifact from "../artifacts/contracts/Campaign.sol/Campaign.json";
 const FactoryAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
 import {ethers, Contract} from 'ethers'
 

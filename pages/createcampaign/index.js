@@ -16,7 +16,7 @@ import { PhotoCamera } from "@mui/icons-material";
 import Axios from 'axios';
 import Nav from "../../components/Nav.js";
 
-import _intializeContract from "../../pages/api/utils/contractconnector";
+import _intializeContract from "../../components/contractconnector";
 
 // import { cloudinary } from "../api/utils/cloudinary";
 // import cloudinary from 'cloudinary';

@@ -10,7 +10,7 @@ import { useMoralis } from "react-moralis";
 import styles from "../styles/Home.module.css";
 
 
-import _intializeContract from "./api/utils/contractconnector";
+import _intializeContract from "../components/contractconnector";
 
 
 export default function Home() {
