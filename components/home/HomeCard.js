@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 
 export default function HomeCard({ campaign }) {
-    console.log(campaign)
+    // console.log(campaign)
     const minimum = ethers.utils.formatEther(campaign[0].toString())
     const approveCount = campaign[1].toString()
     // console.log(campaign[1].toString())
@@ -18,7 +18,7 @@ export default function HomeCard({ campaign }) {
     const creator = "Creator"
     const id = campaign['id']
     const lastDay = new Date(campaign[7] * 1000)
-    console.log(lastDay);
+    // console.log(lastDay);
     // const daysLeft = moment(campaign[6]).diff(moment(), 'days')
     const daysLeft = moment(lastDay).diff(moment(), 'days')
     // const daysLeft = moment("2023-02-01").diff(moment(), 'days')

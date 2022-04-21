@@ -46,6 +46,8 @@ const category = [
 
 const create = () => {
 
+  const { isAuthenticated, user } = useMoralis();
+
   const [title, setTitle] = useState();
   const [mcategory, setmcategory] = useState([]);
   const [description, setDescription] = useState();
@@ -86,11 +88,11 @@ const create = () => {
   if (isAuthenticated) {
     var account = user.attributes.accounts
   }
-  console.log(account)
+  console.log(user)
 
 }, []);
 
-  const { isAuthenticated, logout, Moralis, user } = useMoralis();
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -100,7 +102,7 @@ const create = () => {
     console.log(title, mcategory, description, goal, imgURL, endDate);
 
     if (isAuthenticated) {
-      var account = user.attributes.accounts[0]
+      var account = user.attributes.accounts
     }
     console.log(account)
 
@@ -119,7 +121,7 @@ const create = () => {
 
   return (
     <>
-      <Nav />
+      <Nav isAuthenticated={isAuthenticated} />
       <div className="wrapper" style={{
         zIndex: "1",
         marginTop: "2vh",
@@ -220,7 +222,7 @@ const create = () => {
                           }}
                           type="number"
                           validators={['required', 'isNumber']}
-                          errorMessages={['this field is required', 'please enter a valid number']}
+                          // errorMessages={['this field is required', 'please enter a valid number']}
                           value={goal}
                           onChange={(e) => setGoal(e.target.value)}
                         />
@@ -233,7 +235,7 @@ const create = () => {
                           }}
                           type="number"
                           validators={['required', 'isNumber']}
-                          errorMessages={['this field is required', 'please enter a valid number']}
+                          // errorMessages={['this field is required', 'please enter a valid number']}
                           value={min}
                           onChange={(e) => setMin(e.target.value)}
                         />

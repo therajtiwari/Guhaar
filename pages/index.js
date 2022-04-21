@@ -42,6 +42,7 @@ export default function Home() {
     if (isAuthenticated) {
       var account = user.attributes.accounts
     }
+    // console.log(user.attributes)
 
     const contract = await _intializeContract(account)
     let final = await _getCampaigns(contract)
