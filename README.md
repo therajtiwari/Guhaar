@@ -45,7 +45,6 @@ npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
 
 ```
 
-
 # if changed smart contract code
 npx hardhat compile
 

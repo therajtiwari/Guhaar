@@ -68,7 +68,8 @@ contract Campaign {
 
   function createRequest(string memory description, uint value) public {
       require(msg.sender == recipient, "You can't create a request if you are not the recipient");
-      // address(this).balance >= value
+      // address(this).balance >= value // can create multiple requests with sum more than balance so no need to check this
+
       Request storage newRequest = requests.push();
       newRequest.description = description;
       newRequest.value = value;
@@ -77,7 +78,7 @@ contract Campaign {
   function approveRequest(uint index) public {
       require(approvers[msg.sender],"You can't approve a request");
       require(!requests[index].approvals[msg.sender],"You already approved this request");
-      // complete = true already request completed
+      require(!requests[index].complete,"Request Already Completed");
 
       requests[index].approvals[msg.sender] = true;
       requests[index].approvalCount++;
@@ -95,8 +96,9 @@ contract Campaign {
 
   }
 
-    // function getRequests() public view returns (Request[] memory) {
-    //     return requests;
+    function getRequestsCount() public view returns (uint){
+        return requests.length;
+    }
 
 
     function getDetails() public view returns (uint,uint,string memory,string memory,string memory,uint, string memory, uint, uint) {

@@ -3,6 +3,7 @@ import { useMoralis } from "react-moralis";
 import styles from "../styles/Home.module.css";
 // import Logo from "./images/Web3Auth.svg";
 import { useState } from "react";
+import Button from "@mui/material/Button";
 
 export default function SignIn() {
   const { authenticate, authError, isAuthenticating, Moralis } = useMoralis();
@@ -23,9 +24,9 @@ export default function SignIn() {
     //     <p className={styles.error}>{JSON.stringify(authError.message)}</p>
     //   )}
     //   <div className={styles.buttonCard}>
-    <button className={styles.loginButton} onClick={handleCustomLogin}>
+    <Button variant="contained" onClick={handleCustomLogin}>
       Login with Web3Auth
-    </button>
+    </Button>
     // </div>
     // </div> 
   );

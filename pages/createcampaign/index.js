@@ -14,6 +14,8 @@ import Nav from "../../components/Nav.js";
 
 import _intializeContract from "../../components/contractconnector";
 
+import { useMoralis } from "react-moralis";
+
 // import { cloudinary } from "../api/utils/cloudinary";
 // import cloudinary from 'cloudinary';
 
@@ -80,14 +82,34 @@ const create = () => {
     })
   };
 
-  const handleSubmit = (event) => {
+  useEffect(async () => {
+  if (isAuthenticated) {
+    var account = user.attributes.accounts
+  }
+  console.log(account)
+
+}, []);
+
+  const { isAuthenticated, logout, Moralis, user } = useMoralis();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (imgURL === "" || imgURL === undefined || imgURL === null) {
       setImgURL("https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg")
     };
     console.log(title, mcategory, description, goal, imgURL, endDate);
-    const contract = _intializeContract();
-    contract.functions.createCampaign(title, mcategory, description, goal, imgURL, endDate).then(res => { // insert arguments according to contract
+
+    if (isAuthenticated) {
+      var account = user.attributes.accounts[0]
+    }
+    console.log(account)
+
+    const contract = await _intializeContract(account);
+
+    let tdate = new Date(endDate)
+    tdate = tdate.getTime() / 1000; // to unix timestamp
+
+    contract.functions.createCampaign(min, title, description,imgURL, goal, mcategory, tdate).then(res => {
       console.log(res)
     }).catch(err => {
       console.log(err)

@@ -2,6 +2,7 @@ import { useMoralis } from "react-moralis";
 import signOutStyle from "../styles/SignOut.module.css";
 import styles from "../styles/Home.module.css";
 import { useEffect, useState } from "react";
+import Button from "@mui/material/Button";
 
 export const SignOut = () => {
   const { logout, Moralis, user } = useMoralis();
@@ -53,9 +54,9 @@ export const SignOut = () => {
     //     <button className={styles.loginButton} onClick={handleTransfer}>
     //       Test Transfer
     //     </button>
-        <button className={styles.loginButton} onClick={logout}>
+        <Button variant="contained"  onClick={logout}>
           Sign Out
-        </button>
+        </Button>
     //  </div>
     //</div>
   );

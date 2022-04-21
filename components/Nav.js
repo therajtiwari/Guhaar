@@ -18,6 +18,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import SignIn from "./SignIn";
 import { SignOut } from "./SignOut";
 
+
 const Search = styled('div')(({ theme }) => ({
 
     position: 'relative',
@@ -191,15 +192,14 @@ export default function Nav(props) {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar sx={{ ...appBarStyle }} position="static">
                 <Toolbar>
-
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ display: { xs: 'block', sm: 'block' } }}
-                    >
-                        Guhaar
-                    </Typography>
+                <Box
+                        component="img"
+                        sx={{
+                        height: 64,
+                        }}
+                        alt="logo"
+                        src={"/assets/Guhaar.svg"}
+                    />
 
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
