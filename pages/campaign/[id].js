@@ -22,6 +22,7 @@ import { useEffect } from "react";
 import PrimarySearchAppBar from "../../components/home/Appbar";
 import { useMoralis } from "react-moralis";
 import fetch from "node-fetch"
+import { InputAdornment } from '@mui/material';
 
 import _intializeContract from "../../components/contractconnector";
 
@@ -113,6 +114,12 @@ export default function Home(props) {
                   {/* Covid Relief Fund */}
                   {details[2]}
                 </Typography>
+                <img
+        src={details[4]}
+        alt="Banner Image"
+        loading="lazy"
+        className={styles.imager}
+        />
                 <Typography variant="subtitle1" gutterBottom component="div" className={styles.grey}>
                   {/* This Campaign is to Donate Funds for Covid Relief in India,
                   the situation. The manager is
@@ -252,14 +259,15 @@ export default function Home(props) {
                               type="number"
                               step="any"
                               min="0"
+                              endAdornment={<InputAdornment position="end">ETH</InputAdornment>}
                               onChange={(e) => {
                                 setConvert(Math.abs(e.target.value));
                               }}
                             />
-                            {convert ? (
-                              <FormHelperText><span className={styles.grey}>{parseFloat(convert*details["price"]).toFixed(2)}</span></FormHelperText>
-                            ) : null}
                           </FormControl>
+                          {convert ? (
+                            <FormHelperText><span className={styles.grey}>{parseFloat(convert*details["price"]).toFixed(2)}</span></FormHelperText>
+                          ) : null}
                         </form>
                       </Box>
                     </CardContent>

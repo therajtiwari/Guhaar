@@ -34,4 +34,4 @@ export default function HomeCard({ imgURL }) {
 
         </div >
     )
-}
+} 
