@@ -85,14 +85,14 @@ const create = () => {
   };
 
   useEffect(async () => {
-  if (isAuthenticated) {
-    var account = user.attributes.accounts
-  }
-  console.log(user)
+    if (isAuthenticated) {
+      var account = user.attributes.accounts
+    }
+    console.log(user)
 
-}, []);
+  }, []);
 
-  
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -111,8 +111,8 @@ const create = () => {
     let tdate = new Date(endDate)
     tdate = tdate.getTime() / 1000; // to unix timestamp
 
-    contract.functions.createCampaign(min, title, description,imgURL, goal, mcategory, tdate).then(res => {
-      console.log(res)
+    contract.functions.createCampaign(min, title, description, imgURL, goal, mcategory, tdate).then(res => {
+      console.log("printing", res);
     }).catch(err => {
       console.log(err)
     })

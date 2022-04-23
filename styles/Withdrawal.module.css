@@ -1,0 +1,27 @@
+.titleArea {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  border-bottom: 3px solid #b2b3bd;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.success {
+  color: #1dc071;
+}
+.withdrawRequestButton {
+  /* background-color: #1dc071; */
+}
+
+.approvalButton {
+  /* color: #1dc071; */
+  background-color: #1dc071 !important;
+}
+
+.approvalButton :hover {
+  color: #1dc071;
+  background-color: red !important;
+}
