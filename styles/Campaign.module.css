@@ -20,18 +20,14 @@
 }
 .imager
 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    object-fit: fill;
-    width: 70%;
-    height: 50rem;
-    margin-bottom: 2.5em;
+    margin-bottom: 0.5em;
+    border-radius: 15px;
+    box-shadow: 2px 2px 1px gray;
 }
 @media screen and (min-width: 600px)
 {
     .another
     {
-        margin-top: -100px;
+        margin-top: -350px;
     }
 }
