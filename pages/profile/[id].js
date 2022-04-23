@@ -26,6 +26,7 @@ const Profile = () => {
             <Nav isAuthenticated={isAuthenticated} />
             <ProfileCard />
             <CampaignList title="My Campaigns"/>
+            <CampaignList title="Supported Campaigns"/>
         </>
      );
 }
