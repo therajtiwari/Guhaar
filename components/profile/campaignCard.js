@@ -33,10 +33,10 @@ const CampaignCard = () => {
             <Card sx={{ display: 'flex' }} fullWidth>
                 <CardMedia
                         component="img"
-                        sx={{ width: 200 }}
+                        sx={{ maxWidth: 250 }}
                         image={image}
                     />
-                <Box sx={{ display: 'flex', flexDirection: 'column',  width: 600 }} fullWidth>
+                <Box sx={{ display: 'flex', flexDirection: 'column',  maxWidth: 550 , width: "100%"}} fullWidth>
                     <CardContent sx={{ flex: '1 0 auto' }} fullWidth>
                         <Typography variant="subtitle1" color="text.secondary" component="div">
                             {category}
