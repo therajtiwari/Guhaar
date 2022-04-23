@@ -1,7 +1,7 @@
 import styles from "../../styles/Home.module.css";
 import { ethers, Contract } from 'ethers';
 import moment from 'moment';
-
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 export default function HomeCard({ campaign }) {
     // console.log(campaign)
@@ -22,13 +22,12 @@ export default function HomeCard({ campaign }) {
     // const daysLeft = moment("2023-02-01").diff(moment(), 'days')
     const handleClick = () => {
         // redirect to /campaign/id
-        console.log("clicked")
         window.location.href = `/campaign/${id}`
     }
 
     return (
 
-        <div className={styles.homeCard} onClick={handleClick}>
+        <div className={styles.homeCard} >
             <div className={styles.homeCardImage} >
                 <img src={imgURL} alt="" />
             </div>
@@ -48,8 +47,16 @@ export default function HomeCard({ campaign }) {
                             <p style={{ margin: "8px auto", color: '#606060' }}>days left</p>
                         </div>
                     </div>
-                    <div className="campaigner">
-                        <p>By <b>{creator}</b></p>
+                    <div className={styles.addInfo}>
+                        <div className="campainger" style={{ marginRight: "auto" }}>
+                            <p style={{ position: "relative", top: "6px" }} >By <b>{creator}</b></p>
+                        </div>
+                        <div className="moreInfo" style={{ marginRight: "auto" }}>
+                            <p style={{ marginLeft: "80px" }} onClick={handleClick}> <b>More info</b>
+                                <ArrowForwardIosIcon style={{ position: "relative", top: "5px" }} />
+                            </p>
+                        </div>
+
                     </div>
                 </div>
             </div>
