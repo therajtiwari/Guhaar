@@ -17,6 +17,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import SignIn from "./SignIn";
 import { SignOut } from "./SignOut";
+import Divider from '@mui/material/Divider';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -81,7 +82,10 @@ const appBarStyle = {
     color: 'text.primary',
     boxShadow: 0,
     borderRadius: 0,
-
+    // borderBottom: '5px solid #e0e0e0',
+    // webkitBoxShadow: "0px 16px 6px 0px rgba(50, 50, 50, 0.8)",
+    // - moz - box - shadow: "0px 16px 6px 0px rgba(50, 50, 50, 0.8)",
+    // boxShadow: "0px 6px 3px 0px rgba(50, 50, 50, 0.2)",
 
 }
 
@@ -192,10 +196,10 @@ export default function Nav(props) {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar sx={{ ...appBarStyle }} position="static">
                 <Toolbar>
-                <Box
+                    <Box
                         component="img"
                         sx={{
-                        height: 64,
+                            height: 64,
                         }}
                         alt="logo"
                         src={"/assets/Guhaar.svg"}
@@ -247,6 +251,7 @@ export default function Nav(props) {
             </AppBar>
             {renderMobileMenu}
             {renderMenu}
+            <Divider variant='fullWidth' sx={{ borderBottomWidth: 2 }} />
         </Box>
     );
 }
