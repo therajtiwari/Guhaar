@@ -11,6 +11,9 @@ import { RemoveRedEye } from "@mui/icons-material";
 
 const ProfileCard = () => {
     const [showAddress, setShowAddress] = useState("password");
+    const username = "Axon";
+    const email = "anon@gmail.com";
+    const address = "0x0000000000000000000000000000000000000000";
 
     const handleShowAddress = () => {
         setShowAddress(showAddress === "password" ? "text" : "password");
@@ -36,13 +39,13 @@ const ProfileCard = () => {
                         <div className="Details">
                             <Grid container spacing={5}>
                                 <Grid xs={12} sm={6} item>
-                                    <TextField label="Username" variant="outlined" value={"Axon"} fullWidth inputMode="none"/>
+                                    <TextField label="Username" variant="outlined" value={username} fullWidth inputMode="none"/>
                                 </Grid>
                                 <Grid xs={12} sm={6} item>
-                                    <TextField label="Email" variant="outlined" value={"anon@gmail.com"} fullWidth/>
+                                    <TextField label="Email" variant="outlined" value={email} fullWidth/>
                                 </Grid>
                                 <Grid xs={12} sm={12} item>
-                                    <TextField label="Wallet Address" variant="outlined" value={"0x0ADWDJWAFHI2U87EI2UAUF7W"} type={showAddress} fullWidth
+                                    <TextField label="Wallet Address" variant="outlined" value={address} type={showAddress} fullWidth
                                     InputProps={{
                                         endAdornment:
                                           <InputAdornment position="end">
