@@ -17,6 +17,8 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import SignIn from "../SignIn";
 import { SignOut } from "../SignOut";
+import Divider from '@mui/material/Divider';
+
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -79,12 +81,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const appBarStyle = {
     bgcolor: '#fcfcfd',
     marginTop: '5px',
+    marginBottom: '5px',
     color: 'text.primary',
     boxShadow: 0,
     borderRadius: 0,
-    height: '100px',
-
-
 }
 
 export default function PrimarySearchAppBar(props) {
@@ -197,12 +197,12 @@ export default function PrimarySearchAppBar(props) {
                     <Box
                         component="img"
                         sx={{
-                        height: 64,
+                            height: 64,
                         }}
                         alt="logo"
                         src={"/assets/Guhaar.svg"}
                     />
-                
+
 
                     {/* <Typography
                         variant="h6"
@@ -272,7 +272,8 @@ export default function PrimarySearchAppBar(props) {
             </AppBar>
             {renderMobileMenu}
             {renderMenu}
+            <Divider variant='fullWidth' sx={{ borderBottomWidth: 2 }} />
+
         </Box>
     );
 }
- 

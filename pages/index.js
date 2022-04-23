@@ -11,7 +11,7 @@ import styles from "../styles/Home.module.css";
 
 
 import _intializeContract from "../components/contractconnector";
-
+import BigCardCarousel from "../components/home/BigCardCarousel";
 
 export default function Home() {
   const { isAuthenticated } = useMoralis();
@@ -28,6 +28,7 @@ export default function Home() {
       let detail = await campaignContract.getDetails()
       // console.log("here",detail);
       detail = { ...detail, id: add }
+      // console.log("det", detail);
       // detail.push(add)
       final_list.push(detail)
     }
@@ -55,19 +56,24 @@ export default function Home() {
     <div>
 
       <PrimarySearchAppBar isAuthenticated={isAuthenticated} />
-      {/* <h2>Popular Campaigns</h2>
-      <Slider />
-      <div style={{ margin: "100px" }}></div> */}
+      <div className={styles.sectionWrapper}>
+        <h2>Your campaigns</h2>
+        {/* <CardCarousel campaigns={campaigns} style={{ margin: "auto" }} />
+         */}
+        <BigCardCarousel campaigns={campaigns} />
+      </div>
+      <div className={styles.sectionWrapper}>
+        <h2>Recent Campaigns</h2>
+        <CardCarousel campaigns={campaigns} style={{ margin: "auto" }} />
+      </div>
 
-      <h2>Recent Campaigns</h2>
-      <CardCarousel campaigns={campaigns} style={{ margin: "auto" }} />
+      <div className={styles.sectionWrapper}>
+        <h2>Other Campaigns</h2>
+        <CardCarousel campaigns={campaigns} />
+      </div>
 
-      <div style={{ margin: "100px" }}></div>
 
-      <h2>Other Campaigns</h2>
-      <CardCarousel campaigns={campaigns} />
 
-      <div style={{ margin: "100px" }}></div>
 
 
     </div >

@@ -1,8 +1,6 @@
-import react from 'react';
 import styles from "../../styles/Home.module.css";
 import { ethers, Contract } from 'ethers';
 import moment from 'moment';
-import Link from 'next/link';
 
 
 export default function HomeCard({ campaign }) {

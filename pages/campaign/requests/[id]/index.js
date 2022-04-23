@@ -18,15 +18,17 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: '#6f49fd',
         color: theme.palette.common.white,
+        fontSize: "1rem"
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
+        fontSize: 16,
     },
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(odd)': {
         backgroundColor: "#fcfcfd",
+
     },
     // hide last border
     '&:last-child td, &:last-child th': {
@@ -57,7 +59,7 @@ const Requests = () => {
             <div className={styles.titleArea}>
                 <h2 style={{ marginBottom: "5px" }}>Withdrawal Requests
                 </h2>
-                <Button className={styles.withdrawRequestButton} variant="contained">Add Request</Button>
+                <Button className={styles.withdrawRequestButton} variant="contained" disableElevation="true"><b>Add Request</b></Button>
             </div>
             <div className="table-wrapper">
                 <TableContainer component={Paper}>
