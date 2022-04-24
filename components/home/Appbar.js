@@ -128,7 +128,7 @@ export default function PrimarySearchAppBar(props) {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            <MenuItem onClick={handleMenuClose} component="a" href="/profile/1">Profile</MenuItem>
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
         </Menu>
     );
@@ -194,6 +194,7 @@ export default function PrimarySearchAppBar(props) {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar sx={{ ...appBarStyle }} position="static">
                 <Toolbar>
+                    <a href='/'>
                     <Box
                         component="img"
                         sx={{
@@ -201,7 +202,7 @@ export default function PrimarySearchAppBar(props) {
                         }}
                         alt="logo"
                         src={"/assets/Guhaar.svg"}
-                    />
+                    /></a>
 
 
                     {/* <Typography

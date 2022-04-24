@@ -7,13 +7,16 @@ import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import { RemoveRedEye } from "@mui/icons-material";
+import { AvatarGenerator } from 'random-avatar-generator';
 
+const generator = new AvatarGenerator();
 
 const ProfileCard = () => {
     const [showAddress, setShowAddress] = useState("password");
-    const username = "Axon";
+    const username = "axon";
     const email = "anon@gmail.com";
     const address = "0x0000000000000000000000000000000000000000";
+    const image = generator.generateRandomAvatar(username);
 
     const handleShowAddress = () => {
         setShowAddress(showAddress === "password" ? "text" : "password");
@@ -28,7 +31,7 @@ const ProfileCard = () => {
                     color: "#606060",
                }}>My Profile</h1>
                 <div className={styles.profileContainer}>
-                        <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" alt="profile" 
+                        <img src={image} alt="profile" 
                         style={{
                             width: "160px",
                             height: "160px",

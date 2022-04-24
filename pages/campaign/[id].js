@@ -139,9 +139,10 @@ export default function Home(props) {
                 direction="column"
                 alignItems="stretch"
                 gap={2}
+                style={{ border: '1px solid black', borderRadius: '1rem' }}
               >
                 <Grid item>
-                  <Card style={{ border: "1px solid" }}>
+                  <Card style={{ boxShadow: '0px 0px 0px black', background: "transparent", marginBottom: "-35px" }}>
                     <CardContent>
                       <Typography variant="subtitle1" component="div">
                         Minimum Contribution
@@ -157,7 +158,7 @@ export default function Home(props) {
                   </Card>
                 </Grid>
                 <Grid item xs zeroMinWidth>
-                  <Card style={{ border: "1px solid" }}>
+                  <Card style={{ boxShadow: '0px 0px 0px black', background: "transparent", marginBottom: "-35px" }}>
                     <CardContent>
                       <Typography variant="subtitle1" component="div" noWrap>
                         Wallet Address of Campaign Creator
@@ -175,7 +176,7 @@ export default function Home(props) {
                   </Card>
                 </Grid>
                 <Grid item>
-                  <Card style={{ border: "1px solid" }}>
+                  <Card style={{ boxShadow: '0px 0px 0px black', background: "transparent", marginBottom: "-35px" }}>
                     <CardContent>
                       <Typography variant="subtitle1" component="div">
                         Number of Requests
@@ -191,7 +192,7 @@ export default function Home(props) {
                   </Card>
                 </Grid>
                 <Grid item>
-                  <Card style={{ border: "1px solid" }}>
+                  <Card style={{ boxShadow: '0px 0px 0px black', background: "transparent" }}>
                     <CardContent>
                       <Typography variant="subtitle1" component="div">
                         Number of Approvers
