@@ -23,6 +23,7 @@
 
 .infoText {
   font-size: 1.2rem !important;
+  word-wrap: break-word;
 }
 
 .title {
