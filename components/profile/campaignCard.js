@@ -11,8 +11,10 @@ const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    border: "None",
+    border: "None",s
   }));
+
+
 
 const CampaignCard = ({ campaign }) => {
     // const name = "Covid Relief";
@@ -34,15 +36,41 @@ const CampaignCard = ({ campaign }) => {
     const lastDay = new Date(campaign[7] * 1000)
     const daysLeft = moment(lastDay).diff(moment(), 'days')
 
+    // handling responsiveness
+    const [direction, setDirection] = useState('none');
+    const [border, setBorder] = useState('none');
+    const [borderRadius, setBorderRadius] = useState('0px');
+
+    const handleWindowResize = () => {
+        if (window.innerWidth < 720) {
+            setDirection('column');
+            setBorder('1px solid #E0E0E0');
+            setBorderRadius('20px');
+        } else {
+            setDirection('none');
+            setBorder('none');
+            setBorderRadius('0px');
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowResize);
+        return () => {
+            window.removeEventListener('resize', handleWindowResize);
+        };
+    }, []);
+
     return ( 
         <div className="Card" style={{
             width: "100%",
             maxWidth: "800px",
             padding: "10px",
             // backgroundColor: "#1b1717",
+            border : border,
+            borderRadius: borderRadius,
         }}>
             
-            <Card sx={{ display: 'flex' }} fullWidth style={{
+            <Card sx={{ display: 'flex', flexDirection: direction }} fullWidth style={{
                 // borderRadius: "25px",
                 border: "none",
                 elevation: "0",
@@ -58,7 +86,7 @@ const CampaignCard = ({ campaign }) => {
                         }}
                     />
                 <Box sx={{ display: 'flex', flexDirection: 'column',  maxWidth: 450 , width: "100%"}} fullWidth>
-                    <CardContent sx={{ flex: '1 0 auto' }} fullWidth>
+                    <CardContent sx={{ flex: '1 0 auto',  }} fullWidth>
                         <Typography variant="subtitle1" color="text.secondary" component="div">
                             {category}
                         </Typography>
