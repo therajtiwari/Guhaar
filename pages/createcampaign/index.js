@@ -98,7 +98,7 @@ const create = () => {
   }, []);
 
   const { data, error, fetch, isFetching, isLoading } = useWeb3ExecuteFunction()
-  
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -122,13 +122,13 @@ const create = () => {
     // }).catch(err => {
     //   console.log(err)
     // })
-    
+
     fetch(createCampaign([min, title, description, imgURL, goal, mcategory, tdate])).then(
       res => console.log(res)
     ).catch(err => console.log(err))
 
     console.log(data, error, isFetching, isLoading)
-    
+
 
   };
 
@@ -293,7 +293,7 @@ const create = () => {
                           }}
                           onClick={(event) => { handleSubmit(event) }}
                         >Submit</Button>
-                        {"fetching"+isFetching}
+                        {"fetching" + isFetching}
                         {data && <pre>
                           {JSON.stringify(data,
                             null,
@@ -301,9 +301,9 @@ const create = () => {
                           )}
                         </pre>}
                         {error && <pre>{JSON.stringify(error,
-                            null,
-                            2,
-                          )}</pre>}
+                          null,
+                          2,
+                        )}</pre>}
 
                       </Grid>
                       <Grid item xs={12} sm={4} />
