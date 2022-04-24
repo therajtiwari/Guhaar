@@ -6,7 +6,7 @@ export default function BigCard({ campaign }) {
     const { title, description, imgURL, target, category, creator, id, lastDay, approveCount } = campaign;
     const imgAdd = "https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/p-466-pa-0661.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=0f55ed0d0312dfcd3339c1d675e71946";
     return (
-        <Grid container className={styles.BigCardWrapper}>
+        <Grid style={{ padding: "0rem 3rem" }} container className={styles.BigCardWrapper}>
             <Grid item md={6} sm={10} className={styles.imageWrapper}>
                 <img src={imgAdd} alt="" />
             </Grid>
