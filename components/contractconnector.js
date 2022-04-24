@@ -4,7 +4,7 @@ import CampaignArtifact from "../artifacts/contracts/Campaign.sol/Campaign.json"
 const FactoryAddress = process.env.FACTORY_ADDRESS
 import {ethers, Contract} from 'ethers'
 
-const customHttpProvider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
+const customHttpProvider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL);
 
 async function _intializeContract(wallet, factory = true, campaignaddress = null) {
     let abi
