@@ -1,33 +1,52 @@
-.another
-{
-    margin-top: 0;
+.another {
+  margin-top: 0;
 }
-.boxer
-{
-    margin-top: 30px;
+.boxer {
+  margin-top: 60px;
 }
-.main
-{
-    padding-bottom: 50px;
+.main {
+  padding-bottom: 50px;
 }
-.test
-{
-    background: blue;
+.test {
+  background: blue;
 }
-.grey
-{
-    color: gray;
+.subtitle {
+  color: rgb(90, 90, 90);
+  font-size: 1.2rem !important;
 }
-.imager
-{
-    margin-bottom: 0.5em;
-    border-radius: 15px;
-    box-shadow: 2px 2px 1px gray;
+.imager {
+  margin-bottom: 0.5em;
+  border-radius: 15px;
+  width: 100%;
+  /* box-shadow: 2px 2px 1px gray; */
 }
-@media screen and (min-width: 600px)
-{
-    .another
-    {
-        margin-top: -250px;
-    }
+
+.infoText {
+  font-size: 1.2rem !important;
+}
+
+.title {
+  font-size: 3rem !important;
+}
+
+.infoGrid {
+  margin-top: 80px !important;
+  /* font-size: 22rem; */
+}
+
+.cardContent {
+  padding: 3rem 2rem !important;
+}
+
+.progressBarr span {
+  background-color: #4acd8d !important;
+  height: 10px !important;
+}
+@media screen and (max-width: 900px) {
+  .title {
+    font-size: 2rem !important;
+  }
+  .infoGrid {
+    margin-top: 20px !important;
+  }
 }

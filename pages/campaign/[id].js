@@ -20,9 +20,11 @@ import { ethers, Contract } from "ethers";
 import CampaignArtifact from "../../artifacts/contracts/Campaign.sol/Campaign.json";
 import { useEffect } from "react";
 import PrimarySearchAppBar from "../../components/home/Appbar";
+import Nav from "../../components/Nav";
 import { useMoralis } from "react-moralis";
-import fetch from "node-fetch"
-import { InputAdornment } from '@mui/material';
+import fetch from "node-fetch";
+import { InputAdornment } from "@mui/material";
+import { Divider } from "@mui/material";
 
 import _intializeContract from "../../components/contractconnector";
 
@@ -62,253 +64,239 @@ export default function Home(props) {
   useEffect(async () => {
     if (id != undefined) {
       const campaignContract = await _intializeContract(null, false, id);
-      let details= await campaignContract.getDetails();
-      const price=await INRPrice();
-      if(flag==false)
-      {
-        details={...details,price:price}
+      let details = await campaignContract.getDetails();
+      const price = await INRPrice();
+      if (flag == false) {
+        details = { ...details, price: price };
         setFlag(true);
         setDetails(details);
-        console.log(details);
+        // console.log(details);
       }
     }
   });
 
-  return (
-    details!=null?<div>
-      <PrimarySearchAppBar isAuthenticated={isAuthenticated} />
+  return details != null ? (
+    <div>
+      <Nav isAuthenticated={isAuthenticated} />
       <Box sx={{ flexGrow: 1 }} className={styles.boxer}>
-        {/* <Grid
+        <Grid
           container
-          direction="column"
+          direction="row"
           justifyContent="center"
-          alignItems="center"
-          spacing={10}
+          alignItems="start"
+          spacing={12}
           className={styles.main}
         >
-      <Grid item xs={12} className={styles.test}>
-          <img
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuBGRDsmxh6rqIpg4FdiGBik_8RzwpoiDNfA&usqp=CAU"
-        // srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-        alt="Banner Image"
-        loading="lazy"
-        className={styles.imager}
-        />
-        </Grid> */}
-          <Grid
-            container
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            spacing={12}
-            className={styles.main}
-          >
-            <Grid item xl={5} lg={5} md={6} sm={6} xs={12}>
-              <Stack>
-                <Typography
-                  variant="h3"
-                  fontWeight={"bold"}
-                  gutterBottom
-                  component="div"
-                >
-                  {/* Covid Relief Fund */}
-                  {details[2]}
-                </Typography>
-                <img
-        src={details[4]}
-        alt="Banner Image"
-        loading="lazy"
-        className={styles.imager}
-        />
-                <Typography variant="subtitle1" gutterBottom component="div" className={styles.grey}>
-                  {/* This Campaign is to Donate Funds for Covid Relief in India,
-                  the situation. The manager is
-                  https://twitter.com/harshbadhai28 and all the receives will go
-                  to ABCD Foundation which will help in buying, delivering
-                  oxygen, and other covid related help. If you want to withdraw
-                  funds from this campaign please feel free to create a request,
-                  and ping me on Twitter so that I can help you get the funds as
-                  soon as possible. */}
-                  {details[3]}
-                </Typography>
-              </Stack>
-              <br />
-              <Grid
-                container
-                wrap="nowrap"
-                direction="column"
-                alignItems="stretch"
-                gap={2}
-                style={{ border: '1px solid black', borderRadius: '1rem' }}
+          <Grid item xl={6} lg={6} md={6} sm={10} xs={12}>
+            <Stack>
+              <Typography
+                variant="h3"
+                fontWeight={"bold"}
+                gutterBottom
+                component="div"
+                className={styles.title}
               >
-                <Grid item>
-                  <Card style={{ boxShadow: '0px 0px 0px black', background: "transparent", marginBottom: "-35px" }}>
-                    <CardContent>
-                      <Typography variant="subtitle1" component="div">
-                        Minimum Contribution
-                      </Typography>
-                      <Typography
-                        variant="subtitle1"
-                        fontWeight={"bold"}
-                        component="div"
-                      >
-                        {ethers.utils.formatEther(details[0])} ETH (₹{parseFloat(details['price']*ethers.utils.formatEther(details[0])).toFixed(2)})
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item xs zeroMinWidth>
-                  <Card style={{ boxShadow: '0px 0px 0px black', background: "transparent", marginBottom: "-35px" }}>
-                    <CardContent>
-                      <Typography variant="subtitle1" component="div" noWrap>
-                        Wallet Address of Campaign Creator
-                      </Typography>
-                      <Typography
-                        variant="subtitle1"
-                        fontWeight={"bold"}
-                        component="div"
-                        noWrap
-                      >
-                        {/* 0x5d7676dB6119Ed1F6C696419058310D16a734d */}
-                        {id}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item>
-                  <Card style={{ boxShadow: '0px 0px 0px black', background: "transparent", marginBottom: "-35px" }}>
-                    <CardContent>
-                      <Typography variant="subtitle1" component="div">
-                        Number of Requests
-                      </Typography>
-                      <Typography
-                        variant="subtitle1"
-                        fontWeight={"bold"}
-                        component="div"
-                      >
-                        5
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item>
-                  <Card style={{ boxShadow: '0px 0px 0px black', background: "transparent" }}>
-                    <CardContent>
-                      <Typography variant="subtitle1" component="div">
-                        Number of Approvers
-                      </Typography>
-                      <Typography
-                        variant="subtitle1"
-                        fontWeight={"bold"}
-                        component="div"
-                      >
-                        {/* 20 */}
-                        {ethers.utils.formatUnits(details[0]).split('.')[0]}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
+                {details[2]}
+              </Typography>
+              <img
+                src={details[4]}
+                alt="Banner Image"
+                loading="lazy"
+                className={styles.imager}
+              />
+              <Typography
+                mt={4}
+                gutterBottom
+                component="div"
+                className={styles.subtitle}
+              >
+                This Campaign is to Donate Funds for Covid Relief in India, the
+                situation. The manager is https://twitter.com/harshbadhai28 and
+                all the receives will go to ABCD Foundation which will help in
+                buying, delivering oxygen, and other covid related help. If you
+                want to withdraw funds from this campaign please feel free to
+                create a request, and ping me on Twitter so that I can help you
+                get the funds as soon as possible.
+                {details[3]}
+              </Typography>
+            </Stack>
+            <br />
+            <Grid
+              mt={6}
+              container
+              wrap="nowrap"
+              direction="column"
+              alignItems="stretch"
+              gap={2}
+            >
+              <Grid item>
+                <Typography fontWeight={"bold"} className={styles.infoText}>
+                  Minimum Contribution
+                </Typography>
+                <Typography className={styles.infoText}>
+                  {ethers.utils.formatEther(details[0])} ETH (₹
+                  {parseFloat(
+                    details["price"] * ethers.utils.formatEther(details[0])
+                  ).toFixed(2)}
+                  )
+                </Typography>
               </Grid>
+              <Divider mt={5} />
+
+              <Grid item xs zeroMinWidth>
+                <Typography className={styles.infoText} fontWeight={"bold"}>
+                  Wallet Address of Campaign Creator
+                </Typography>
+                <Typography className={styles.infoText}>
+                  {id}
+                </Typography>
+              </Grid>
+              <Divider mt={5} />
+
+              <Grid item>
+                <Typography fontWeight={"bold"} className={styles.infoText}>Number of Requests</Typography>
+                <Typography className={styles.infoText}>5</Typography>
+              </Grid>
+              <Divider mt={5} />
+
+              <Grid item>
+                <Typography fontWeight={"bold"} className={styles.infoText}>Number of Approvers</Typography>
+                <Typography className={styles.infoText}>
+                  {ethers.utils.formatUnits(details[0]).split(".")[0]}
+                </Typography>
+              </Grid>
+              <Divider mt={5} />
             </Grid>
-            <Grid item xl={5} lg={5} md={6} sm={6} xs={12} width={"100%"}>
-              <Grid
-                container
-                direction="column"
-                alignItems="stretch"
-                gap={4}
-                className={styles.another}
-              >
-                <Grid item>
-                  <Card>
-                    <CardContent>
-                      <Typography variant="subtitle1" component="div">
-                        Campaign Balance
-                      </Typography>
-                      <Typography
-                        variant="h5"
-                        fontWeight={"bold"}
-                        component="div"
-                      >
-                        {/* 12.75 ETH($35751.51) */}
-                        5 ETH <span className={styles.grey}>(₹{5*details['price']})</span>
-                      </Typography>
-                      <Typography variant="subtitle1" component="div">
-                        {/* target of 11999 ETH ($33645675.96) */}
-                        target of {ethers.utils.formatEther(details[5]).split('.')[1]>0?ethers.utils.formatEther(details[5]):ethers.utils.formatEther(details[5]).split('.')[0]} ETH (₹{parseFloat(ethers.utils.formatEther(details[5])*details['price']).toFixed(2)})
-                      </Typography>
-                      <LinearProgress
-                        variant="determinate"
-                        value={(5/ethers.utils.formatEther(details[5]))*100}
-                      ></LinearProgress>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item>
-                  <Card>
-                    <CardContent>
-                      <Typography variant="h5" component="div">
-                        Contribute Now!
-                      </Typography>
-                      <br/>
-                      <Box sx={{ width: "100%" }}>
-                        <form>
-                          <FormControl id="value" style={{ width: "100%" }}>
-                            <FormLabel>
-                              Amount in Ether you want to contribute
-                            </FormLabel>
-                            <Input
-                              type="number"
-                              step="any"
-                              min="0"
-                              endAdornment={<InputAdornment position="end">ETH</InputAdornment>}
-                              onChange={(e) => {
-                                setConvert(Math.abs(e.target.value));
-                              }}
-                            />
-                          </FormControl>
-                          {convert ? (
-                            <FormHelperText><span className={styles.grey}>{parseFloat(convert*details["price"]).toFixed(2)}</span></FormHelperText>
-                          ) : null}
-                        </form>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item>
-                  <Card>
-                    <CardContent>
+          </Grid>
+          <Grid item xl={4} lg={4} md={4} sm={10} xs={12} width={"100%"}>
+            <Grid
+              container
+              direction="column"
+              alignItems="stretch"
+              gap={4}
+            >
+
+              <Grid item className={styles.infoGrid} >
+
+                <Card >
+                  <CardContent className={styles.cardContent}>
+                    <Typography variant="h6" fontWeight={'normal'}>Campaign Balance</Typography>
+                    <Typography
+                      variant="h5"
+                      fontWeight={"bold"}
+                    // component="div"
+                    >
+                      5 ETH{" "}
+                      <span className={styles.grey} >
+                        (₹{5 * details["price"]})
+                      </span>
+                    </Typography>
+                    <br />
+                    <Typography variant="h6" fontWeight={'normal'} mb={2}>
+                      {/* target of 11999 ETH ($33645675.96) */}
+                      Target of{" "}
+                      {ethers.utils.formatEther(details[5]).split(".")[1] > 0
+                        ? ethers.utils.formatEther(details[5])
+                        : ethers.utils
+                          .formatEther(details[5])
+                          .split(".")[0]}{" "}
+                      ETH (₹
+                      {parseFloat(
+                        ethers.utils.formatEther(details[5]) * details["price"]
+                      ).toFixed(2)}
+                      )
+                    </Typography>
+                    <LinearProgress
+                      variant="determinate"
+                      className={styles.progressBarr}
+
+                      value={(5 / ethers.utils.formatEther(details[5])) * 100}
+
+
+                    ></LinearProgress>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item>
+                <Card>
+                  <CardContent className={styles.cardContent} >
+                    <Box sx={{ width: "100%" }}>
+                      <form>
+                        <FormControl id="value" style={{ width: "100%" }}>
+                          <Typography variant="h6" component="div">
+                            Amount in Ether you want to contribute
+                          </Typography>
+                          <Input
+                            type="number"
+                            min={0}
+                            endAdornment={
+                              <InputAdornment position="end">
+                                ETH
+                              </InputAdornment>
+                            }
+                            onChange={(e) => {
+                              setConvert(Math.abs(e.target.value));
+                            }}
+                          />
+                        </FormControl>
+                        {convert ? (
+                          <FormHelperText>
+                            <span className={styles.grey}>
+                              {parseFloat(convert * details["price"]).toFixed(
+                                2
+                              )}
+                            </span>
+                          </FormHelperText>
+                        ) : null}
+                      </form>
+                      <br />
                       <Button
                         variant="contained"
                         href="#"
-                        style={{ width: "100%" }}
+                        style={{ width: "100%", backgroundColor: "#4acd8d", minHeight: "50px" }}
                       >
-                        View Withdrawal Request
+                        Contribute Now
                       </Button>
-                      <Typography variant="body1" component="div">
-                        * You can see where these funds are being used & if you
-                        have contributed you can also approve those Withdrawal
-                        Requests :)
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item>
+                <Card>
+                  <CardContent className={styles.cardContent}>
+                    <Button
+                      variant="contained"
+                      href="#"
+                      style={{ width: "100%", backgroundColor: "#6f49fd", minHeight: "50px" }}
+                    >
+                      View Withdrawal Request
+                    </Button>
+
+                    <Typography variant="subtitle" component="div" style={{ marginTop: "2rem" }}>
+                      Check where the funds are being used and the requests made.
+                    </Typography>
+                  </CardContent>
+                </Card>
               </Grid>
             </Grid>
           </Grid>
+        </Grid>
         {/* </Grid> */}
       </Box>
-    </div>:""
+    </div >
+  ) : (
+    ""
   );
 }
 
-
-const INRPrice = async ()=>{
-    try{
-        const response= await fetch("https://api.coinstats.app/public/v1/tickers?exchange=WazirX&pair=ETH-INR")
-        const value= await response.json()
-        return value['tickers'][0]['price'];
-    }catch(e)
-    {
-        console.log(e);
-    }
-}
+const INRPrice = async () => {
+  try {
+    const response = await fetch(
+      "https://api.coinstats.app/public/v1/tickers?exchange=WazirX&pair=ETH-INR"
+    );
+    const value = await response.json();
+    return value["tickers"][0]["price"];
+  } catch (e) {
+    console.log(e);
+  }
+};
