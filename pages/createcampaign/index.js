@@ -13,11 +13,10 @@ import Axios from 'axios';
 import Nav from "../../components/Nav.js";
 
 import _intializeContract from "../../components/contractconnector";
-import createCampaign from "../../components/createcampaign";
 
+import FactoryArtifact from "../../artifacts/contracts/Campaign.sol/CampaignFactory.json";
 
-
-
+import {ethers} from "ethers"
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
 
 // import { cloudinary } from "../api/utils/cloudinary";
@@ -52,11 +51,11 @@ const create = () => {
 
   const { isAuthenticated, user, enableWeb3 } = useMoralis();
 
-  const [title, setTitle] = useState("test");
-  const [mcategory, setmcategory] = useState(["Education"]);
-  const [description, setDescription] = useState("test description");
+  const [title, setTitle] = useState("");
+  const [mcategory, setmcategory] = useState([]);
+  const [description, setDescription] = useState("");
   const [goal, setGoal] = useState(0.1);
-  const [imgURL, setImgURL] = useState("https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg");
+  const [imgURL, setImgURL] = useState("");
   const [min, setMin] = useState(0.01);
   const [endDate, setEndDate] = useState(new Date());
 
@@ -92,11 +91,11 @@ const create = () => {
     if (isAuthenticated) {
       var account = user.attributes.accounts
     }
-    console.log(user)
-    enableWeb3()
+    console.log(account)
+    enableWeb3({provider: 'metamask'})
 
   }, []);
-
+  
   const { data, error, fetch, isFetching, isLoading } = useWeb3ExecuteFunction()
 
 
@@ -105,30 +104,31 @@ const create = () => {
     if (imgURL === "" || imgURL === undefined || imgURL === null) {
       setImgURL("https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg")
     };
-    console.log(title, mcategory, description, goal, imgURL, endDate);
-
-    if (isAuthenticated) {
-      var account = user.attributes.accounts
-    }
-    console.log(account)
-
-    // const contract = await _intializeContract(account);
 
     let tdate = new Date(endDate)
-    tdate = tdate.getTime() / 1000; // to unix timestamp
+    tdate = tdate.getTime() / 1000;
 
-    // contract.functions.createCampaign(min, title, description, imgURL, goal, mcategory, tdate).then(res => {
-    //   console.log("printing", res);
-    // }).catch(err => {
-    //   console.log(err)
-    // })
-
-    fetch(createCampaign([min, title, description, imgURL, goal, mcategory, tdate])).then(
+    fetch( { params: {
+      contractAddress: process.env.FACTORY_ADDRESS,
+      functionName: "createCampaign",
+      abi: FactoryArtifact.abi,
+      params: {
+        minimum:ethers.utils.parseEther(min.toString()),
+        name:title,
+        description: description,
+        imageUrl: imgURL,
+        target: ethers.utils.parseEther(goal.toString()),
+        category: mcategory,
+        lastdate: tdate
+      }
+      // functionArgs: [ethers.utils.parseEther(min.toString()), title, description, imgURL, ethers.utils.parseEther(goal.toString()), mcategory, tdate],
+        }
+      }
+      ).then(
       res => console.log(res)
     ).catch(err => console.log(err))
 
-    console.log(data, error, isFetching, isLoading)
-
+    console.log(data, error)
 
   };
 
@@ -292,18 +292,8 @@ const create = () => {
                             fontSize: "20px",
                           }}
                           onClick={(event) => { handleSubmit(event) }}
+                          disabled={isFetching}
                         >Submit</Button>
-                        {"fetching" + isFetching}
-                        {data && <pre>
-                          {JSON.stringify(data,
-                            null,
-                            2,
-                          )}
-                        </pre>}
-                        {error && <pre>{JSON.stringify(error,
-                          null,
-                          2,
-                        )}</pre>}
 
                       </Grid>
                       <Grid item xs={12} sm={4} />
