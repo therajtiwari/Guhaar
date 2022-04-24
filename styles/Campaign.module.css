@@ -40,7 +40,6 @@
 
 .progressBarr span {
   background-color: #4acd8d !important;
-  height: 10px !important;
 }
 @media screen and (max-width: 900px) {
   .title {
