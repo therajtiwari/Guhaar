@@ -41,7 +41,7 @@ Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_
 npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
 ``` -->
 
-## Important commands
+<!-- ## Important commands
 
 ```
 
@@ -53,5 +53,20 @@ npx hardhat node
 
 # deploy smart contract and start frontend
 npx hardhat run --network localhost scripts/deploy.js && npm run dev
+
+``` -->
+
+## Important commands
+
+```
+
+# start frontend
+npm run dev
+
+# compile contract
+npx hardhat compile
+
+# redeploy on rinkeby (make sure to have private key in env and note new contract address)
+npx hardhat run --network rinkeby scripts/deploy.js
 
 ```
