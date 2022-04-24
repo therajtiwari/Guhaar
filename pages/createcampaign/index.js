@@ -55,11 +55,7 @@ const create = () => {
   const [mcategory, setmcategory] = useState([]);
   const [description, setDescription] = useState("");
   const [goal, setGoal] = useState(0.1);
-<<<<<<< HEAD
-  const [imgURL, setImgURL] = useState();
-=======
   const [imgURL, setImgURL] = useState("");
->>>>>>> 6ae81030b2055a6fcf6b40ccd7201a0bf0886e2d
   const [min, setMin] = useState(0.01);
   const [endDate, setEndDate] = useState(new Date());
 
