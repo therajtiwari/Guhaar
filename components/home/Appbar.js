@@ -194,7 +194,7 @@ export default function PrimarySearchAppBar(props) {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar sx={{ ...appBarStyle }} position="static">
                 <Toolbar>
-                    <a href='/'>
+                    {/* <a href='/'>
                         <Box
                             component="img"
                             sx={{
@@ -203,7 +203,7 @@ export default function PrimarySearchAppBar(props) {
                             style={{ maxWidth: '120px' }}
                             alt="logo"
                             src={"/assets/Guhaar.svg"}
-                        /></a>
+                        /></a> */}
 
                     <Search
                         sx={{
