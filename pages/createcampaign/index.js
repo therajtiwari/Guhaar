@@ -49,13 +49,13 @@ const category = [
 
 const create = () => {
 
-  const { isAuthenticated, user, enableWeb3 } = useMoralis();
+  const { isAuthenticated, user, enableWeb3, Moralis } = useMoralis();
 
   const [title, setTitle] = useState("");
   const [mcategory, setmcategory] = useState([]);
   const [description, setDescription] = useState("");
   const [goal, setGoal] = useState(0.1);
-  const [imgURL, setImgURL] = useState("");
+  const [imgURL, setImgURL] = useState();
   const [min, setMin] = useState(0.01);
   const [endDate, setEndDate] = useState(new Date());
 
@@ -101,34 +101,43 @@ const create = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (imgURL === "" || imgURL === undefined || imgURL === null) {
-      setImgURL("https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg")
-    };
+    // if (imgURL === "" || imgURL === undefined || imgURL === null) {
+    //   console.log("oye")
+    //   setImgURL("https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg")
+    // };
 
     let tdate = new Date(endDate)
-    tdate = tdate.getTime() / 1000;
+    let num = Math.floor(tdate.getTime() / 1000);
 
-    fetch( { params: {
+    function pp(a) {
+      console.log(JSON.stringify(a))
+    }
+
+    fetch( {onComplete: pp, 
+      onError:(a)=>console.error(a.toString()),
+       onSuccess:(a)=>console.log(JSON.stringify(a))
+       , params: {
       contractAddress: process.env.FACTORY_ADDRESS,
       functionName: "createCampaign",
       abi: FactoryArtifact.abi,
-      params: {
+      params: 
+      {
         minimum:ethers.utils.parseEther(min.toString()),
         name:title,
         description: description,
-        imageUrl: imgURL,
+        imageUrl: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg",
         target: ethers.utils.parseEther(goal.toString()),
-        category: mcategory,
-        lastdate: tdate
+        category: mcategory.toString(),
+        lastdate: num
       }
-      // functionArgs: [ethers.utils.parseEther(min.toString()), title, description, imgURL, ethers.utils.parseEther(goal.toString()), mcategory, tdate],
-        }
-      }
-      ).then(
-      res => console.log(res)
+    }
+  }
+  ).then(
+    res => console.log(res)
     ).catch(err => console.log(err))
-
+    
     console.log(data, error)
+    // functionArgs: [ethers.utils.parseEther(min.toString()), title, description, imgURL, ethers.utils.parseEther(goal.toString()), mcategory, tdate],
 
   };
 
