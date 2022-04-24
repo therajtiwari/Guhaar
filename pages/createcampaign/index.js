@@ -56,7 +56,7 @@ const create = () => {
   const [mcategory, setmcategory] = useState(["Education"]);
   const [description, setDescription] = useState("test description");
   const [goal, setGoal] = useState(0.1);
-  const [imgURL, setImgURL] = useState("https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg");
+  const [imgURL, setImgURL] = useState();
   const [min, setMin] = useState(0.01);
   const [endDate, setEndDate] = useState(new Date());
 
