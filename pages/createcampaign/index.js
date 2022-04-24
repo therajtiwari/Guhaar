@@ -55,7 +55,7 @@ const create = () => {
   const [mcategory, setmcategory] = useState([]);
   const [description, setDescription] = useState("");
   const [goal, setGoal] = useState(0.1);
-  const [imgURL, setImgURL] = useState("");
+  const [imgURL, setImgURL] = useState();
   const [min, setMin] = useState(0.01);
   const [endDate, setEndDate] = useState(new Date());
 
