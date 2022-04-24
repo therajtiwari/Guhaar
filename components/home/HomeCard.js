@@ -52,7 +52,7 @@ export default function HomeCard({ campaign }) {
                             <p style={{ position: "relative", top: "6px" }} >By <b>{creator}</b></p>
                         </div>
                         <div className="moreInfo" style={{ marginRight: "auto" }}>
-                            <p style={{ marginLeft: "80px" }} onClick={handleClick}> <b>More info</b>
+                            <p style={{ marginLeft: "80px", cursor: "pointer" }} onClick={handleClick}> <b>More info</b>
                                 <ArrowForwardIosIcon style={{ position: "relative", top: "5px" }} />
                             </p>
                         </div>

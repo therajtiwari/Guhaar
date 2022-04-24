@@ -35,7 +35,7 @@ const Search = styled('div')(({ theme }) => ({
     width: '40%',
     [theme.breakpoints.up('sm')]: {
         marginLeft: theme.spacing(3),
-        minWidth: '200px',
+        minWidth: '150px',
         // width: 'auto',
     },
     [theme.breakpoints.down('sm')]: {
@@ -195,24 +195,16 @@ export default function PrimarySearchAppBar(props) {
             <AppBar sx={{ ...appBarStyle }} position="static">
                 <Toolbar>
                     <a href='/'>
-                    <Box
-                        component="img"
-                        sx={{
-                            height: 64,
-                        }}
-                        alt="logo"
-                        src={"/assets/Guhaar.svg"}
-                    /></a>
+                        <Box
+                            component="img"
+                            sx={{
+                                height: 64,
+                            }}
+                            style={{ maxWidth: '120px' }}
+                            alt="logo"
+                            src={"/assets/Guhaar.svg"}
+                        /></a>
 
-
-                    {/* <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ display: { xs: 'block', sm: 'block' } }}
-                    >
-                        <Image src={logo} alt="logo" />
-                    </Typography> */}
                     <Search
                         sx={{
                             boxShadow: 3,
