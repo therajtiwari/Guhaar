@@ -32,7 +32,8 @@ const Profile = () => {
         if (isAuthenticated) {
           var account = user.attributes.accounts
         }
-        console.log(user)
+        console.log("user",user);
+        // console.log("address", user.attributes.ethAddress)
       
         const contract = await _intializeContract(account)
         let final = await _getCampaigns(contract)
