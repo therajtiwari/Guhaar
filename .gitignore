@@ -6,7 +6,7 @@ node_modules
 
 #Hardhat files
 cache
-artifacts
+# artifacts
 .next/
 
 # Allow a dummy project in this directory for testing purposes

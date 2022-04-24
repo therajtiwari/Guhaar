@@ -38,6 +38,7 @@ export default function BigCardCarousel({ campaigns }) {
         campaign.push(
             <BigCard
                 campaign={campaigns[i]}
+
             />
         )
     }

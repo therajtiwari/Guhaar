@@ -191,7 +191,7 @@ export default function Nav(props) {
                     <AccountCircle />
                 </IconButton>
                 {/* <Link to="/profile/1"> */}
-                    <p>Profile</p>
+                <p>Profile</p>
                 {/* </Link> */}
             </MenuItem>
         </Menu>
@@ -210,6 +210,7 @@ export default function Nav(props) {
                         }}
                         alt="logo"
                         src={"/assets/Guhaar.svg"}
+                        style={{ maxWidth: '120px' }}
                     />
 
                     <Box sx={{ flexGrow: 1 }} />
