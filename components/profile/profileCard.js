@@ -42,13 +42,13 @@ const ProfileCard = () => {
                         <div className="Details">
                             <Grid container spacing={5}>
                                 <Grid xs={12} sm={6} item>
-                                    <TextField label="Username" variant="outlined" value={username} fullWidth inputMode="none"/>
+                                    <TextField label="Username" variant="outlined" value={username} fullWidth inputMode="none" disabled={true}/>
                                 </Grid>
                                 <Grid xs={12} sm={6} item>
-                                    <TextField label="Email" variant="outlined" value={email} fullWidth/>
+                                    <TextField label="Email" variant="outlined" value={email} fullWidth disabled={true}/>
                                 </Grid>
                                 <Grid xs={12} sm={12} item>
-                                    <TextField label="Wallet Address" variant="outlined" value={address} type={showAddress} fullWidth
+                                    <TextField label="Wallet Address" variant="outlined" value={address} type={showAddress} fullWidth disabled={true}
                                     InputProps={{
                                         endAdornment:
                                           <InputAdornment position="end">
