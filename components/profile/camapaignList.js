@@ -4,7 +4,17 @@ import { Typography, Container, Card, CardMedia, Grid, CardContent, TextField, B
 import CampaignCard from "./campaignCard";
 
 
-const CampaignList = ( { title } ) => {
+const CampaignList = ( { title, campaigns } ) => {
+    const campaign = []
+
+    for (let i = 0; i < campaigns.length; i++) {
+        campaign.push(
+            <CampaignCard
+                campaign={campaigns[i]}
+            />
+        )
+    }
+
     return ( 
         <div className={styles.wrapper}>
             <h1 style={{
@@ -13,8 +23,11 @@ const CampaignList = ( { title } ) => {
                     marginBottom: "10px",
                     color: "#606060",
                }}>{ title }</h1>
-            <CampaignCard />
-            <CampaignCard />
+
+            {/* <CampaignCard />
+            <CampaignCard /> */}
+
+            { campaign }
         </div>
      );
 }

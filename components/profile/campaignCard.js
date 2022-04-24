@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 import { Typography, Container, Card, CardMedia, Grid, CardContent, TextField, Box, LinearProgress } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
+import { ethers, Contract } from 'ethers';
+import moment from 'moment';
 
 const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#FCFCFD',
     ...theme.typography.body2,
     padding: theme.spacing(1),
     textAlign: 'center',
@@ -12,15 +14,25 @@ const Item = styled(Paper)(({ theme }) => ({
     border: "None",
   }));
 
-const CampaignCard = () => {
-    const name = "Covid Relief";
-    const category = "Education, Health, and Wellness";
-    const description = "Campaign Description";
-    const raised = 2;
-    const goal = 10;
-    const image = "https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg"
-    const backers = 201
-    const daysLeft = "2"
+const CampaignCard = ({ campaign }) => {
+    // const name = "Covid Relief";
+    // const category = "Education, Health, and Wellness";
+    // const description = "Campaign Description";
+    // const raised = 2;
+    // const goal = 10;
+    // const image = "https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg"
+    // const backers = 201
+    // const daysLeft = "2"
+
+    const raised = ethers.utils.formatEther(campaign[0].toString())
+    const backers = campaign[1].toString()
+    const name = campaign[2];
+    const description = campaign[3];
+    const image = campaign[4];
+    const goal = ethers.utils.formatEther(campaign[5].toString())
+    const category = campaign[6];
+    const lastDay = new Date(campaign[7] * 1000)
+    const daysLeft = moment(lastDay).diff(moment(), 'days')
 
     return ( 
         <div className="Card" style={{
@@ -30,13 +42,22 @@ const CampaignCard = () => {
             // backgroundColor: "#1b1717",
         }}>
             
-            <Card sx={{ display: 'flex' }} fullWidth>
+            <Card sx={{ display: 'flex' }} fullWidth style={{
+                // borderRadius: "25px",
+                border: "none",
+                elevation: "0",
+                boxShadow: "none",
+                backgroundColor: "#FCFCFD",
+            }}>
                 <CardMedia
                         component="img"
-                        sx={{ maxWidth: 250 }}
+                        sx={{ maxWidth: 350 }}
                         image={image}
+                        style={{
+                            borderRadius: "25px",
+                        }}
                     />
-                <Box sx={{ display: 'flex', flexDirection: 'column',  maxWidth: 550 , width: "100%"}} fullWidth>
+                <Box sx={{ display: 'flex', flexDirection: 'column',  maxWidth: 450 , width: "100%"}} fullWidth>
                     <CardContent sx={{ flex: '1 0 auto' }} fullWidth>
                         <Typography variant="subtitle1" color="text.secondary" component="div">
                             {category}
