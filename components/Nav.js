@@ -18,6 +18,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import SignIn from "./SignIn";
 import { SignOut } from "./SignOut";
 import Divider from '@mui/material/Divider';
+import Link from 'next/link'
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -131,7 +132,11 @@ export default function Nav(props) {
             onClose={handleMenuClose}
         >
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={handleMenuClose}>
+                <Link href="/profile/1">
+                    My account
+                </Link>
+            </MenuItem>
         </Menu>
     );
 
@@ -185,7 +190,9 @@ export default function Nav(props) {
                 >
                     <AccountCircle />
                 </IconButton>
-                <p>Profile</p>
+                {/* <Link to="/profile/1"> */}
+                    <p>Profile</p>
+                {/* </Link> */}
             </MenuItem>
         </Menu>
     );
