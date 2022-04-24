@@ -110,13 +110,6 @@ export default function Home(props) {
                 component="div"
                 className={styles.subtitle}
               >
-                This Campaign is to Donate Funds for Covid Relief in India, the
-                situation. The manager is https://twitter.com/harshbadhai28 and
-                all the receives will go to ABCD Foundation which will help in
-                buying, delivering oxygen, and other covid related help. If you
-                want to withdraw funds from this campaign please feel free to
-                create a request, and ping me on Twitter so that I can help you
-                get the funds as soon as possible.
                 {details[3]}
               </Typography>
             </Stack>
