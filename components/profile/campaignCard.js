@@ -49,7 +49,7 @@ const CampaignCard = () => {
                             {description}
                         </Typography>
                         <br />
-                        <LinearProgress variant="determinate" value={raised} />
+                        <LinearProgress variant="determinate" value={raised*100/goal} />
                         <Grid container spacing={8} style={{
                             alignContent: "space-between",
                         }}>
