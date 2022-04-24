@@ -1,7 +1,7 @@
 
 import FactoryArtifact from "../artifacts/contracts/Campaign.sol/CampaignFactory.json";
 import CampaignArtifact from "../artifacts/contracts/Campaign.sol/Campaign.json";
-const FactoryAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+const FactoryAddress = process.env.FACTORY_ADDRESS
 import {ethers, Contract} from 'ethers'
 
 const customHttpProvider = new ethers.providers.JsonRpcProvider("http://localhost:8545");

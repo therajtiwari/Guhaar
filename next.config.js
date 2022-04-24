@@ -6,7 +6,7 @@ const nextConfig = {
     MORALIS_APPLICATION_ID: process.env.MORALIS_APPLICATION_ID,
     CLIENT_ID: process.env.CLIENT_ID,
     ETHERSCAN_API_KEY: process.env.ETHERSCAN_API_KEY,
-    INFURA_URL: process.env.INFURA_URL,
+    RPC_URL: process.env.RPC_URL,
     PRIVATE_KEY: process.env.PRIVATE_KEY,
     CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,

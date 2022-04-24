@@ -13,8 +13,12 @@ import Axios from 'axios';
 import Nav from "../../components/Nav.js";
 
 import _intializeContract from "../../components/contractconnector";
+import createCampaign from "../../components/createcampaign";
 
-import { useMoralis } from "react-moralis";
+
+
+
+import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
 
 // import { cloudinary } from "../api/utils/cloudinary";
 // import cloudinary from 'cloudinary';
@@ -46,14 +50,14 @@ const category = [
 
 const create = () => {
 
-  const { isAuthenticated, user } = useMoralis();
+  const { isAuthenticated, user, enableWeb3 } = useMoralis();
 
-  const [title, setTitle] = useState();
-  const [mcategory, setmcategory] = useState([]);
-  const [description, setDescription] = useState();
-  const [goal, setGoal] = useState(0);
-  const [imgURL, setImgURL] = useState();
-  const [min, setMin] = useState(0);
+  const [title, setTitle] = useState("test");
+  const [mcategory, setmcategory] = useState(["Education"]);
+  const [description, setDescription] = useState("test description");
+  const [goal, setGoal] = useState(0.1);
+  const [imgURL, setImgURL] = useState("https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg");
+  const [min, setMin] = useState(0.01);
   const [endDate, setEndDate] = useState(new Date());
 
   const handleCategoryChange = (event) => {
@@ -89,10 +93,12 @@ const create = () => {
       var account = user.attributes.accounts
     }
     console.log(user)
+    enableWeb3()
 
   }, []);
 
-
+  const { data, error, fetch, isFetching, isLoading } = useWeb3ExecuteFunction()
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -106,16 +112,23 @@ const create = () => {
     }
     console.log(account)
 
-    const contract = await _intializeContract(account);
+    // const contract = await _intializeContract(account);
 
     let tdate = new Date(endDate)
     tdate = tdate.getTime() / 1000; // to unix timestamp
 
-    contract.functions.createCampaign(min, title, description, imgURL, goal, mcategory, tdate).then(res => {
-      console.log("printing", res);
-    }).catch(err => {
-      console.log(err)
-    })
+    // contract.functions.createCampaign(min, title, description, imgURL, goal, mcategory, tdate).then(res => {
+    //   console.log("printing", res);
+    // }).catch(err => {
+    //   console.log(err)
+    // })
+    
+    fetch(createCampaign([min, title, description, imgURL, goal, mcategory, tdate])).then(
+      res => console.log(res)
+    ).catch(err => console.log(err))
+
+    console.log(data, error, isFetching, isLoading)
+    
 
   };
 
@@ -280,6 +293,18 @@ const create = () => {
                           }}
                           onClick={(event) => { handleSubmit(event) }}
                         >Submit</Button>
+                        {"fetching"+isFetching}
+                        {data && <pre>
+                          {JSON.stringify(data,
+                            null,
+                            2,
+                          )}
+                        </pre>}
+                        {error && <pre>{JSON.stringify(error,
+                            null,
+                            2,
+                          )}</pre>}
+
                       </Grid>
                       <Grid item xs={12} sm={4} />
                     </Grid>
