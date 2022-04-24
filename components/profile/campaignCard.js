@@ -4,7 +4,6 @@ import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import { ethers, Contract } from 'ethers';
 import moment from 'moment';
-import useWindowDimensions from './getWindow';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#FCFCFD',
