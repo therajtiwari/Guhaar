@@ -26,6 +26,7 @@ const CampaignCard = ({ campaign }) => {
     // const backers = 201
     // const daysLeft = "2"
 
+    const id = campaign['id']
     const raised = ethers.utils.formatEther(campaign[0].toString())
     const backers = campaign[1].toString()
     const name = campaign[2];
@@ -40,6 +41,10 @@ const CampaignCard = ({ campaign }) => {
     const [direction, setDirection] = useState('none');
     const [border, setBorder] = useState('none');
     const [borderRadius, setBorderRadius] = useState('0px');
+
+    const handleClick = () => {
+        window.location.href = `/campaign/${id}`
+    }
 
     const handleWindowResize = () => {
         if (window.innerWidth < 720) {
@@ -61,7 +66,7 @@ const CampaignCard = ({ campaign }) => {
     }, []);
 
     return ( 
-        <div className="Card" style={{
+        <div className="Card" onClick={()=>handleClick()} style={{
             width: "100%",
             maxWidth: "800px",
             padding: "10px",
