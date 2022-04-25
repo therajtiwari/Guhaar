@@ -118,7 +118,7 @@ contract Campaign {
     }
 
 
-    function getDetails() public view returns (uint,uint,string memory,string memory,string memory,uint, string memory, uint, uint,uint) {
+    function getDetails() public view returns (uint,uint,string memory,string memory,string memory,uint, string memory, uint, uint,uint, address) {
         return (
             minimunContribution,
             approversCount,
@@ -129,7 +129,8 @@ contract Campaign {
             campaignCategory,
             campaignLastDate,
             collectedAmount,
-            contributers.length
+            contributers.length,
+            recipient
           );
     }
 }
