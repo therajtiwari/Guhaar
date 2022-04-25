@@ -265,6 +265,7 @@ const create = () => {
 
                       <Grid xs={12} sm={6} item>
                         <TextField label="Image" placeholder="Enter a URL or Upload an Image" variant="outlined" value={imgURL} fullWidth
+                        onChange={(e) => setImgURL(e.target.value)}
                           InputProps={{
                             endAdornment:
                               <InputAdornment position="end">

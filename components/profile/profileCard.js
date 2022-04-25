@@ -6,8 +6,9 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
-import { RemoveRedEye } from "@mui/icons-material";
+import { Edit, RemoveRedEye } from "@mui/icons-material";
 import { AvatarGenerator } from 'random-avatar-generator';
+import UserModal from "./usernameModal";
 
 const generator = new AvatarGenerator();
 
@@ -22,7 +23,10 @@ const ProfileCard = () => {
         setShowAddress(showAddress === "password" ? "text" : "password");
     };
 
-    return ( 
+    // function to create a modal
+    
+    return (
+        // Modal(), 
         <div className={styles.wrapper}>
                <h1 style={{
                     fontSize: "2.5rem",
@@ -42,7 +46,17 @@ const ProfileCard = () => {
                         <div className="Details">
                             <Grid container spacing={5}>
                                 <Grid xs={12} sm={6} item>
-                                    <TextField label="Username" variant="outlined" value={username} fullWidth inputMode="none" disabled={true}/>
+                                    <TextField label="Username" variant="outlined" value={username} fullWidth inputMode="none" disabled={true}
+                                    InputProps={{
+                                        endAdornment:
+                                          <InputAdornment position="end">
+                                              {/* <IconButton aria-label="upload picture" component="span" >
+                                                < Edit />
+                                              </IconButton> */}
+                                              < UserModal value={username}/>
+                                          </InputAdornment>,
+                                      }}
+                                    />
                                 </Grid>
                                 <Grid xs={12} sm={6} item>
                                     <TextField label="Email" variant="outlined" value={email} fullWidth disabled={true}/>
