@@ -10,14 +10,27 @@ import { Edit, RemoveRedEye } from "@mui/icons-material";
 import { AvatarGenerator } from 'random-avatar-generator';
 import UserModal from "./usernameModal";
 
+import { useMoralis } from "react-moralis";
+
 const generator = new AvatarGenerator();
 
+
+
 const ProfileCard = () => {
+    const { isAuthenticated, user, Moralis } = useMoralis();
     const [showAddress, setShowAddress] = useState("password");
-    const username = "axon";
+    const [username, setUsername] = useState("");
+    // const username = user.get("username");
     const email = "anon@gmail.com";
     const address = "0x0000000000000000000000000000000000000000";
     const image = generator.generateRandomAvatar(username);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            setUsername(user.get("username"));
+        }
+
+    })
 
     const handleShowAddress = () => {
         setShowAddress(showAddress === "password" ? "text" : "password");
@@ -45,7 +58,7 @@ const ProfileCard = () => {
                         }}/>
                         <div className="Details">
                             <Grid container spacing={5}>
-                                <Grid xs={12} sm={6} item>
+                                <Grid xs={12} sm={12} item>
                                     <TextField label="Username" variant="outlined" value={username} fullWidth inputMode="none" disabled={true}
                                     InputProps={{
                                         endAdornment:
@@ -58,19 +71,19 @@ const ProfileCard = () => {
                                       }}
                                     />
                                 </Grid>
-                                <Grid xs={12} sm={6} item>
+                                {/* <Grid xs={12} sm={12} item>
                                     <TextField label="Email" variant="outlined" value={email} fullWidth disabled={true}/>
-                                </Grid>
+                                </Grid> */}
                                 <Grid xs={12} sm={12} item>
-                                    <TextField label="Wallet Address" variant="outlined" value={address} type={showAddress} fullWidth disabled={true}
-                                    InputProps={{
-                                        endAdornment:
-                                          <InputAdornment position="end">
-                                              <IconButton aria-label="upload picture" component="span" onClick={() => handleShowAddress()}>
-                                                < RemoveRedEye />
-                                              </IconButton>
-                                          </InputAdornment>,
-                                      }}
+                                    <TextField label="Wallet Address" variant="outlined" value={address} fullWidth disabled={true}
+                                    // InputProps={{
+                                    //     endAdornment:
+                                    //       <InputAdornment position="end">
+                                    //           <IconButton aria-label="upload picture" component="span" onClick={() => handleShowAddress()}>
+                                    //             < RemoveRedEye />
+                                    //           </IconButton>
+                                    //       </InputAdornment>,
+                                    //   }}
                                     />
                                 </Grid>
                                 {/* <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel> */}

@@ -8,6 +8,8 @@ import IconButton from '@mui/material/IconButton';
 import { Edit, RemoveRedEye, Save } from "@mui/icons-material";
 import { TextField } from '@material-ui/core';
 
+import { useMoralis } from "react-moralis";
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -20,11 +22,19 @@ const style = {
 };
 
 const UserModal = ({ value }) => {
+
+  const { isAuthenticated, user, Moralis } = useMoralis();
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [username, setUsername] = useState(value);
+    const handleChangeUsername = async ()=>{
+      user.set("username", username);
+      await user.save();
+      handleClose()
 
+    }
     const handleSave = () => {
         console.log(username);
         setOpen(false);
@@ -49,7 +59,9 @@ const UserModal = ({ value }) => {
             InputProps={{
                 endAdornment:
                     <InputAdornment position="end">
-                        <IconButton component="span" >
+                        <IconButton component="span" onClick={ ()=>{
+                            handleChangeUsername();
+                        }}>
                             < Save />
                         </IconButton>
                     </InputAdornment>,
