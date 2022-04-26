@@ -147,16 +147,10 @@ export default function Home(props) {
               <Divider mt={5} />
 
               <Grid item>
-                <Typography fontWeight={"bold"} className={styles.infoText}>Number of Requests</Typography>
-                <Typography className={styles.infoText}>5</Typography>
-              </Grid>
-              <Divider mt={5} />
-
-              <Grid item>
-                <Typography fontWeight={"bold"} className={styles.infoText}>Number of Approvers</Typography>
+                <Typography fontWeight={"bold"} className={styles.infoText}>Number of Contributors</Typography>
                 <Typography className={styles.infoText}>
-                  {ethers.utils.formatUnits(details[0]).split(".")[0]}
-                </Typography>
+                {parseFloat(ethers.utils.formatEther(details[9])).toFixed(0)}
+                  </Typography>
               </Grid>
               <Divider mt={5} />
             </Grid>
@@ -179,9 +173,9 @@ export default function Home(props) {
                       fontWeight={"bold"}
                     // component="div"
                     >
-                      5 ETH{" "}
+                      {ethers.utils.formatEther(details[8])} ETH{" "}
                       <span className={styles.grey} >
-                        (₹{5 * details["price"]})
+                        {ethers.utils.formatEther(details[8])>0?'(₹ '+ethers.utils.formatEther(details[8]) * details["price"]+' )':''}
                       </span>
                     </Typography>
                     <br />
@@ -203,7 +197,7 @@ export default function Home(props) {
                       variant="determinate"
                       className={styles.progressBarr}
 
-                      value={(5 / ethers.utils.formatEther(details[5])) * 100}
+                      value={(ethers.utils.formatEther(details[8]) / ethers.utils.formatEther(details[5])) * 100}
 
 
                     ></LinearProgress>
@@ -243,13 +237,13 @@ export default function Home(props) {
                         ) : null}
                       </form>
                       <br />
-                      <Button
+                      {isAuthenticated?<Button
                         variant="contained"
                         href="#"
                         style={{ width: "100%", backgroundColor: "#4acd8d", minHeight: "50px" }}
                       >
                         Contribute Now
-                      </Button>
+                      </Button>:null}
                     </Box>
                   </CardContent>
                 </Card>

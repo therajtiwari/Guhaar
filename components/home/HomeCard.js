@@ -39,7 +39,7 @@ export default function HomeCard({ campaign }) {
 
                     <div className={styles.addInfo}>
                         <div className="raised" style={{ marginRight: "auto" }}>
-                            <h3 style={{ margin: "8px auto" }}>₹ {approveCount}</h3>
+                            <h3 style={{ margin: "8px auto" }}>₹ {parseFloat(campaign["price"]*target).toFixed(2)}</h3>
                             <p style={{ margin: "8px auto", color: '#606060' }}>To be Raised ⧫{target}</p>
                         </div>
                         <div className="daysLeft" style={{ marginRight: "auto" }}>

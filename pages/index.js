@@ -20,6 +20,7 @@ export default function Home() {
 
   async function _getCampaigns(contract) {
     let list = await contract.functions.getDeployedCampaigns()
+    const price=await INRPrice();
     // console.log(list)
     let final_list = []
     for (let i = 0; i < list[0].length; i++) {
@@ -27,7 +28,7 @@ export default function Home() {
       const campaignContract = await _intializeContract(null, false, add)
       let detail = await campaignContract.getDetails()
       // console.log("here",detail);
-      detail = { ...detail, id: add }
+      detail = { ...detail, id: add,price: price }
       // console.log("det", detail);
       // detail.push(add)
       final_list.push(detail)
@@ -83,3 +84,15 @@ export default function Home() {
     </div >
   );
 }
+
+const INRPrice = async () => {
+  try {
+    const response = await fetch(
+      "https://api.coinstats.app/public/v1/tickers?exchange=WazirX&pair=ETH-INR"
+    );
+    const value = await response.json();
+    return value["tickers"][0]["price"];
+  } catch (e) {
+    console.log(e);
+  }
+};
