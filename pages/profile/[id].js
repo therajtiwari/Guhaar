@@ -8,10 +8,12 @@ import ProfileCard from "../../components/profile/profileCard";
 import CampaignList from "../../components/profile/camapaignList";
 import _intializeContract from "../../components/contractconnector";
 
+
 const Profile = () => {
     const { isAuthenticated, user } = useMoralis();
     const router = useRouter();
     const id = router.query.id;
+    console.log(id);
     const [campaigns, setCampaigns] = useState([]);
     // console.log("id:",id);
 
