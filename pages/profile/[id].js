@@ -2,7 +2,7 @@ import styles from "../../styles/Profile.module.css";
 import { useRouter } from "next/router";
 import { useState, useEffect } from 'react';;
 import Nav from "../../components/Nav.js";
-import { useMoralis } from "react-moralis";
+import { useMoralis, useMoralisQuery } from "react-moralis";
 import { Typography, Container, Card, Grid, CardContent, TextField } from "@mui/material";
 import ProfileCard from "../../components/profile/profileCard";
 import CampaignList from "../../components/profile/camapaignList";
@@ -15,7 +15,16 @@ const Profile = () => {
     const id = router.query.id;
     console.log(id);
     const [campaigns, setCampaigns] = useState([]);
-    // console.log("id:",id);
+    const [username, setUsername] = useState();
+    const [address, setAddress] = useState();
+    const { fetch, data, error, isLoading } = useMoralisQuery(
+      "Users",
+      (query) => query.equalTo("ethAddress", id),
+      [],
+      { autoFetch: false }
+    );
+
+    
 
     async function _getCampaigns(contract) {
         let list = await contract.functions.getDeployedCampaigns()
@@ -34,18 +43,23 @@ const Profile = () => {
         if (isAuthenticated) {
           var account = user.attributes.accounts
         }
-        console.log(user)
+        // console.log(user)
       
         const contract = await _intializeContract(account)
         let final = await _getCampaigns(contract)
         setCampaigns(final)
         console.log(final)
-    }, []);
+
+        const userData = await fetch();
+        console.log("user",userData);
+        // console.log(userData.get("username"));
+        // console.log(userData.attributes.ethAddress);
+    }, [fetch]);
 
     return ( 
         <>
             <Nav isAuthenticated={isAuthenticated} />
-            <ProfileCard />
+            <ProfileCard username={username} address={address}/>
             <CampaignList title="My Campaigns" campaigns={campaigns.slice(0,campaigns.length/2)} />
             <CampaignList title="Supported Campaigns" campaigns={campaigns.slice(campaigns.length/2,campaigns.length)} />
         </>
