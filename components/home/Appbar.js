@@ -127,7 +127,8 @@ export default function PrimarySearchAppBar(props) {
     // }, []);
 
     const walletID = props.walletID;
-    const path = "/profile/" + walletID;
+    // const path = "/profile/" + walletID;
+    const path = "/profile/my";
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
