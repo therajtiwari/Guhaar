@@ -6,7 +6,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
-import { Edit, RemoveRedEye } from "@mui/icons-material";
+import { CopyAll, Edit, RemoveRedEye } from "@mui/icons-material";
 import { AvatarGenerator } from 'random-avatar-generator';
 import UserModal from "./usernameModal";
 
@@ -27,6 +27,10 @@ const ProfileCard = ({username,address}) => {
 
     const handleShowAddress = () => {
         setShowAddress(showAddress === "password" ? "text" : "password");
+    };
+
+    const handleCopyAddress = () => {
+        navigator.clipboard.writeText(address);
     };
     
     return (
@@ -67,14 +71,14 @@ const ProfileCard = ({username,address}) => {
                                 </Grid> */}
                                 <Grid xs={12} sm={12} item>
                                     <TextField label="Wallet Address" variant="outlined" value={address} fullWidth disabled={true}
-                                    // InputProps={{
-                                    //     endAdornment:
-                                    //       <InputAdornment position="end">
-                                    //           <IconButton aria-label="upload picture" component="span" onClick={() => handleShowAddress()}>
-                                    //             < RemoveRedEye />
-                                    //           </IconButton>
-                                    //       </InputAdornment>,
-                                    //   }}
+                                    InputProps={{
+                                        endAdornment:
+                                          <InputAdornment position="end">
+                                              <IconButton aria-label="upload picture" component="span" onClick={handleCopyAddress} >
+                                                < CopyAll />
+                                              </IconButton>
+                                          </InputAdornment>,
+                                      }}
                                     />
                                 </Grid>
                                 {/* <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel> */}
