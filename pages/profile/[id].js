@@ -7,10 +7,11 @@ import { Typography, Container, Card, Grid, CardContent, TextField } from "@mui/
 import ProfileCard from "../../components/profile/profileCard";
 import CampaignList from "../../components/profile/camapaignList";
 import _intializeContract from "../../components/contractconnector";
+import OProfileCard from "../../components/profile/oprofileCard";
 
 
 const Profile = () => {
-    const { isAuthenticated, user } = useMoralis();
+    const { isAuthenticated, user, Moralis } = useMoralis();
     const router = useRouter();
     const id = router.query.id;
     console.log(id);
@@ -39,27 +40,53 @@ const Profile = () => {
         return final_list
       }
 
-    useEffect(async () => {
-        if (isAuthenticated) {
-          var account = user.attributes.accounts
+      const getUdata = async () => { 
+        // Moralis.Query("_User" )
+        try{
+          if (id !== undefined) {
+            const Monster = Moralis.Object.extend("_User");
+            const query = new Moralis.Query(Monster);
+            await query.equalTo("ethAddress", id);
+            const results = await query.find().then(function(results) {
+              console.log("Res",results);
+              return results[0];
+            });
+            // console.log("res",results[0].get("username"));
+            return results[0];
+          }
+        } catch(err){
+          console.log(err);
         }
-        // console.log(user)
-      
+      }
+
+      useEffect(async () => {
+        if (isAuthenticated) {
+            var account = user.attributes.accounts
+            // setUsername(user.get("username"));
+            // setAddress(user.attributes.ethAddress);
+        }
+
+        await getUdata().then(res => {
+          console.log("res",res);
+          // setUsername(res.get("username"));
+          // setAddress(res.attributes.ethAddress);
+        });
+
+        console.log(user)
+        if(username !== undefined){
+            setComponent(<ProfileCard username={username} address={address}/>)
+        }
         const contract = await _intializeContract(account)
         let final = await _getCampaigns(contract)
         setCampaigns(final)
-        console.log(final)
+        // console.log(final)
+    }, []);
 
-        const userData = await fetch();
-        console.log("user",userData);
-        // console.log(userData.get("username"));
-        // console.log(userData.attributes.ethAddress);
-    }, [fetch]);
 
     return ( 
         <>
-            <Nav/>
-            <ProfileCard username={username} address={address}/>
+            <Nav isAuthenticated={isAuthenticated} />
+            {username && <OProfileCard username={username} address={address}/>}
             <CampaignList title="My Campaigns" campaigns={campaigns.slice(0,campaigns.length/2)} />
             <CampaignList title="Supported Campaigns" campaigns={campaigns.slice(campaigns.length/2,campaigns.length)} />
         </>

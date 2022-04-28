@@ -16,8 +16,8 @@ const generator = new AvatarGenerator();
 
 
 
-const ProfileCard = ({username,address}) => {
-    // console.log("DAWADW",username)
+const OProfileCard = ({username,address}) => {
+    console.log("DAWADW",username)
     const [uname, setUname] = useState(username);
     // console.log(uname)
     const { isAuthenticated, user, Moralis } = useMoralis();
@@ -59,15 +59,6 @@ const ProfileCard = ({username,address}) => {
                             <Grid container spacing={5}>
                                 <Grid xs={12} sm={12} item>
                                     <TextField label="Username" variant="outlined" value={uname} fullWidth inputMode="none" disabled={true}
-                                    InputProps={{
-                                        endAdornment:
-                                          <InputAdornment position="end">
-                                              {/* <IconButton aria-label="upload picture" component="span" >
-                                                < Edit />
-                                              </IconButton> */}
-                                              < UserModal value={uname} onChangeUsername={(value)=>setUname(value)}/>
-                                          </InputAdornment>,
-                                      }}
                                     />
                                 </Grid>
                                 {/* <Grid xs={12} sm={12} item>
@@ -93,4 +84,4 @@ const ProfileCard = ({username,address}) => {
      );
 }
  
-export default ProfileCard;
+export default OProfileCard;
