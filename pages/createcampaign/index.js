@@ -16,7 +16,7 @@ import _intializeContract from "../../components/contractconnector";
 
 import FactoryArtifact from "../../artifacts/contracts/Campaign.sol/CampaignFactory.json";
 
-import {ethers} from "ethers"
+import { ethers } from "ethers"
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
 
 // import { cloudinary } from "../api/utils/cloudinary";
@@ -92,10 +92,10 @@ const create = () => {
       var account = user.attributes.accounts
     }
     console.log(account)
-    enableWeb3({provider: 'metamask'})
+    enableWeb3({ provider: 'metamask' })
 
   }, []);
-  
+
   const { data, error, fetch, isFetching, isLoading } = useWeb3ExecuteFunction()
 
 
@@ -113,29 +113,30 @@ const create = () => {
       console.log(JSON.stringify(a))
     }
 
-    fetch( {onComplete: pp, 
-      onError:(a)=>console.error(a.toString()),
-       onSuccess:(a)=>console.log(JSON.stringify(a))
-       , params: {
-      contractAddress: process.env.FACTORY_ADDRESS,
-      functionName: "createCampaign",
-      abi: FactoryArtifact.abi,
-      params: 
-      {
-        minimum:ethers.utils.parseEther(min.toString()),
-        name:title,
-        description: description,
-        imageUrl: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg",
-        target: ethers.utils.parseEther(goal.toString()),
-        category: mcategory.toString(),
-        lastdate: num
+    fetch({
+      onComplete: pp,
+      onError: (a) => console.error(a.toString()),
+      onSuccess: (a) => console.log(JSON.stringify(a))
+      , params: {
+        contractAddress: process.env.FACTORY_ADDRESS,
+        functionName: "createCampaign",
+        abi: FactoryArtifact.abi,
+        params:
+        {
+          minimum: ethers.utils.parseEther(min.toString()),
+          name: title,
+          description: description,
+          imageUrl: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg",
+          target: ethers.utils.parseEther(goal.toString()),
+          category: mcategory.toString(),
+          lastdate: num
+        }
       }
     }
-  }
-  ).then(
-    res => console.log(res)
+    ).then(
+      res => console.log(res)
     ).catch(err => console.log(err))
-    
+
     console.log(data, error)
     // functionArgs: [ethers.utils.parseEther(min.toString()), title, description, imgURL, ethers.utils.parseEther(goal.toString()), mcategory, tdate],
 
@@ -265,7 +266,7 @@ const create = () => {
 
                       <Grid xs={12} sm={6} item>
                         <TextField label="Image" placeholder="Enter a URL or Upload an Image" variant="outlined" value={imgURL} fullWidth
-                        onChange={(e) => setImgURL(e.target.value)}
+                          onChange={(e) => setImgURL(e.target.value)}
                           InputProps={{
                             endAdornment:
                               <InputAdornment position="end">

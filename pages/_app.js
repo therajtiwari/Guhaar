@@ -3,14 +3,24 @@ import '../styles/globals.css'
 import Layout from '../components/Layout';
 import { MoralisProvider } from "react-moralis";
 import Head from 'next/head'
+import Router from "next/router"
+import Loader from '../components/Loader';
 
 function MyApp({ Component, pageProps }) {
+  Router.events.on('routeChangeStart', (url) => {
+    console.log("router is changing", url);
+  })
+
+  Router.events.on('routeChangeComplete', (url) => {
+    console.log("router change has ended", url);
+  })
   return (
     <MoralisProvider serverUrl={process.env.MORALIS_SERVER_URL} appId={process.env.MORALIS_APPLICATION_ID}>
       <Head>
         <title>Guhaar</title>
       </Head>
       <Layout>
+
         <Component {...pageProps} />
       </Layout>
     </MoralisProvider>

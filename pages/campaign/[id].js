@@ -21,12 +21,16 @@ import CampaignArtifact from "../../artifacts/contracts/Campaign.sol/Campaign.js
 import { useEffect } from "react";
 import PrimarySearchAppBar from "../../components/home/Appbar";
 import Nav from "../../components/Nav";
-import { useMoralis } from "react-moralis";
+// import { useMoralis } from "react-moralis";
 import fetch from "node-fetch";
 import { InputAdornment } from "@mui/material";
 import { Divider } from "@mui/material";
 
 import _intializeContract from "../../components/contractconnector";
+
+// import CampaignArtifact from "../../artifacts/contracts/Campaign.sol/Campaign.json";
+
+import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
 
 // const responsive = {
 //   xl: {
@@ -53,11 +57,12 @@ import _intializeContract from "../../components/contractconnector";
 // };
 
 export default function Home(props) {
+  const { isAuthenticated, user, enableWeb3, Moralis } = useMoralis();
   //   const { isAuthenticated } = useMoralis();
   const [convert, setConvert] = useState(null);
   const [details, setDetails] = useState(null);
   const [flag, setFlag] = useState(false);
-  const { isAuthenticated } = useMoralis();
+  // const { isAuthenticated } = useMoralis();
   const router = useRouter();
   const { id } = router.query;
 
@@ -73,7 +78,36 @@ export default function Home(props) {
         // console.log(details);
       }
     }
+    // enableWeb3({ provider: 'metamask' })
   });
+
+  const { data, error, fetch, isFetching, isLoading } = useWeb3ExecuteFunction()
+
+
+  function handlePayment() {
+    fetch({
+      onComplete: pp,
+      onError: (a) => console.error(a.toString()),
+      onSuccess: (a) => console.log(JSON.stringify(a))
+      , params: {
+        contractAddress: id,
+        functionName: "contibute",
+        abi: CampaignArtifact.abi,
+        params:
+        {
+          wantToApprove: false // option modal to approve
+        },
+        amount: ethers.utils.parseEther(convert.toString())
+      }
+    }
+    ).then(
+      res => console.log(res)
+    ).catch(err => console.log(err))
+
+    console.log(data, error)
+    // functionArgs: [ethers.utils.parseEther(min.toString()), title, description, imgURL, ethers.utils.parseEther(goal.toString()), mcategory, tdate],
+
+  };
 
   return details != null ? (
     <div>
@@ -149,8 +183,8 @@ export default function Home(props) {
               <Grid item>
                 <Typography fontWeight={"bold"} className={styles.infoText}>Number of Contributors</Typography>
                 <Typography className={styles.infoText}>
-                {parseFloat(ethers.utils.formatEther(details[9])).toFixed(0)}
-                  </Typography>
+                  {parseFloat(ethers.utils.formatEther(details[9])).toFixed(0)}
+                </Typography>
               </Grid>
               <Divider mt={5} />
             </Grid>
@@ -175,7 +209,7 @@ export default function Home(props) {
                     >
                       {ethers.utils.formatEther(details[8])} ETH{" "}
                       <span className={styles.grey} >
-                        {ethers.utils.formatEther(details[8])>0?'(₹ '+ethers.utils.formatEther(details[8]) * details["price"]+' )':''}
+                        {ethers.utils.formatEther(details[8]) > 0 ? '(₹ ' + ethers.utils.formatEther(details[8]) * details["price"] + ' )' : ''}
                       </span>
                     </Typography>
                     <br />
@@ -237,13 +271,14 @@ export default function Home(props) {
                         ) : null}
                       </form>
                       <br />
-                      {isAuthenticated?<Button
+                      {isAuthenticated ? <Button
                         variant="contained"
                         href="#"
                         style={{ width: "100%", backgroundColor: "#4acd8d", minHeight: "50px" }}
+                        onClick={() => handlePayment()}
                       >
                         Contribute Now
-                      </Button>:null}
+                      </Button> : null}
                     </Box>
                   </CardContent>
                 </Card>

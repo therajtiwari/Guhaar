@@ -13,14 +13,30 @@ import styles from "../styles/Home.module.css";
 import _intializeContract from "../components/contractconnector";
 import BigCardCarousel from "../components/home/BigCardCarousel";
 
+
+
+import { css } from "@emotion/react";
+import { BounceLoader } from "react-spinners";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
+
 export default function Home() {
   const { isAuthenticated } = useMoralis();
   const [campaigns, setCampaigns] = useState([]);
+  const [currUser, setCurrUser] = useState(null);
 
+
+  let [loading, setLoading] = useState(true);
+  let [color, setColor] = useState("#6f49fd");
 
   async function _getCampaigns(contract) {
+    setLoading(true);
     let list = await contract.functions.getDeployedCampaigns()
-    const price=await INRPrice();
+    const price = await INRPrice();
     // console.log(list)
     let final_list = []
     for (let i = 0; i < list[0].length; i++) {
@@ -28,13 +44,13 @@ export default function Home() {
       const campaignContract = await _intializeContract(null, false, add)
       let detail = await campaignContract.getDetails()
       // console.log("here",detail);
-      detail = { ...detail, id: add,price: price }
+      detail = { ...detail, id: add, price: price }
       // console.log("det", detail);
       // detail.push(add)
       final_list.push(detail)
     }
+    setLoading(false);
     return final_list
-
 
   }
 
@@ -42,7 +58,9 @@ export default function Home() {
 
   useEffect(async () => {
     if (isAuthenticated) {
-      var account = user.attributes.accounts
+      var account = user.attributes.accounts;
+      console.log("account is", account);
+      setCurrUser(account);
     }
     // console.log(user.attributes)
 
@@ -56,22 +74,28 @@ export default function Home() {
   return (
     <div>
 
-      <PrimarySearchAppBar isAuthenticated={isAuthenticated} />
-      <div className={styles.sectionWrapper}>
-        <h2>Your campaigns</h2>
-        {/* <CardCarousel campaigns={campaigns} style={{ margin: "auto" }} />
-         */}
-        <BigCardCarousel campaigns={campaigns} />
-      </div>
-      <div className={styles.sectionWrapper}>
-        <h2>Recent Campaigns</h2>
-        <CardCarousel campaigns={campaigns} style={{ margin: "auto" }} />
-      </div>
+      <PrimarySearchAppBar isAuthenticated={isAuthenticated} userinfo={currUser} />
 
-      <div className={styles.sectionWrapper}>
-        <h2>Other Campaigns</h2>
-        <CardCarousel campaigns={campaigns} />
-      </div>
+      {loading ?
+        <div className="loader" style={{ minHeight: "80vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <BounceLoader color={color} loading={loading} css={override} size={120} />
+        </div> :
+        (<>
+          <div className={styles.sectionWrapper}>
+            <h2>Your campaigns</h2>
+
+            <BigCardCarousel campaigns={campaigns} />
+          </div>
+          <div className={styles.sectionWrapper}>
+            <h2>Recent Campaigns</h2>
+            <CardCarousel campaigns={campaigns} style={{ margin: "auto" }} />
+          </div>
+
+          <div className={styles.sectionWrapper}>
+            <h2>Other Campaigns</h2>
+            <CardCarousel campaigns={campaigns} />
+          </div></>)
+      }
 
 
 
