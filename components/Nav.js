@@ -19,6 +19,10 @@ import SignIn from "./SignIn";
 import { SignOut } from "./SignOut";
 import Divider from '@mui/material/Divider';
 import Link from 'next/link'
+import { useEffect, useState } from "react";
+import { useMoralis } from "react-moralis";
+
+
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -113,6 +117,18 @@ export default function Nav(props) {
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
+    const { isAuthenticated } = useMoralis();
+    const { logout, Moralis, user } = useMoralis();
+    const [walletID, setWalletID] = useState(null);
+    const [path, setPath] = useState(null);
+    useEffect(async () => {
+        if (isAuthenticated) {
+        console.log("hello")
+        console.log(user)
+        setWalletID(user.attributes.ethAddress)
+        setPath("/wallet/" + user.attributes.ethAddress)
+        }
+    }, []);
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -131,11 +147,11 @@ export default function Nav(props) {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            {isAuthenticated && <MenuItem onClick={handleMenuClose}>Profile</MenuItem>}
             <MenuItem onClick={handleMenuClose}>
-                <Link href="/profile/1">
+                {isAuthenticated && <Link href="/profile/1">
                     My account
-                </Link>
+                </Link>}
             </MenuItem>
         </Menu>
     );
@@ -196,8 +212,6 @@ export default function Nav(props) {
             </MenuItem>
         </Menu>
     );
-
-
 
     return (
         <Box sx={{ flexGrow: 1 }}>

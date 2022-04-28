@@ -29,6 +29,7 @@ export default function Home() {
   const [campaigns, setCampaigns] = useState([]);
   const [currUser, setCurrUser] = useState(null);
 
+  const [walletID, setWalletID] = useState(null);
 
   let [loading, setLoading] = useState(true);
   let [color, setColor] = useState("#6f49fd");
@@ -61,40 +62,44 @@ export default function Home() {
       var account = user.attributes.accounts;
       console.log("account is", account);
       setCurrUser(account);
+      setWalletID(user.attributes.ethAddress);
+      // console.log(user)
     }
+
     // console.log(user.attributes)
 
     const contract = await _intializeContract(account)
     let final = await _getCampaigns(contract)
     setCampaigns(final)
-    console.log(final)
+    // console.log(final)
 
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <div>
 
       <PrimarySearchAppBar isAuthenticated={isAuthenticated} userinfo={currUser} />
 
-      {loading ?
-        <div className="loader" style={{ minHeight: "80vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <BounceLoader color={color} loading={loading} css={override} size={120} />
-        </div> :
-        (<>
-          <div className={styles.sectionWrapper}>
-            <h2>Your campaigns</h2>
+      {
+        loading ?
+          <div className="loader" style={{ minHeight: "80vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <BounceLoader color={color} loading={loading} css={override} size={120} />
+          </div> :
+          (<>
+            <div className={styles.sectionWrapper}>
+              <h2>Your campaigns</h2>
 
-            <BigCardCarousel campaigns={campaigns} />
-          </div>
-          <div className={styles.sectionWrapper}>
-            <h2>Recent Campaigns</h2>
-            <CardCarousel campaigns={campaigns} style={{ margin: "auto" }} />
-          </div>
+              <BigCardCarousel campaigns={campaigns} />
+            </div>
+            <div className={styles.sectionWrapper}>
+              <h2>Recent Campaigns</h2>
+              <CardCarousel campaigns={campaigns} style={{ margin: "auto" }} />
+            </div>
 
-          <div className={styles.sectionWrapper}>
-            <h2>Other Campaigns</h2>
-            <CardCarousel campaigns={campaigns} />
-          </div></>)
+            <div className={styles.sectionWrapper}>
+              <h2>Other Campaigns</h2>
+              <CardCarousel campaigns={campaigns} />
+            </div></>)
       }
 
 

@@ -16,27 +16,18 @@ const generator = new AvatarGenerator();
 
 
 
-const ProfileCard = () => {
+const ProfileCard = ({username,address}) => {
     const { isAuthenticated, user, Moralis } = useMoralis();
     const [showAddress, setShowAddress] = useState("password");
-    const [username, setUsername] = useState("");
+    
     // const username = user.get("username");
-    const email = "anon@gmail.com";
-    const address = "0x0000000000000000000000000000000000000000";
+    // const email = "anon@gmail.com";
+    // const address = "0x0000000000000000000000000000000000000000";
     const image = generator.generateRandomAvatar(username);
-
-    useEffect(() => {
-        if (isAuthenticated) {
-            setUsername(user.get("username"));
-        }
-
-    })
 
     const handleShowAddress = () => {
         setShowAddress(showAddress === "password" ? "text" : "password");
     };
-
-    // function to create a modal
     
     return (
         // Modal(), 

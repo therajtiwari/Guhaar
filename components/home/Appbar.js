@@ -18,6 +18,8 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import SignIn from "../SignIn";
 import { SignOut } from "../SignOut";
 import Divider from '@mui/material/Divider';
+import { useEffect, useState } from "react";
+import { useMoralis } from "react-moralis";
 
 
 
@@ -114,6 +116,23 @@ export default function PrimarySearchAppBar(props) {
         setMobileMoreAnchorEl(event.currentTarget);
     };
 
+    const { isAuthenticated } = useMoralis();
+    const { logout, Moralis, user } = useMoralis();
+    // const [walletID, setWalletID] = useState(null);
+    // const [path, setPath] = useState("/profile/");
+    // useEffect(async () => {
+    //     if (isAuthenticated) {
+    //     console.log("hello")
+    //     console.log(user)
+    //     setWalletID(user.attributes.ethAddress)
+    //     setPath("/profile/" + user.attributes.ethAddress)
+    //     }
+    // }, []);
+
+    const walletID = props.walletID;
+    // const path = "/profile/" + walletID;
+    const path = "/profile/my";
+
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
         <Menu
@@ -131,10 +150,12 @@ export default function PrimarySearchAppBar(props) {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose} component="a" href="/profile/1">Profile</MenuItem>
+            {props.isAuthenticated && <MenuItem onClick={handleMenuClose} component="a" href={path}>Profile</MenuItem>}
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
         </Menu>
     );
+    
+    
 
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (
