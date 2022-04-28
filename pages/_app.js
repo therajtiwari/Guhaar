@@ -2,6 +2,7 @@
 import '../styles/globals.css'
 import Layout from '../components/Layout';
 import { MoralisProvider } from "react-moralis";
+// import { useEffect } from 'react';
 import Head from 'next/head'
 import Router from "next/router"
 import Loader from '../components/Loader';
@@ -10,7 +11,12 @@ function MyApp({ Component, pageProps }) {
   // Router.events.on('routeChangeStart', (url) => {
   //   console.log("router is changing", url);
   // })
-
+  // const {Moralis} = useMoralis()
+  // useEffect(
+  //    async ()=>{
+  //      await Moralis.enableWeb3()
+  //    }
+  // )
   // Router.events.on('routeChangeComplete', (url) => {
   //   console.log("router change has ended", url);
   // })

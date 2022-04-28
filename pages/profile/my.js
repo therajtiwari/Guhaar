@@ -6,28 +6,15 @@ import { useMoralis } from "react-moralis";
 import { Typography, Container, Card, Grid, CardContent, TextField } from "@mui/material";
 import ProfileCard from "../../components/profile/profileCard";
 import CampaignList from "../../components/profile/camapaignList";
-import _intializeContract from "../../components/contractconnector";
+import getCampaigns from "../../components/getCampaigns";
 
 
 const Profile = () => {
-    const { isAuthenticated, user } = useMoralis();
+    const { user, Moralis, isWeb3Enabled, isAuthenticated, isWeb3EnableLoading } = useMoralis();
     const router = useRouter();
     const [campaigns, setCampaigns] = useState([]);
     const [username, setUsername] = useState();
     const [address, setAddress] = useState();
-
-    async function _getCampaigns(contract) {
-        let list = await contract.functions.getDeployedCampaigns()
-        let final_list = []
-        for (let i = 0; i < list[0].length; i++) {
-          let add = list[0][i]
-          const campaignContract = await _intializeContract(null, false, add)
-          let detail = await campaignContract.getDetails()
-          detail = { ...detail, id: add }
-          final_list.push(detail)
-        }
-        return final_list
-      }
 
     useEffect(async () => {
         if (isAuthenticated) {
@@ -35,10 +22,9 @@ const Profile = () => {
             setUsername(user.get("username"));
             setAddress(user.attributes.ethAddress);
         }
-        console.log(user)
+        // console.log(user)
       
-        const contract = await _intializeContract(account)
-        let final = await _getCampaigns(contract)
+        let final = await getCampaigns(Moralis, isWeb3Enabled, isAuthenticated, isWeb3EnableLoading)
         setCampaigns(final)
         console.log(final)
     }, [isAuthenticated]);
