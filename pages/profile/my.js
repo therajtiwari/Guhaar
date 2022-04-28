@@ -28,7 +28,7 @@ const Profile = () => {
         }
         return final_list
       }
-
+    
     useEffect(async () => {
         if (isAuthenticated) {
             var account = user.attributes.accounts
@@ -41,7 +41,7 @@ const Profile = () => {
         let final = await _getCampaigns(contract)
         setCampaigns(final)
         console.log(final)
-    }, [isAuthenticated]);
+    }, [isAuthenticated, user]);
 
 
     return ( 

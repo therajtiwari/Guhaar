@@ -17,13 +17,17 @@ const generator = new AvatarGenerator();
 
 
 const ProfileCard = ({username,address}) => {
+    // console.log(username)
+    const [uname, setUname] = useState(username.toString());
+    // console.log(uname)
     const { isAuthenticated, user, Moralis } = useMoralis();
     const [showAddress, setShowAddress] = useState("password");
     
     // const username = user.get("username");
     // const email = "anon@gmail.com";
     // const address = "0x0000000000000000000000000000000000000000";
-    const image = generator.generateRandomAvatar(username);
+    const image = generator.generateRandomAvatar(address);
+    
 
     const handleShowAddress = () => {
         setShowAddress(showAddress === "password" ? "text" : "password");
@@ -54,14 +58,14 @@ const ProfileCard = ({username,address}) => {
                         <div className="Details">
                             <Grid container spacing={5}>
                                 <Grid xs={12} sm={12} item>
-                                    <TextField label="Username" variant="outlined" value={username} fullWidth inputMode="none" disabled={true}
+                                    <TextField label="Username" variant="outlined" value={uname} fullWidth inputMode="none" disabled={true}
                                     InputProps={{
                                         endAdornment:
                                           <InputAdornment position="end">
                                               {/* <IconButton aria-label="upload picture" component="span" >
                                                 < Edit />
                                               </IconButton> */}
-                                              < UserModal value={username}/>
+                                              < UserModal value={uname} onChangeUsername={(value)=>setUname(value)}/>
                                           </InputAdornment>,
                                       }}
                                     />

@@ -21,7 +21,7 @@ const style = {
   borderRadius: 4,
 };
 
-const UserModal = ({ value }) => {
+const UserModal = ({ value, onChangeUsername }) => {
 
   const { isAuthenticated, user, Moralis } = useMoralis();
 
@@ -32,9 +32,10 @@ const UserModal = ({ value }) => {
     const handleChangeUsername = async ()=>{
       user.set("username", username);
       await user.save();
+      
       handleClose()
-
-    }
+      // re render parent component
+  }
     const handleSave = () => {
         console.log(username);
         setOpen(false);
@@ -59,8 +60,9 @@ const UserModal = ({ value }) => {
             InputProps={{
                 endAdornment:
                     <InputAdornment position="end">
-                        <IconButton component="span" onClick={ ()=>{
+                        <IconButton component="span" onClick={ (event)=>{
                             handleChangeUsername();
+                            onChangeUsername(username);
                         }}>
                             < Save />
                         </IconButton>
