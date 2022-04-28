@@ -12,8 +12,6 @@ import { PhotoCamera } from "@mui/icons-material";
 import Axios from 'axios';
 import Nav from "../../components/Nav.js";
 
-import _intializeContract from "../../components/contractconnector";
-
 import FactoryArtifact from "../../artifacts/contracts/Campaign.sol/CampaignFactory.json";
 
 import { ethers } from "ethers"
@@ -92,7 +90,7 @@ const create = () => {
       var account = user.attributes.accounts
     }
     console.log(account)
-    enableWeb3({ provider: 'metamask' })
+    enableWeb3()
 
   }, []);
 
@@ -126,7 +124,7 @@ const create = () => {
           minimum: ethers.utils.parseEther(min.toString()),
           name: title,
           description: description,
-          imageUrl: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg",
+          imageUrl: imgURL,
           target: ethers.utils.parseEther(goal.toString()),
           category: mcategory.toString(),
           lastdate: num
@@ -144,7 +142,7 @@ const create = () => {
 
   return (
     <>
-      <Nav isAuthenticated={isAuthenticated} />
+      <Nav />
       <div className="wrapper" style={{
         zIndex: "1",
         marginTop: "2vh",

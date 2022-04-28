@@ -78,7 +78,7 @@ export default function Home() {
   return (
     <div>
 
-      <PrimarySearchAppBar isAuthenticated={isAuthenticated} userinfo={currUser} />
+      <PrimarySearchAppBar userinfo={currUser} />
 
       {
         loading ?

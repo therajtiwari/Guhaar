@@ -21,48 +21,21 @@ import CampaignArtifact from "../../artifacts/contracts/Campaign.sol/Campaign.js
 import { useEffect } from "react";
 import PrimarySearchAppBar from "../../components/home/Appbar";
 import Nav from "../../components/Nav";
-// import { useMoralis } from "react-moralis";
 import fetch from "node-fetch";
 import { InputAdornment } from "@mui/material";
 import { Divider } from "@mui/material";
 
 import _intializeContract from "../../components/contractconnector";
 
-// import CampaignArtifact from "../../artifacts/contracts/Campaign.sol/Campaign.json";
 
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
 
-// const responsive = {
-//   xl: {
-//       // the naming can be any, depends on you.
-//       breakpoint: { max: 4000, min: 3000 },
-//       items: 8
-//   },
-//   lg: {
-//       breakpoint: { max: 3000, min: 1500 },
-//       items: 4
-//   },
-//   md: {
-//       breakpoint: { max: 1500, min: 1200 },
-//       items: 3
-//   },
-//   sm: {
-//       breakpoint: { max: 1200, min: 700 },
-//       items: 2
-//   },
-//   xs: {
-//       breakpoint: { max: 700, min: 0 },
-//       items: 1
-//   }
-// };
 
 export default function Home(props) {
   const { isAuthenticated, user, enableWeb3, Moralis } = useMoralis();
-  //   const { isAuthenticated } = useMoralis();
   const [convert, setConvert] = useState(null);
   const [details, setDetails] = useState(null);
   const [flag, setFlag] = useState(false);
-  // const { isAuthenticated } = useMoralis();
   const router = useRouter();
   const { id } = router.query;
 
@@ -78,7 +51,7 @@ export default function Home(props) {
         // console.log(details);
       }
     }
-    // enableWeb3({ provider: 'metamask' })
+    // enableWeb3()
   });
 
   const { data, error, fetch, isFetching, isLoading } = useWeb3ExecuteFunction()
@@ -111,7 +84,7 @@ export default function Home(props) {
 
   return details != null ? (
     <div>
-      <Nav isAuthenticated={isAuthenticated} />
+      <Nav />
       <Box sx={{ flexGrow: 1 }} className={styles.boxer}>
         <Grid
           container

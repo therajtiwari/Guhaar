@@ -150,7 +150,7 @@ export default function PrimarySearchAppBar(props) {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            {props.isAuthenticated && <MenuItem onClick={handleMenuClose} component="a" href={path}>Profile</MenuItem>}
+            {isAuthenticated && <MenuItem onClick={handleMenuClose} component="a" href={path}>Profile</MenuItem>}
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
         </Menu>
     );
@@ -175,7 +175,7 @@ export default function PrimarySearchAppBar(props) {
             onClose={handleMobileMenuClose}
         >
             <MenuItem>
-                {props.isAuthenticated ? <SignOut /> : <SignIn />}
+                {isAuthenticated ? <SignOut /> : <SignIn />}
             </MenuItem>
             <MenuItem>
                 <IconButton size="large" aria-label="show 4 new mails" color="inherit">
@@ -246,7 +246,7 @@ export default function PrimarySearchAppBar(props) {
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 
-                        {props.isAuthenticated ? <SignOut /> : <SignIn />}
+                        {isAuthenticated ? <SignOut /> : <SignIn />}
                         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                             <Badge badgeContent={1} color="error">
                                 <MailIcon />

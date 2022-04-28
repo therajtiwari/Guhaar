@@ -174,7 +174,7 @@ export default function Nav(props) {
             onClose={handleMobileMenuClose}
         >
             <MenuItem>
-                {props.isAuthenticated ? <SignOut /> : <SignIn />}
+                {isAuthenticated ? <SignOut /> : <SignIn />}
             </MenuItem>
             <MenuItem>
                 <IconButton size="large" aria-label="show 4 new mails" color="inherit">
@@ -230,7 +230,7 @@ export default function Nav(props) {
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 
-                        {props.isAuthenticated ? <SignOut /> : <SignIn />}
+                        {isAuthenticated ? <SignOut /> : <SignIn />}
                         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                             <Badge badgeContent={1} color="error">
                                 <MailIcon />

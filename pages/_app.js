@@ -7,13 +7,13 @@ import Router from "next/router"
 import Loader from '../components/Loader';
 
 function MyApp({ Component, pageProps }) {
-  Router.events.on('routeChangeStart', (url) => {
-    console.log("router is changing", url);
-  })
+  // Router.events.on('routeChangeStart', (url) => {
+  //   console.log("router is changing", url);
+  // })
 
-  Router.events.on('routeChangeComplete', (url) => {
-    console.log("router change has ended", url);
-  })
+  // Router.events.on('routeChangeComplete', (url) => {
+  //   console.log("router change has ended", url);
+  // })
   return (
     <MoralisProvider serverUrl={process.env.MORALIS_SERVER_URL} appId={process.env.MORALIS_APPLICATION_ID}>
       <Head>

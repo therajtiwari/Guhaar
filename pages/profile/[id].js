@@ -58,7 +58,7 @@ const Profile = () => {
 
     return ( 
         <>
-            <Nav isAuthenticated={isAuthenticated} />
+            <Nav/>
             <ProfileCard username={username} address={address}/>
             <CampaignList title="My Campaigns" campaigns={campaigns.slice(0,campaigns.length/2)} />
             <CampaignList title="Supported Campaigns" campaigns={campaigns.slice(campaigns.length/2,campaigns.length)} />
