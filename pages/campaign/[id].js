@@ -25,34 +25,35 @@ import fetch from "node-fetch";
 import { InputAdornment } from "@mui/material";
 import { Divider } from "@mui/material";
 
-import _intializeContract from "../../components/contractconnector";
+import getCampaigndetails from "../../components/getCampaigndetails";
 
 
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
 
 
 export default function Home(props) {
-  const { isAuthenticated, user, enableWeb3, Moralis } = useMoralis();
+  const { user, Moralis, isWeb3Enabled, isAuthenticated, isAuthenticating, isWeb3EnableLoading } = useMoralis();
   const [convert, setConvert] = useState(null);
   const [details, setDetails] = useState(null);
-  const [flag, setFlag] = useState(false);
+  // const [flag, setFlag] = useState(false);
   const router = useRouter();
   const { id } = router.query;
 
   useEffect(async () => {
     if (id != undefined) {
-      const campaignContract = await _intializeContract(null, false, id);
-      let details = await campaignContract.getDetails();
+      let details = await getCampaigndetails(Moralis, id,isWeb3Enabled, isAuthenticating, isWeb3EnableLoading);
       const price = await INRPrice();
-      if (flag == false) {
+      if (details){
         details = { ...details, price: price };
-        setFlag(true);
+        // setFlag(true);
         setDetails(details);
-        // console.log(details);
       }
+      // if (flag == false) {
+        
+      //   // console.log(details);
+      // }
     }
-    // enableWeb3()
-  });
+  },[]);
 
   const { data, error, fetch, isFetching, isLoading } = useWeb3ExecuteFunction()
 

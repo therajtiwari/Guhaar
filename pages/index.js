@@ -1,4 +1,4 @@
-// import styles from "../styles/Home.module.css";
+
 import PrimarySearchAppBar from "../components/home/Appbar"
 import Slider from "../components/home/Slider"
 import HomeCard from "../components/home/HomeCard"
@@ -10,7 +10,7 @@ import { useMoralis } from "react-moralis";
 import styles from "../styles/Home.module.css";
 
 
-import _intializeContract from "../components/contractconnector";
+import getCampaigns from "../components/getCampaigns";
 import BigCardCarousel from "../components/home/BigCardCarousel";
 
 
@@ -25,7 +25,6 @@ const override = css`
 `;
 
 export default function Home() {
-  const { isAuthenticated } = useMoralis();
   const [campaigns, setCampaigns] = useState([]);
   const [currUser, setCurrUser] = useState(null);
 
@@ -34,28 +33,7 @@ export default function Home() {
   let [loading, setLoading] = useState(true);
   let [color, setColor] = useState("#6f49fd");
 
-  async function _getCampaigns(contract) {
-    setLoading(true);
-    let list = await contract.functions.getDeployedCampaigns()
-    const price = await INRPrice();
-    // console.log(list)
-    let final_list = []
-    for (let i = 0; i < list[0].length; i++) {
-      let add = list[0][i]
-      const campaignContract = await _intializeContract(null, false, add)
-      let detail = await campaignContract.getDetails()
-      // console.log("here",detail);
-      detail = { ...detail, id: add, price: price }
-      // console.log("det", detail);
-      // detail.push(add)
-      final_list.push(detail)
-    }
-    setLoading(false);
-    return final_list
-
-  }
-
-  const { logout, Moralis, user } = useMoralis();
+  const { Moralis, user, isWeb3Enabled, isAuthenticated,isAuthenticating, isWeb3EnableLoading } = useMoralis();
 
   useEffect(async () => {
     if (isAuthenticated) {
@@ -66,12 +44,12 @@ export default function Home() {
       // console.log(user)
     }
 
-    // console.log(user.attributes)
-
-    const contract = await _intializeContract(account)
-    let final = await _getCampaigns(contract)
+    setLoading(true);
+    
+    let final = await getCampaigns(Moralis,isWeb3Enabled, isAuthenticating, isWeb3EnableLoading)
+    console.log(final)
+    setLoading(false);
     setCampaigns(final)
-    // console.log(final)
 
   }, [isAuthenticated]);
 
@@ -101,11 +79,6 @@ export default function Home() {
               <CardCarousel campaigns={campaigns} />
             </div></>)
       }
-
-
-
-
-
     </div >
   );
 }

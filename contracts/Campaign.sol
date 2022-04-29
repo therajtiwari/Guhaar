@@ -90,6 +90,9 @@ contract Campaign {
         Request storage newRequest = requests.push();
         newRequest.description = description;
         newRequest.value = value;
+        if (approversCount==0){
+            finalizeRequest(requests.length-1);
+        }
   }
 
   function approveRequest(uint index) public {

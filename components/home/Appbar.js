@@ -91,7 +91,7 @@ const appBarStyle = {
 
 export default function PrimarySearchAppBar(props) {
 
-    console.log("here", props.userinfo);
+    // console.log("here", props.userinfo);
     const address = props.userinfo;
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);

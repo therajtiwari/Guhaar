@@ -6,12 +6,13 @@ import { useMoralis, useMoralisQuery } from "react-moralis";
 import { Typography, Container, Card, Grid, CardContent, TextField } from "@mui/material";
 import ProfileCard from "../../components/profile/profileCard";
 import CampaignList from "../../components/profile/camapaignList";
-import _intializeContract from "../../components/contractconnector";
+
 import OProfileCard from "../../components/profile/oprofileCard";
+import getCampaigns from "../../components/getCampaigns";
 
 
 const Profile = () => {
-    const { isAuthenticated, user, Moralis } = useMoralis();
+    const { user, Moralis, isWeb3Enabled, isAuthenticated,isAuthenticating, isWeb3EnableLoading } = useMoralis();
     const router = useRouter();
     const id = router.query.id;
     console.log(id);
@@ -76,8 +77,8 @@ const Profile = () => {
         if(username !== undefined){
             setComponent(<ProfileCard username={username} address={address}/>)
         }
-        const contract = await _intializeContract(account)
-        let final = await _getCampaigns(contract)
+
+        let final = await getCampaigns(Moralis,isWeb3Enabled, isAuthenticating, isWeb3EnableLoading)
         setCampaigns(final)
         // console.log(final)
     }, []);
