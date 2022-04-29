@@ -33,7 +33,7 @@ export default function Home() {
   let [loading, setLoading] = useState(true);
   let [color, setColor] = useState("#6f49fd");
 
-  const { Moralis, user, isWeb3Enabled, isAuthenticated, isWeb3EnableLoading } = useMoralis();
+  const { Moralis, user, isWeb3Enabled, isAuthenticated,isAuthenticating, isWeb3EnableLoading } = useMoralis();
 
   useEffect(async () => {
     if (isAuthenticated) {
@@ -46,7 +46,7 @@ export default function Home() {
 
     setLoading(true);
     
-    let final = await getCampaigns(Moralis,isWeb3Enabled, isAuthenticated, isWeb3EnableLoading)
+    let final = await getCampaigns(Moralis,isWeb3Enabled, isAuthenticating, isWeb3EnableLoading)
     console.log(final)
     setLoading(false);
     setCampaigns(final)

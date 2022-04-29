@@ -32,7 +32,7 @@ import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
 
 
 export default function Home(props) {
-  const { user, Moralis, isWeb3Enabled, isAuthenticated, isWeb3EnableLoading } = useMoralis();
+  const { user, Moralis, isWeb3Enabled, isAuthenticated, isAuthenticating, isWeb3EnableLoading } = useMoralis();
   const [convert, setConvert] = useState(null);
   const [details, setDetails] = useState(null);
   const [flag, setFlag] = useState(false);
@@ -41,7 +41,7 @@ export default function Home(props) {
 
   useEffect(async () => {
     if (id != undefined && !flag) {
-      let details = await getCampaigndetails(Moralis, id,isWeb3Enabled, isAuthenticated, isWeb3EnableLoading);
+      let details = await getCampaigndetails(Moralis, id,isWeb3Enabled, isAuthenticating, isWeb3EnableLoading);
       const price = await INRPrice();
       if (flag == false) {
         details = { ...details, price: price };
@@ -50,7 +50,7 @@ export default function Home(props) {
         // console.log(details);
       }
     }
-  });
+  },[]);
 
   const { data, error, fetch, isFetching, isLoading } = useWeb3ExecuteFunction()
 

@@ -10,7 +10,7 @@ import getCampaigns from "../../components/getCampaigns";
 
 
 const Profile = () => {
-    const { user, Moralis, isWeb3Enabled, isAuthenticated, isWeb3EnableLoading } = useMoralis();
+    const { user, Moralis, isWeb3Enabled, isAuthenticated,isAuthenticating, isWeb3EnableLoading } = useMoralis();
     const router = useRouter();
     const [campaigns, setCampaigns] = useState([]);
     const [username, setUsername] = useState();
@@ -24,7 +24,7 @@ const Profile = () => {
         }
         // console.log(user)
       
-        let final = await getCampaigns(Moralis, isWeb3Enabled, isAuthenticated, isWeb3EnableLoading)
+        let final = await getCampaigns(Moralis, isWeb3Enabled, isAuthenticating, isWeb3EnableLoading)
         setCampaigns(final)
         console.log(final)
     }, [isAuthenticated]);
