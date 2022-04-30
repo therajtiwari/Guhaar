@@ -51,7 +51,7 @@ export default function Home() {
     setLoading(false);
     setCampaigns(final)
 
-  }, [isAuthenticated]);
+  }, []);
 
   return (
     <div>
