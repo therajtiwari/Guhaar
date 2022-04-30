@@ -39,9 +39,7 @@ const Profile = () => {
         for (let i = 0; i < campaigns.length; i++) {
           if (campaigns[i][10] === address) {
               campaign.push(
-                  <BigCard
-                      campaign={campaigns[i]}
-                  />
+                  campaigns[i]
               ) 
           }
        }
