@@ -34,6 +34,20 @@ const Profile = () => {
         const component = <ProfileCard username={username} address={address}/>
     }
 
+    const getMyCampaigns = (campaigns) => {
+        const campaign = []
+        for (let i = 0; i < campaigns.length; i++) {
+          if (campaigns[i][10] === address) {
+              campaign.push(
+                  <BigCard
+                      campaign={campaigns[i]}
+                  />
+              ) 
+          }
+       }
+        return campaign;
+     }
+
     useEffect(async () => {
         if (isAuthenticated) {
             var account = user.attributes.accounts
@@ -56,7 +70,7 @@ const Profile = () => {
             <Nav />
             {username && <ProfileCard username={username} address={address}/>}
             {/* {component} */}
-            <CampaignList title="My Campaigns" campaigns={campaigns.slice(0,campaigns.length/2)} />
+            <CampaignList title="My Campaigns" campaigns={getMyCampaigns(campaigns)} />
             <CampaignList title="Supported Campaigns" campaigns={campaigns.slice(campaigns.length/2,campaigns.length)} />
         </>
      );
