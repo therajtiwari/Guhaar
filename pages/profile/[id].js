@@ -50,10 +50,14 @@ const Profile = () => {
             await query.equalTo("ethAddress", id);
             const results = await query.find().then(function(results) {
               console.log("Res",results);
-              return results[0];
+              console.log("username",results[0].attributes.username);
+              console.log("eth",results[0].attributes.ethAddress);
+              setUsername(results[0].get("username"));
+              setAddress(results[0].get("ethAddress"));
+              // return results[0];
             });
             // console.log("res",results[0].get("username"));
-            return results[0];
+            // return results[0];
           }
         } catch(err){
           console.log(err);
@@ -80,16 +84,12 @@ const Profile = () => {
             // setAddress(user.attributes.ethAddress);
         }
 
-        await getUdata().then(res => {
-          console.log("res",res);
-          // setUsername(res.get("username"));
-          // setAddress(res.attributes.ethAddress);
-        });
+        await getUdata();
 
         console.log(user)
-        if(username !== undefined){
-            setComponent(<ProfileCard username={username} address={address}/>)
-        }
+        // if(username !== undefined){
+        //     setComponent(<ProfileCard username={username} address={address}/>)
+        // }
 
         let final = await getCampaigns(Moralis,isWeb3Enabled, isAuthenticating, isWeb3EnableLoading)
         setCampaigns(final)
