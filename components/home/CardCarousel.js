@@ -1,5 +1,6 @@
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import moment from 'moment';
 import HomeCard from './HomeCard';
 const responsive = {
     superLargeDesktop: {
@@ -35,11 +36,15 @@ export default function CardCarousel({ campaigns }) {
     const campaign = []
 
     for (let i = 0; i < campaigns.length; i++) {
-        campaign.push(
-            <HomeCard
-                campaign={campaigns[i]}
-            />
-        )
+        const lastDay = new Date(campaigns[i][7] * 1000)
+        const daysLeft = moment(lastDay).diff(moment(), 'days')
+        if (daysLeft > 0) {
+            campaign.push(
+                <HomeCard
+                    campaign={campaigns[i]}
+                />
+            ) 
+        }
     }
 
     return (

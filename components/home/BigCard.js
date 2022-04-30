@@ -45,10 +45,6 @@ export default function BigCard({ campaign }) {
                     </div>
                     <div className="campaigner"  >
                         <p style={{ fontSize: "18px" }}>By <b>{creator}</b></p>
-
-
-
-
                     </div>
                     <div className="more-info">
                         <p style={{ marginRight: "auto", cursor: "pointer" }} onClick={handleClick}> <b>More info</b>
