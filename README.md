@@ -70,3 +70,5 @@ npx hardhat compile
 npx hardhat run --network rinkeby scripts/deploy.js
 
 ```
+
+To get test eth in rinkeby testnet click [here](https://faucets.chain.link/rinkeby)

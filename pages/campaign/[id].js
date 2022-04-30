@@ -55,7 +55,7 @@ export default function Home(props) {
       //   // console.log(details);
       // }
     }
-  }, []);
+  }, [id]);
 
   const { data, error, fetch, isFetching, isLoading } = useWeb3ExecuteFunction()
 
