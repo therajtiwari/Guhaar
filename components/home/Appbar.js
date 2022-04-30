@@ -21,6 +21,8 @@ import Divider from '@mui/material/Divider';
 import { useEffect, useState } from "react";
 import { useMoralis } from "react-moralis";
 import Router from 'next/router';
+import styles from "../../styles/PrimaryAppBar.module.css"
+import { BigLogo } from "/public/favicon.svg"
 
 
 
@@ -62,7 +64,6 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
-
     minWidth: '100%',
 
     '& .MuiInputBase-input': {
@@ -93,11 +94,11 @@ const appBarStyle = {
 
 export default function PrimarySearchAppBar(props) {
 
-    // console.log("here", props.userinfo);
-    // const address = props.userinfo[0];
+
     const [address, setAddress] = useState();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -123,17 +124,6 @@ export default function PrimarySearchAppBar(props) {
 
     const { isAuthenticated } = useMoralis();
     const { logout, Moralis, user } = useMoralis();
-    // const [walletID, setWalletID] = useState(null);
-    // const [path, setPath] = useState("/profile/");
-    // useEffect(async () => {
-    //     if (isAuthenticated) {
-    //     console.log("hello")
-    //     console.log(user)
-    //     setWalletID(user.attributes.ethAddress)
-    //     setPath("/profile/" + user.attributes.ethAddress)
-    //     }
-    // }, []);
-
 
     useEffect(() => {
         if (props.userinfo)
@@ -226,23 +216,19 @@ export default function PrimarySearchAppBar(props) {
             <AppBar sx={{ ...appBarStyle }} position="static">
                 <Toolbar>
 
-                    {/* <Box
-                            component="img"
-                            sx={{
-                                height: 64,
-                            }}
-                            style={{ maxWidth: '120px' }}
-                            alt="logo"
-                            src={"/assets/Guhaar.svg"}
-                        /></a> */}
                     <Box
                         component="img"
                         sx={{
                             height: 64,
+                            content: {
+                                md: `url(assets/Guhaar.svg)`, //img src from xs up to md
+                                xs: `url(favicon.svg)`,  //img src from md and up
+                            }
+
                         }}
+                        className={styles.logo}
                         alt="logo"
-                        src={"/assets/Guhaar.svg"}
-                        style={{ maxWidth: '100px' }}
+
                         onClick={() => Router.push("/")}
                     />
 
@@ -250,7 +236,7 @@ export default function PrimarySearchAppBar(props) {
 
                     <Search
                         sx={{
-                            boxShadow: 3,
+                            boxShadow: 2,
                             elevation: 0,
                         }}
                     >
@@ -258,6 +244,7 @@ export default function PrimarySearchAppBar(props) {
                             <SearchIcon />
                         </SearchIconWrapper>
                         <StyledInputBase
+                            onChange={(e) => props.handleSearch(e)}
                             placeholder="Search…"
                             inputProps={{ 'aria-label': 'search' }}
                         />

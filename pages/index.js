@@ -12,6 +12,8 @@ import styles from "../styles/Home.module.css";
 
 import getCampaigns from "../components/getCampaigns";
 import BigCardCarousel from "../components/home/BigCardCarousel";
+import { Divider } from "@mui/material";
+
 
 
 
@@ -26,14 +28,21 @@ const override = css`
 
 export default function Home() {
   const [campaigns, setCampaigns] = useState([]);
+  const [searchedCampaigns, setSearchedCampaigns] = useState([]);
+
   const [currUser, setCurrUser] = useState(null);
 
   const [walletID, setWalletID] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const handleSearch = (e) => {
+    // console.log(e.target.value);
+    setSearchQuery(e.target.value);
+  }
 
   let [loading, setLoading] = useState(true);
   let [color, setColor] = useState("#6f49fd");
 
-  const { Moralis, user, isWeb3Enabled, isAuthenticated,isAuthenticating, isWeb3EnableLoading } = useMoralis();
+  const { Moralis, user, isWeb3Enabled, isAuthenticated, isAuthenticating, isWeb3EnableLoading } = useMoralis();
 
   useEffect(async () => {
     if (isAuthenticated) {
@@ -45,18 +54,32 @@ export default function Home() {
     }
 
     setLoading(true);
-    
-    let final = await getCampaigns(Moralis,isWeb3Enabled, isAuthenticating, isWeb3EnableLoading)
+
+    let final = await getCampaigns(Moralis, isWeb3Enabled, isAuthenticating, isWeb3EnableLoading)
     console.log(final)
     setLoading(false);
     setCampaigns(final)
 
   }, []);
 
+  useEffect(() => {
+    if (searchQuery.length > 3) {
+      campaigns.map(campaign => {
+        if (campaign[2].toLowerCase().includes(searchQuery.toLowerCase()) && !searchedCampaigns.includes(campaign)) {
+          setSearchedCampaigns([...searchedCampaigns, campaign])
+        }
+      })
+    }
+    else {
+      setSearchedCampaigns([])
+    }
+
+  }, [searchQuery])
+
   return (
     <div>
 
-      <PrimarySearchAppBar userinfo={currUser} />
+      <PrimarySearchAppBar userinfo={currUser} handleSearch={handleSearch} />
 
       {
         loading ?
@@ -64,20 +87,30 @@ export default function Home() {
             <BounceLoader color={color} loading={loading} css={override} size={120} />
           </div> :
           (<>
-            <div className={styles.sectionWrapper}>
-              <h2>Your campaigns</h2>
+            {searchQuery.length > 0 ?
+              <>
+                <h2 style={{ fontWeight: 'normal' }}>Search Results for <b>'{searchQuery}'</b></h2>
+                <Divider />
 
-              <BigCardCarousel campaigns={campaigns} />
-            </div>
-            <div className={styles.sectionWrapper}>
-              <h2>Recent Campaigns</h2>
-              <CardCarousel campaigns={campaigns} style={{ margin: "auto" }} />
-            </div>
+                <CardCarousel campaigns={searchedCampaigns} style={{ margin: "auto" }} />
 
-            <div className={styles.sectionWrapper}>
-              <h2>Other Campaigns</h2>
-              <CardCarousel campaigns={campaigns} />
-            </div></>)
+              </> :
+              <>
+                <div className={styles.sectionWrapper}>
+                  <h2>Popular campaigns</h2>
+
+                  <BigCardCarousel campaigns={campaigns} />
+                </div>
+                <div className={styles.sectionWrapper}>
+                  <h2>Recent Campaigns</h2>
+                  <CardCarousel campaigns={campaigns} style={{ margin: "auto" }} />
+                </div>
+
+                <div className={styles.sectionWrapper}>
+                  <h2>Other Campaigns</h2>
+                  <CardCarousel campaigns={campaigns} />
+                </div></>}
+          </>)
       }
     </div >
   );

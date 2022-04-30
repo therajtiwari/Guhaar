@@ -45,17 +45,15 @@ export default function Home(props) {
     if (id != undefined) {
       let details = await getCampaigndetails(Moralis, id, isWeb3Enabled, isAuthenticating, isWeb3EnableLoading);
       const price = await INRPrice();
+
       if (details) {
         details = { ...details, price: price };
         // setFlag(true);
         setDetails(details);
       }
-      // if (flag == false) {
 
-      //   // console.log(details);
-      // }
     }
-  }, []);
+  }, [id]);
 
   const { data, error, fetch, isFetching, isLoading } = useWeb3ExecuteFunction()
 
