@@ -12,14 +12,14 @@ const nextConfig = {
     FACTORY_ADDRESS: "0xF0200aDD164309d1CD2C839c0d276b34D3380964",
     CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
-    CLOUDINARY_NAME: process.env.CLOUDINARY_NAME
+    CLOUDINARY_NAME: process.env.CLOUDINARY_NAME,
   },
   pwa: {
     dest: "public",
     register: true,
     skipWaiting: true,
-    mode: "production"
+    mode: "production",
   },
-}
+};
 
-module.exports = withPWA(nextConfig)
+module.exports = withPWA(nextConfig);

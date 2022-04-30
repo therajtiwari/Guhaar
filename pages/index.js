@@ -1,7 +1,4 @@
-
-import PrimarySearchAppBar from "../components/home/Appbar"
-import Slider from "../components/home/Slider"
-import HomeCard from "../components/home/HomeCard"
+import PrimarySearchAppBar from "../components/home/Appbar";
 import CardCarousel from "../components/home/CardCarousel";
 
 import { useEffect, useState } from "react";
@@ -9,13 +6,9 @@ import { useEffect, useState } from "react";
 import { useMoralis } from "react-moralis";
 import styles from "../styles/Home.module.css";
 
-
 import getCampaigns from "../components/getCampaigns";
 import BigCardCarousel from "../components/home/BigCardCarousel";
 import { Divider } from "@mui/material";
-
-
-
 
 import { css } from "@emotion/react";
 import { BounceLoader } from "react-spinners";
@@ -33,16 +26,23 @@ export default function Home() {
   const [currUser, setCurrUser] = useState(null);
 
   const [walletID, setWalletID] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const handleSearch = (e) => {
     // console.log(e.target.value);
     setSearchQuery(e.target.value);
-  }
+  };
 
   let [loading, setLoading] = useState(true);
   let [color, setColor] = useState("#6f49fd");
 
-  const { Moralis, user, isWeb3Enabled, isAuthenticated, isAuthenticating, isWeb3EnableLoading } = useMoralis();
+  const {
+    Moralis,
+    user,
+    isWeb3Enabled,
+    isAuthenticated,
+    isAuthenticating,
+    isWeb3EnableLoading,
+  } = useMoralis();
 
   useEffect(async () => {
     if (isAuthenticated) {
@@ -55,64 +55,90 @@ export default function Home() {
 
     setLoading(true);
 
-    let final = await getCampaigns(Moralis, isWeb3Enabled, isAuthenticating, isWeb3EnableLoading)
-    console.log(final)
+    let final = await getCampaigns(
+      Moralis,
+      isWeb3Enabled,
+      isAuthenticating,
+      isWeb3EnableLoading
+    );
     setLoading(false);
-    setCampaigns(final)
-
+    setCampaigns(final);
   }, []);
 
   useEffect(() => {
     if (searchQuery.length > 3) {
-      campaigns.map(campaign => {
-        if (campaign[2].toLowerCase().includes(searchQuery.toLowerCase()) && !searchedCampaigns.includes(campaign)) {
-          setSearchedCampaigns([...searchedCampaigns, campaign])
+      campaigns.map((campaign) => {
+        if (
+          campaign[2].toLowerCase().includes(searchQuery.toLowerCase()) &&
+          !searchedCampaigns.includes(campaign)
+        ) {
+          setSearchedCampaigns([...searchedCampaigns, campaign]);
         }
-      })
+      });
+    } else {
+      setSearchedCampaigns([]);
     }
-    else {
-      setSearchedCampaigns([])
-    }
-
-  }, [searchQuery])
+  }, [searchQuery]);
 
   return (
     <div>
-
       <PrimarySearchAppBar userinfo={currUser} handleSearch={handleSearch} />
 
-      {
-        loading ?
-          <div className="loader" style={{ minHeight: "80vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <BounceLoader color={color} loading={loading} css={override} size={120} />
-          </div> :
-          (<>
-            {searchQuery.length > 0 ?
-              <>
-                <h2 style={{ fontWeight: 'normal' }}>Search Results for <b>'{searchQuery}'</b></h2>
-                <Divider />
+      {loading ? (
+        <div
+          className="loader"
+          style={{
+            minHeight: "80vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <BounceLoader
+            color={color}
+            loading={loading}
+            css={override}
+            size={120}
+          />
+        </div>
+      ) : (
+        <>
+          {searchQuery.length > 0 ? (
+            <>
+              <h2 style={{ fontWeight: "normal" }}>
+                Search Results for <b>'{searchQuery}'</b>
+              </h2>
+              <Divider />
 
-                <CardCarousel campaigns={searchedCampaigns} style={{ margin: "auto" }} />
+              <CardCarousel
+                campaigns={searchedCampaigns}
+                style={{ margin: "auto" }}
+              />
+            </>
+          ) : (
+            <>
+              <div className={styles.sectionWrapper}>
+                <h2>Popular campaigns</h2>
 
-              </> :
-              <>
-                <div className={styles.sectionWrapper}>
-                  <h2>Popular campaigns</h2>
+                <BigCardCarousel campaigns={campaigns} />
+              </div>
+              <div className={styles.sectionWrapper}>
+                <h2>Recent Campaigns</h2>
+                <CardCarousel
+                  campaigns={campaigns}
+                  style={{ margin: "auto" }}
+                />
+              </div>
 
-                  <BigCardCarousel campaigns={campaigns} />
-                </div>
-                <div className={styles.sectionWrapper}>
-                  <h2>Recent Campaigns</h2>
-                  <CardCarousel campaigns={campaigns} style={{ margin: "auto" }} />
-                </div>
-
-                <div className={styles.sectionWrapper}>
-                  <h2>Other Campaigns</h2>
-                  <CardCarousel campaigns={campaigns} />
-                </div></>}
-          </>)
-      }
-    </div >
+              <div className={styles.sectionWrapper}>
+                <h2>Other Campaigns</h2>
+                <CardCarousel campaigns={campaigns} />
+              </div>
+            </>
+          )}
+        </>
+      )}
+    </div>
   );
 }
 

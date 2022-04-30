@@ -21,14 +21,14 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const CampaignFactory = await hre.ethers.getContractFactory("CampaignFactory");
+  const CampaignFactory = await hre.ethers.getContractFactory(
+    "CampaignFactory"
+  );
   const campaignFactory = await CampaignFactory.deploy();
 
   await campaignFactory.deployed();
 
   // for testing
-
-
 
   // await campaignFactory.createCampaign(ethers.utils.parseEther("0.01") , "Campaign 1", "Description 1",
   // "https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg", ethers.utils.parseEther("1"));
@@ -97,9 +97,8 @@ async function main() {
     dateToUnix("2021-06-01")
   );
 
-
-  var deplist = await campaignFactory.getDeployedCampaigns()
-  console.log(deplist)
+  var deplist = await campaignFactory.getDeployedCampaigns();
+  console.log(deplist);
   // end testing
 
   console.log("campaignFactory deployed to:", campaignFactory.address);

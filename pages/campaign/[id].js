@@ -24,26 +24,35 @@ import Nav from "../../components/Nav";
 import fetch from "node-fetch";
 import { InputAdornment } from "@mui/material";
 import { Divider } from "@mui/material";
-import Router from 'next/router';
-
+import Router from "next/router";
 
 import getCampaigndetails from "../../components/getCampaigndetails";
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
 
-
 export default function Home(props) {
-  const { user, Moralis, isWeb3Enabled, isAuthenticated, isAuthenticating, isWeb3EnableLoading } = useMoralis();
+  const {
+    user,
+    Moralis,
+    isWeb3Enabled,
+    isAuthenticated,
+    isAuthenticating,
+    isWeb3EnableLoading,
+  } = useMoralis();
   const [convert, setConvert] = useState(null);
   const [details, setDetails] = useState(null);
   // const [flag, setFlag] = useState(false);
   const router = useRouter();
   const { id } = router.query;
 
-
-
   useEffect(async () => {
     if (id != undefined) {
-      let details = await getCampaigndetails(Moralis, id, isWeb3Enabled, isAuthenticating, isWeb3EnableLoading);
+      let details = await getCampaigndetails(
+        Moralis,
+        id,
+        isWeb3Enabled,
+        isAuthenticating,
+        isWeb3EnableLoading
+      );
       const price = await INRPrice();
 
       if (details) {
@@ -51,39 +60,33 @@ export default function Home(props) {
         // setFlag(true);
         setDetails(details);
       }
-
     }
   }, [id]);
 
-  const { data, error, fetch, isFetching, isLoading } = useWeb3ExecuteFunction()
-
+  const { data, error, fetch, isFetching, isLoading } =
+    useWeb3ExecuteFunction();
 
   function handlePayment() {
     fetch({
-      onComplete: (a)=> console.log(a),
+      onComplete: (a) => console.log(a),
       onError: (a) => console.error(a.toString()),
-      onSuccess: (a) => console.log(JSON.stringify(a))
-      , params: {
+      onSuccess: (a) => console.log(JSON.stringify(a)),
+      params: {
         contractAddress: id,
         functionName: "contibute",
         abi: CampaignArtifact.abi,
-        params:
-        {
-          wantToApprove: true // option checkbox to approve
+        params: {
+          wantToApprove: true, // option checkbox to approve
         },
-        msgValue: ethers.utils.parseEther(convert.toString())
-      }
-    }
-    ).then(
-      res => console.log(res)
-    ).catch(err => console.log(err))
+        msgValue: ethers.utils.parseEther(convert.toString()),
+      },
+    })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
 
-    console.log(data, error)
+    console.log(data, error);
     // functionArgs: [ethers.utils.parseEther(min.toString()), title, description, imgURL, ethers.utils.parseEther(goal.toString()), mcategory, tdate],
-
-  };
-
-
+  }
 
   return details != null ? (
     <div>
@@ -150,14 +153,14 @@ export default function Home(props) {
                 <Typography className={styles.infoText} fontWeight={"bold"}>
                   Wallet Address of Campaign Creator
                 </Typography>
-                <Typography className={styles.infoText} >
-                  {id}
-                </Typography>
+                <Typography className={styles.infoText}>{id}</Typography>
               </Grid>
               <Divider mt={5} />
 
               <Grid item>
-                <Typography fontWeight={"bold"} className={styles.infoText}>Number of Contributors</Typography>
+                <Typography fontWeight={"bold"} className={styles.infoText}>
+                  Number of Contributors
+                </Typography>
                 <Typography className={styles.infoText}>
                   {parseFloat(ethers.utils.formatEther(details[9])).toFixed(0)}
                 </Typography>
@@ -166,37 +169,37 @@ export default function Home(props) {
             </Grid>
           </Grid>
           <Grid item xl={4} lg={4} md={4} sm={10} xs={12} width={"100%"}>
-            <Grid
-              container
-              direction="column"
-              alignItems="stretch"
-              gap={4}
-            >
-
-              <Grid item className={styles.infoGrid} >
-
-                <Card >
+            <Grid container direction="column" alignItems="stretch" gap={4}>
+              <Grid item className={styles.infoGrid}>
+                <Card>
                   <CardContent className={styles.cardContent}>
-                    <Typography variant="h6" fontWeight={'normal'}>Campaign Balance</Typography>
+                    <Typography variant="h6" fontWeight={"normal"}>
+                      Campaign Balance
+                    </Typography>
                     <Typography
                       variant="h5"
                       fontWeight={"bold"}
-                    // component="div"
+                      // component="div"
                     >
                       {ethers.utils.formatEther(details[8])} ETH{" "}
-                      <span className={styles.grey} >
-                        {ethers.utils.formatEther(details[8]) > 0 ? '(₹ ' + ethers.utils.formatEther(details[8]) * details["price"] + ' )' : ''}
+                      <span className={styles.grey}>
+                        {ethers.utils.formatEther(details[8]) > 0
+                          ? "(₹ " +
+                            ethers.utils.formatEther(details[8]) *
+                              details["price"] +
+                            " )"
+                          : ""}
                       </span>
                     </Typography>
                     <br />
-                    <Typography variant="h6" fontWeight={'normal'} mb={2}>
+                    <Typography variant="h6" fontWeight={"normal"} mb={2}>
                       {/* target of 11999 ETH ($33645675.96) */}
                       Target of{" "}
                       {ethers.utils.formatEther(details[5]).split(".")[1] > 0
                         ? ethers.utils.formatEther(details[5])
                         : ethers.utils
-                          .formatEther(details[5])
-                          .split(".")[0]}{" "}
+                            .formatEther(details[5])
+                            .split(".")[0]}{" "}
                       ETH (₹
                       {parseFloat(
                         ethers.utils.formatEther(details[5]) * details["price"]
@@ -206,17 +209,18 @@ export default function Home(props) {
                     <LinearProgress
                       variant="determinate"
                       className={styles.progressBarr}
-
-                      value={(ethers.utils.formatEther(details[8]) / ethers.utils.formatEther(details[5])) * 100}
-
-
+                      value={
+                        (ethers.utils.formatEther(details[8]) /
+                          ethers.utils.formatEther(details[5])) *
+                        100
+                      }
                     ></LinearProgress>
                   </CardContent>
                 </Card>
               </Grid>
               <Grid item>
                 <Card>
-                  <CardContent className={styles.cardContent} >
+                  <CardContent className={styles.cardContent}>
                     <Box sx={{ width: "100%" }}>
                       <form>
                         <FormControl id="value" style={{ width: "100%" }}>
@@ -247,14 +251,20 @@ export default function Home(props) {
                         ) : null}
                       </form>
                       <br />
-                      {isAuthenticated ? <Button
-                        variant="contained"
-                        href="#"
-                        style={{ width: "100%", backgroundColor: "#4acd8d", minHeight: "50px" }}
-                        onClick={() => handlePayment()}
-                      >
-                        Contribute Now
-                      </Button> : null}
+                      {isAuthenticated ? (
+                        <Button
+                          variant="contained"
+                          href="#"
+                          style={{
+                            width: "100%",
+                            backgroundColor: "#4acd8d",
+                            minHeight: "50px",
+                          }}
+                          onClick={() => handlePayment()}
+                        >
+                          Contribute Now
+                        </Button>
+                      ) : null}
                     </Box>
                   </CardContent>
                 </Card>
@@ -264,7 +274,11 @@ export default function Home(props) {
                   <CardContent className={styles.cardContent}>
                     <Button
                       variant="contained"
-                      style={{ width: "100%", backgroundColor: "#6f49fd", minHeight: "50px" }}
+                      style={{
+                        width: "100%",
+                        backgroundColor: "#6f49fd",
+                        minHeight: "50px",
+                      }}
                       onClick={() => {
                         Router.push("./requests/" + id);
                       }}
@@ -272,8 +286,13 @@ export default function Home(props) {
                       View Withdrawal Request
                     </Button>
 
-                    <Typography variant="subtitle" component="div" style={{ marginTop: "2rem" }}>
-                      Check where the funds are being used and the requests made.
+                    <Typography
+                      variant="subtitle"
+                      component="div"
+                      style={{ marginTop: "2rem" }}
+                    >
+                      Check where the funds are being used and the requests
+                      made.
                     </Typography>
                   </CardContent>
                 </Card>
@@ -283,7 +302,7 @@ export default function Home(props) {
         </Grid>
         {/* </Grid> */}
       </Box>
-    </div >
+    </div>
   ) : (
     ""
   );

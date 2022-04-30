@@ -54,9 +54,9 @@ export const SignOut = () => {
     //     <button className={styles.loginButton} onClick={handleTransfer}>
     //       Test Transfer
     //     </button>
-        <Button variant="contained"  onClick={logout}>
-          Sign Out
-        </Button>
+    <Button variant="contained" onClick={logout}>
+      Sign Out
+    </Button>
     //  </div>
     //</div>
   );
