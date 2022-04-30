@@ -17,35 +17,37 @@ const INRPrice = async () => {
 export default async (Moralis,isWeb3Enabled, isAuthenticating, isWeb3EnableLoading)=>{
 
     const readOptions = {
-        contractAddress: FactoryAddress,
-        functionName: "getDeployedCampaigns",
+      chain: "rinkeby",
+        address: FactoryAddress,
+        function_name: "getDeployedCampaigns",
         abi: FactoryArtifact.abi,
     };
     
     let datalist = []
     const price = await INRPrice();
     console.log(isWeb3Enabled, isAuthenticating, isWeb3EnableLoading)
-    if (!isAuthenticating && !isWeb3Enabled && !isWeb3EnableLoading){
-        await Moralis.enableWeb3()
+    // if (!isAuthenticating && !isWeb3Enabled && !isWeb3EnableLoading){
+    //     await Moralis.enableWeb3()
 
-        var campaignlist = await Moralis.executeFunction(readOptions);
+        var campaignlist = await Moralis.Web3API.native.runContractFunction(readOptions);
         var campaign
 
         for(let i=0;i<campaignlist.length;i++){
             let add = campaignlist[i]
             const readOptions = {
-                contractAddress: add,
-                functionName: "getDetails",
+              chain: "rinkeby",
+                address: add,
+                function_name: "getDetails",
                 abi: CampaignArtifact.abi,
               };
-            campaign = await Moralis.executeFunction(readOptions);
+            campaign = await Moralis.Web3API.native.runContractFunction(readOptions);
             campaign = { ...campaign, id: add, price: price }
             datalist.push(campaign)
         }
         return datalist
-    }else{
-      return []
-    }
+    // }else{
+    //   return []
+    // }
     
     
 }
