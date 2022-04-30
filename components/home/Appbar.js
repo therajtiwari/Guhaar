@@ -225,8 +225,8 @@ export default function PrimarySearchAppBar(props) {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar sx={{ ...appBarStyle }} position="static">
                 <Toolbar>
-                    {/* <a href='/'>
-                        <Box
+
+                    {/* <Box
                             component="img"
                             sx={{
                                 height: 64,
@@ -235,6 +235,18 @@ export default function PrimarySearchAppBar(props) {
                             alt="logo"
                             src={"/assets/Guhaar.svg"}
                         /></a> */}
+                    <Box
+                        component="img"
+                        sx={{
+                            height: 64,
+                        }}
+                        alt="logo"
+                        src={"/assets/Guhaar.svg"}
+                        style={{ maxWidth: '100px' }}
+                        onClick={() => Router.push("/")}
+                    />
+
+                    <Box sx={{ flexGrow: 1 }} />
 
                     <Search
                         sx={{

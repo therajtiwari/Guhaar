@@ -171,6 +171,7 @@ export default function Nav(props) {
                         alt="logo"
                         src={"/assets/Guhaar.svg"}
                         style={{ maxWidth: '120px' }}
+                        onClick={() => Router.push("/")}
                     />
 
                     <Box sx={{ flexGrow: 1 }} />
