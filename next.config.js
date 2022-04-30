@@ -1,3 +1,4 @@
+const withPWA = require("next-pwa");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -12,7 +13,12 @@ const nextConfig = {
     CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
     CLOUDINARY_NAME: process.env.CLOUDINARY_NAME
-  }
+  },
+  pwa: {
+    dest: "public",
+    register: true,
+    skipWaiting: true,
+  },
 }
 
-module.exports = nextConfig
+module.exports = withPWA(nextConfig)

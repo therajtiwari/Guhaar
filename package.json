@@ -26,6 +26,7 @@
     "moment": "^2.29.1",
     "moralis": "^1.5.11",
     "next": "12.1.0",
+    "next-pwa": "^5.5.2",
     "npm-check-updates": "^12.4.0",
     "nprogress": "^0.2.0",
     "random-avatar-generator": "^2.0.0",

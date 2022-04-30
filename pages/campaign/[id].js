@@ -24,10 +24,10 @@ import Nav from "../../components/Nav";
 import fetch from "node-fetch";
 import { InputAdornment } from "@mui/material";
 import { Divider } from "@mui/material";
+import Router from 'next/router';
+
 
 import getCampaigndetails from "../../components/getCampaigndetails";
-
-
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
 
 
@@ -39,21 +39,23 @@ export default function Home(props) {
   const router = useRouter();
   const { id } = router.query;
 
+
+
   useEffect(async () => {
     if (id != undefined) {
-      let details = await getCampaigndetails(Moralis, id,isWeb3Enabled, isAuthenticating, isWeb3EnableLoading);
+      let details = await getCampaigndetails(Moralis, id, isWeb3Enabled, isAuthenticating, isWeb3EnableLoading);
       const price = await INRPrice();
-      if (details){
+      if (details) {
         details = { ...details, price: price };
         // setFlag(true);
         setDetails(details);
       }
       // if (flag == false) {
-        
+
       //   // console.log(details);
       // }
     }
-  },[]);
+  }, []);
 
   const { data, error, fetch, isFetching, isLoading } = useWeb3ExecuteFunction()
 
@@ -82,6 +84,8 @@ export default function Home(props) {
     // functionArgs: [ethers.utils.parseEther(min.toString()), title, description, imgURL, ethers.utils.parseEther(goal.toString()), mcategory, tdate],
 
   };
+
+
 
   return details != null ? (
     <div>
@@ -262,8 +266,10 @@ export default function Home(props) {
                   <CardContent className={styles.cardContent}>
                     <Button
                       variant="contained"
-                      href="#"
                       style={{ width: "100%", backgroundColor: "#6f49fd", minHeight: "50px" }}
+                      onClick={() => {
+                        Router.push("./requests/" + id);
+                      }}
                     >
                       View Withdrawal Request
                     </Button>
