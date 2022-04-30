@@ -21,65 +21,13 @@ import Divider from '@mui/material/Divider';
 import Link from 'next/link'
 import { useEffect, useState } from "react";
 import { useMoralis } from "react-moralis";
+import Router from 'next/router';
 
 
 
 
-const Search = styled('div')(({ theme }) => ({
-
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '40%',
-    [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(3),
-        minWidth: '200px',
-        // width: 'auto',
-    },
-    [theme.breakpoints.down('sm')]: {
-        marginLeft: theme.spacing(3),
-        minWidth: '60%',
-        // width: 'auto',
-    },
-}));
 
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    minWidth: '100%',
-
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        // transition: theme.transitions.create('width'),
-        // width: '200%',
-        // minWidth: "200px"
-        // width: '40%',
-        // [theme.breakpoints.up('md')]: {
-        //     width: '20ch',
-        // },
-        width: '100%',
-
-
-    },
-}));
 
 const appBarStyle = {
     bgcolor: '#fcfcfd',
@@ -97,6 +45,8 @@ const appBarStyle = {
 export default function Nav(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+    const [address, setAddress] = useState();
+
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -109,9 +59,11 @@ export default function Nav(props) {
         setMobileMoreAnchorEl(null);
     };
 
-    const handleMenuClose = () => {
+    const handleMenuClose = (event) => {
         setAnchorEl(null);
         handleMobileMenuClose();
+        if (event == "profile")
+            Router.push("/profile/my");
     };
 
     const handleMobileMenuOpen = (event) => {
@@ -121,15 +73,11 @@ export default function Nav(props) {
     const { logout, Moralis, user } = useMoralis();
     const [walletID, setWalletID] = useState(null);
     const [path, setPath] = useState(null);
-    useEffect(async () => {
-        if (isAuthenticated) {
-        console.log("hello")
-        console.log(user)
-        setWalletID(user.attributes.ethAddress)
-        setPath("/wallet/" + user.attributes.ethAddress)
-        }
-    }, []);
 
+    useEffect(() => {
+        if (props.userinfo)
+            setAddress(props.userinfo[0])
+    }, [props.userinfo]);
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
         <Menu
@@ -147,12 +95,10 @@ export default function Nav(props) {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            {isAuthenticated && <MenuItem onClick={handleMenuClose}>Profile</MenuItem>}
-            <MenuItem onClick={handleMenuClose}>
-                {isAuthenticated && <Link href="/profile/1">
-                    My account
-                </Link>}
-            </MenuItem>
+            {isAuthenticated && <MenuItem onClick={() => handleMenuClose("profile")}>Profile</MenuItem>}
+            {isAuthenticated && <MenuItem onClick={() => handleMenuClose("account")}>My account</MenuItem>}
+
+
         </Menu>
     );
 

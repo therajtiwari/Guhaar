@@ -20,6 +20,8 @@ import { SignOut } from "../SignOut";
 import Divider from '@mui/material/Divider';
 import { useEffect, useState } from "react";
 import { useMoralis } from "react-moralis";
+import Router from 'next/router';
+
 
 
 
@@ -92,7 +94,8 @@ const appBarStyle = {
 export default function PrimarySearchAppBar(props) {
 
     // console.log("here", props.userinfo);
-    const address = props.userinfo;
+    // const address = props.userinfo[0];
+    const [address, setAddress] = useState();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -107,9 +110,11 @@ export default function PrimarySearchAppBar(props) {
         setMobileMoreAnchorEl(null);
     };
 
-    const handleMenuClose = () => {
+    const handleMenuClose = (event) => {
         setAnchorEl(null);
         handleMobileMenuClose();
+        if (event == "profile")
+            Router.push("/profile/my");
     };
 
     const handleMobileMenuOpen = (event) => {
@@ -129,9 +134,11 @@ export default function PrimarySearchAppBar(props) {
     //     }
     // }, []);
 
-    const walletID = props.walletID;
-    // const path = "/profile/" + walletID;
-    const path = "/profile/my";
+
+    useEffect(() => {
+        if (props.userinfo)
+            setAddress(props.userinfo[0])
+    }, [props.userinfo]);
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -150,12 +157,12 @@ export default function PrimarySearchAppBar(props) {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            {isAuthenticated && <MenuItem onClick={handleMenuClose} component="a" href={path}>Profile</MenuItem>}
+            {isAuthenticated && <MenuItem onClick={() => handleMenuClose("profile")} component="a" >Profile</MenuItem>}
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
         </Menu>
     );
-    
-    
+
+
 
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (

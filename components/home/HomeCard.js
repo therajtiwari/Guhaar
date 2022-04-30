@@ -2,6 +2,8 @@ import styles from "../../styles/Home.module.css";
 import { ethers, Contract } from 'ethers';
 import moment from 'moment';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import Router from 'next/router';
+
 
 export default function HomeCard({ campaign }) {
     // console.log(campaign)
@@ -22,7 +24,7 @@ export default function HomeCard({ campaign }) {
     // const daysLeft = moment("2023-02-01").diff(moment(), 'days')
     const handleClick = () => {
         // redirect to /campaign/id
-        window.location.href = `/campaign/${id}`
+        Router.push(`/campaign/${id}`);
     }
 
     return (
@@ -35,11 +37,11 @@ export default function HomeCard({ campaign }) {
                 <div className={styles.infoContainer}>
                     <h4 style={{ color: '#606060', marginBottom: "10px" }}>{category}</h4>
                     <h3 style={{ margin: "8px auto", fontSize: "1.25rem" }}>{title}</h3>
-                    <p style={{ margin: "8px auto", color: '#606060' }}>{description}</p>
+                    <p style={{ margin: "8px auto", color: '#606060' }}>{description.length < 200 ? description : description.slice(0, 200) + "..."}</p>
 
                     <div className={styles.addInfo}>
                         <div className="raised" style={{ marginRight: "auto" }}>
-                            <h3 style={{ margin: "8px auto" }}>₹ {parseFloat(campaign["price"]*target).toFixed(2)}</h3>
+                            <h3 style={{ margin: "8px auto" }}>₹ {parseFloat(campaign["price"] * target).toFixed(2)}</h3>
                             <p style={{ margin: "8px auto", color: '#606060' }}>To be Raised ⧫{target}</p>
                         </div>
                         <div className="daysLeft" style={{ marginRight: "auto" }}>

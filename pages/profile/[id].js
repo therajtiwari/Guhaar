@@ -12,86 +12,86 @@ import getCampaigns from "../../components/getCampaigns";
 
 
 const Profile = () => {
-    const { user, Moralis, isWeb3Enabled, isAuthenticated,isAuthenticating, isWeb3EnableLoading } = useMoralis();
-    const router = useRouter();
-    const id = router.query.id;
-    console.log(id);
-    const [campaigns, setCampaigns] = useState([]);
-    const [username, setUsername] = useState();
-    const [address, setAddress] = useState();
-    const { fetch, data, error, isLoading } = useMoralisQuery(
-      "Users",
-      (query) => query.equalTo("ethAddress", id),
-      [],
-      { autoFetch: false }
-    );
+  const { user, Moralis, isWeb3Enabled, isAuthenticated, isAuthenticating, isWeb3EnableLoading } = useMoralis();
+  const router = useRouter();
+  const id = router.query.id;
+  console.log(id);
+  const [campaigns, setCampaigns] = useState([]);
+  const [username, setUsername] = useState();
+  const [address, setAddress] = useState();
+  const { fetch, data, error, isLoading } = useMoralisQuery(
+    "Users",
+    (query) => query.equalTo("ethAddress", id),
+    [],
+    { autoFetch: false }
+  );
 
-    
 
-    async function _getCampaigns(contract) {
-        let list = await contract.functions.getDeployedCampaigns()
-        let final_list = []
-        for (let i = 0; i < list[0].length; i++) {
-          let add = list[0][i]
-          const campaignContract = await _intializeContract(null, false, add)
-          let detail = await campaignContract.getDetails()
-          detail = { ...detail, id: add }
-          final_list.push(detail)
-        }
-        return final_list
-      }
 
-      const getUdata = async () => { 
-        // Moralis.Query("_User" )
-        try{
-          if (id !== undefined) {
-            const Monster = Moralis.Object.extend("_User");
-            const query = new Moralis.Query(Monster);
-            await query.equalTo("ethAddress", id);
-            const results = await query.find().then(function(results) {
-              console.log("Res",results);
-              return results[0];
-            });
-            // console.log("res",results[0].get("username"));
-            return results[0];
-          }
-        } catch(err){
-          console.log(err);
-        }
-      }
+  async function _getCampaigns(contract) {
+    let list = await contract.functions.getDeployedCampaigns()
+    let final_list = []
+    for (let i = 0; i < list[0].length; i++) {
+      let add = list[0][i]
+      const campaignContract = await _intializeContract(null, false, add)
+      let detail = await campaignContract.getDetails()
+      detail = { ...detail, id: add }
+      final_list.push(detail)
+    }
+    return final_list
+  }
 
-      useEffect(async () => {
-        if (isAuthenticated) {
-            var account = user.attributes.accounts
-            // setUsername(user.get("username"));
-            // setAddress(user.attributes.ethAddress);
-        }
-
-        await getUdata().then(res => {
-          console.log("res",res);
-          // setUsername(res.get("username"));
-          // setAddress(res.attributes.ethAddress);
+  const getUdata = async () => {
+    // Moralis.Query("_User" )
+    try {
+      if (id !== undefined) {
+        const Monster = Moralis.Object.extend("_User");
+        const query = new Moralis.Query(Monster);
+        await query.equalTo("ethAddress", id);
+        const results = await query.find().then(function (results) {
+          console.log("Res", results);
+          return results[0];
         });
+        // console.log("res",results[0].get("username"));
+        return results[0];
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-        console.log(user)
-        if(username !== undefined){
-            setComponent(<ProfileCard username={username} address={address}/>)
-        }
+  useEffect(async () => {
+    if (isAuthenticated) {
+      var account = user.attributes.accounts
+      // setUsername(user.get("username"));
+      // setAddress(user.attributes.ethAddress);
+    }
 
-        let final = await getCampaigns(Moralis,isWeb3Enabled, isAuthenticating, isWeb3EnableLoading)
-        setCampaigns(final)
-        // console.log(final)
-    }, []);
+    await getUdata().then(res => {
+      console.log("res", res);
+      // setUsername(res.get("username"));
+      // setAddress(res.attributes.ethAddress);
+    });
+
+    console.log(user)
+    if (username !== undefined) {
+      setComponent(<ProfileCard username={username} address={address} />)
+    }
+
+    let final = await getCampaigns(Moralis, isWeb3Enabled, isAuthenticating, isWeb3EnableLoading)
+    setCampaigns(final)
+    // console.log(final)
+  }, []);
 
 
-    return ( 
-        <>
-            <Nav isAuthenticated={isAuthenticated} />
-            {username && <OProfileCard username={username} address={address}/>}
-            <CampaignList title="My Campaigns" campaigns={campaigns.slice(0,campaigns.length/2)} />
-            <CampaignList title="Supported Campaigns" campaigns={campaigns.slice(campaigns.length/2,campaigns.length)} />
-        </>
-     );
+  return (
+    <>
+      <Nav isAuthenticated={isAuthenticated} />
+      {username && <OProfileCard username={username} address={address} />}
+      <CampaignList title="Campaigns" campaigns={campaigns.slice(0, campaigns.length / 2)} />
+      <CampaignList title="Supported Campaigns" campaigns={campaigns.slice(campaigns.length / 2, campaigns.length)} />
+    </>
+  );
 }
- 
+
 export default Profile;
