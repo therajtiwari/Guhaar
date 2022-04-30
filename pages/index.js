@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useMoralis } from "react-moralis";
 import styles from "../styles/Home.module.css";
 
-import getCampaigns from "../components/getCampaigns";
+import getCampaigns from "../components/getCampaigns.server";
 import BigCardCarousel from "../components/home/BigCardCarousel";
 import { Divider } from "@mui/material";
 

@@ -11,7 +11,6 @@ import NProgress from "nprogress";
 function MyApp({ Component, pageProps }) {
   Router.events.on("routeChangeStart", (url) => {
     NProgress.start();
-    console.log("router is changing", url);
   });
   // const {Moralis} = useMoralis()
   // useEffect(
@@ -21,7 +20,6 @@ function MyApp({ Component, pageProps }) {
   // )
   Router.events.on("routeChangeComplete", (url) => {
     NProgress.done();
-    console.log("router change has ended", url);
   });
   return (
     <MoralisProvider

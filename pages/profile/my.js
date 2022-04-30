@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import ProfileCard from "../../components/profile/profileCard";
 import CampaignList from "../../components/profile/camapaignList";
-import getCampaigns from "../../components/getCampaigns";
+import getCampaigns from "../../components/getCampaigns.server";
 
 const Profile = () => {
   const {

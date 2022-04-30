@@ -36,7 +36,7 @@ export default function BigCardCarousel({ campaigns }) {
     const lastDay = new Date(campaigns[i][7] * 1000);
     const daysLeft = moment(lastDay).diff(moment(), "days");
     if (daysLeft > 0) {
-      campaign.push(<BigCard campaign={campaigns[i]} />);
+      campaign.push(<BigCard key={campaigns[i][0]} campaign={campaigns[i]} />);
     }
   }
 

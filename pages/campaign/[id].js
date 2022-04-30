@@ -26,7 +26,7 @@ import { InputAdornment } from "@mui/material";
 import { Divider } from "@mui/material";
 import Router from "next/router";
 
-import getCampaigndetails from "../../components/getCampaigndetails";
+import getCampaigndetails from "../../components/getCampaigndetails.server";
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
 
 export default function Home(props) {
@@ -179,15 +179,15 @@ export default function Home(props) {
                     <Typography
                       variant="h5"
                       fontWeight={"bold"}
-                      // component="div"
+                    // component="div"
                     >
                       {ethers.utils.formatEther(details[8])} ETH{" "}
                       <span className={styles.grey}>
                         {ethers.utils.formatEther(details[8]) > 0
                           ? "(₹ " +
-                            ethers.utils.formatEther(details[8]) *
-                              details["price"] +
-                            " )"
+                          ethers.utils.formatEther(details[8]) *
+                          details["price"] +
+                          " )"
                           : ""}
                       </span>
                     </Typography>
@@ -198,8 +198,8 @@ export default function Home(props) {
                       {ethers.utils.formatEther(details[5]).split(".")[1] > 0
                         ? ethers.utils.formatEther(details[5])
                         : ethers.utils
-                            .formatEther(details[5])
-                            .split(".")[0]}{" "}
+                          .formatEther(details[5])
+                          .split(".")[0]}{" "}
                       ETH (₹
                       {parseFloat(
                         ethers.utils.formatEther(details[5]) * details["price"]

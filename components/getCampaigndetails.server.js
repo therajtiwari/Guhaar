@@ -13,7 +13,7 @@ export default async (
     function_name: "getDetails",
     abi: CampaignArtifact.abi,
   };
-  console.log(isWeb3Enabled, isAuthenticating, isWeb3EnableLoading);
+  // console.log(isWeb3Enabled, isAuthenticating, isWeb3EnableLoading);
   // if (!isAuthenticating && !isWeb3Enabled && !isWeb3EnableLoading){
   //   await Moralis.enableWeb3()
   let campaign = await Moralis.Web3API.native.runContractFunction(readOptions);
