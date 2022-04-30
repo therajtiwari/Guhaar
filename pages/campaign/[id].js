@@ -62,7 +62,7 @@ export default function Home(props) {
 
   function handlePayment() {
     fetch({
-      onComplete: pp,
+      onComplete: (a)=> console.log(a),
       onError: (a) => console.error(a.toString()),
       onSuccess: (a) => console.log(JSON.stringify(a))
       , params: {
@@ -71,9 +71,9 @@ export default function Home(props) {
         abi: CampaignArtifact.abi,
         params:
         {
-          wantToApprove: false // option modal to approve
+          wantToApprove: true // option checkbox to approve
         },
-        amount: ethers.utils.parseEther(convert.toString())
+        msgValue: ethers.utils.parseEther(convert.toString())
       }
     }
     ).then(
