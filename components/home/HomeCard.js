@@ -9,7 +9,7 @@ export default function HomeCard({ campaign }) {
     const approveCount = campaign[1].toString()
     // console.log(campaign[1].toString())
     const title = campaign[2]
-    const description = campaign[3]
+    const description = campaign[3].length > 100 ? campaign[3].substring(0, 100) + "..." : campaign[3]
     const imgURL = campaign[4]
     const target = ethers.utils.formatEther(campaign[5].toString())
     const category = campaign[6]
@@ -35,7 +35,7 @@ export default function HomeCard({ campaign }) {
                 <div className={styles.infoContainer}>
                     <h4 style={{ color: '#606060', marginBottom: "10px" }}>{category}</h4>
                     <h3 style={{ margin: "8px auto", fontSize: "1.25rem" }}>{title}</h3>
-                    <p style={{ margin: "8px auto", color: '#606060' }}>{description}</p>
+                    <p style={{ margin: "8px auto", color: '#606060', wordWrap: "break-word" }}>{description}</p>
 
                     <div className={styles.addInfo}>
                         <div className="raised" style={{ marginRight: "auto" }}>
@@ -48,9 +48,9 @@ export default function HomeCard({ campaign }) {
                         </div>
                     </div>
                     <div className={styles.addInfo}>
-                        <div className="campainger" style={{ marginRight: "auto" }}>
+                        {/* <div className="campainger" style={{ marginRight: "auto" }}>
                             <p style={{ position: "relative", top: "6px" }} >By <b>{creator}</b></p>
-                        </div>
+                        </div> */}
                         <div className="moreInfo" style={{ marginRight: "auto" }}>
                             <p style={{ marginLeft: "80px", cursor: "pointer" }} onClick={handleClick}> <b>More info</b>
                                 <ArrowForwardIosIcon style={{ position: "relative", top: "5px" }} />

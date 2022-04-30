@@ -2,7 +2,7 @@ import styles from "../../styles/Home.module.css";
 import Grid from '@mui/material/Grid';
 import moment from 'moment';
 import { ethers, Contract } from 'ethers';
-
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 export default function BigCard({ campaign }) {
     // console.log(campaign);
@@ -38,8 +38,10 @@ export default function BigCard({ campaign }) {
                             <p style={{ padding: "12px auto", color: '#606060', fontSize: "1.1rem" }}>days left</p>
                         </div>
                     </div>
-                    <div className="campaigner">
-                        <p style={{ fontSize: "18px" }}>By <b>{creator}</b></p>
+                    <div className="moreInfo" style={{ marginRight: "auto" }}>
+                            <p style={{  cursor: "pointer" }} onClick={handleClick}> <b>More info</b>
+                                <ArrowForwardIosIcon style={{ position: "relative", top: "5px" }} />
+                            </p>
                     </div>
                 </Grid>
             </Grid>
