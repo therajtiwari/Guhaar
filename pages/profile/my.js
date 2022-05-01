@@ -31,6 +31,7 @@ const Profile = () => {
   const [address, setAddress] = useState();
   const [component, setComponent] = useState(<></>);
   const [donatedCampaigns, setDonatedCampaigns] = useState([]);
+  const [createdCampaigns, setCreatedCampaigns] = useState([]);
 
   async function _getCampaigns(contract) {
     let list = await contract.functions.getDeployedCampaigns();
@@ -54,22 +55,24 @@ const Profile = () => {
     for (let i = 0; i < campaigns.length; i++) {
         console.log(campaigns[i][10], "And" , address);
         if (campaigns[i][10].toLowerCase() == address) {
-            console.log("This is the campaign", campaigns[i]);
+            // console.log("This is the campaign", campaigns[i]);
             campaign.push(campaigns[i]);
         }
     }
 
     return campaign;
   };
-
   useEffect(async () => {
+    if(isAuthenticated) {
+
     if (isAuthenticated) {
       var account = user.attributes.accounts;
       setUsername(user.get("username"));
       setAddress(user.attributes.ethAddress);
+      console.log("add here",address);
     }
     // console.log(user)
-    console.log(user);
+    // console.log(user);
     if (username !== undefined) {
       setComponent(<ProfileCard username={username} address={address} />);
     }
@@ -80,31 +83,33 @@ const Profile = () => {
       isWeb3EnableLoading
     );
 
-    let final3 = await getCampaignsDonated(
+    if(address !== undefined && address !== null){
+        let final3 = await getCampaignsDonated(
         Moralis,
         address,
         isWeb3Enabled,
         isAuthenticating,
         isWeb3EnableLoading
-    );
+        );
+    }
     // console.log("adwdaw", final3);
 
     setCampaigns(final);
     // setDonatedCampaigns(final2);
-    console.log(final);
+    // console.log(final);
     // console.log("donated",final2);
 
     let final2 = getMyCampaigns(final);
-    setDonatedCampaigns(final2);
+    setCreatedCampaigns(final2);
 
-  }, [isAuthenticated]);
+  }}, [isAuthenticated]);
 
   return (
     <>
       <Nav />
       {username && <ProfileCard username={username} address={address} />}
       {/* {component} */}
-      <CampaignList title="Campaigns" campaigns={donatedCampaigns} />
+      <CampaignList title="Campaigns" campaigns={createdCampaigns} />
       <CampaignList
         title="Supported Campaigns"
         campaigns={campaigns.slice(campaigns.length / 2, campaigns.length)}
