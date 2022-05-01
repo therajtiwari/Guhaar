@@ -17,6 +17,30 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import CampaignArtifact from "../../../../artifacts/contracts/Campaign.sol/Campaign.json";
 import { ethers } from "ethers";
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Input from '@mui/material/Input';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import TextField from '@mui/material/TextField';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+
+
+import Divider from "@mui/material/Divider";
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '40%',
+  minWidth: '350px',
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+  borderRadius: 1,
+  outline: 'none',
+}
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -120,6 +144,12 @@ const rows = [
   ),
 ];
 
+
+const StyledButton = styled(Button)`
+    &:hover {
+      background-color: #4acd8d;
+    }
+`;
 const Requests = () => {
   const {
     user,
@@ -131,6 +161,22 @@ const Requests = () => {
     isInitialized
   } = useMoralis();
   const [userAddress, setUserAddress] = useState(null);
+
+
+
+  //MODAL
+
+  const [requestTitle, setRequestTitle] = useState(null);
+  const [requestDescription, setRequestDescription] = useState(null);
+  const [requestAmount, setRequestAmount] = useState(null);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setRequestAmount(null);
+    setRequestDescription(null);
+    setRequestTitle(null);
+    setOpen(false);
+  }
 
 
   const { data, error, fetch, isFetching, isLoading } =
@@ -183,9 +229,10 @@ const Requests = () => {
 
 
   const handleAddRequest = () => {
+    handleOpen();
     const des = "oiasndfn";
     const amount = "0.0003";
-    createRequest(id, des, amount);
+    // createRequest(id, des, amount);
   }
 
   useEffect(async () => {
@@ -197,15 +244,15 @@ const Requests = () => {
 
     if (isInitialized && id) {
       // console.log("id ", id);
-      const reqDetails = await getCampaignRequest(
-        Moralis,
-        id,
-        userAddress,
-        isWeb3Enabled,
-        isAuthenticating,
-        isWeb3EnableLoading,
-      );
-      console.log(reqDetails);
+      // const reqDetails = await getCampaignRequest(
+      //   Moralis,
+      //   id,
+      //   userAddress,
+      //   isWeb3Enabled,
+      //   isAuthenticating,
+      //   isWeb3EnableLoading,
+      // );
+      // console.log(reqDetails);
 
 
     }
@@ -215,13 +262,71 @@ const Requests = () => {
   return (
     <>
       <Nav />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        outline="none"
+      >
+        <Box sx={style}>
+          <div className="temp" style={{ display: "flex", alignItems: "center" }}>
+            <AddCircleIcon fontSize="large" style={{ marginRight: "15px", color: "#6f49fd" }} />
+            <h2>Create a New Request</h2>
+          </div>
+          <Divider />
+
+          <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+            <h4>Title</h4>
+            <Input
+              id="rquest-title"
+              value={requestTitle}
+              onChange={(e) => setRequestTitle(e.target.value)}
+              startAdornment={<InputAdornment position="start"></InputAdornment>}
+            />
+          </FormControl>
+          <br />
+          <br />
+          <FormControl fullWidth sx={{ m: 1 }} variant="filled">
+            <h4>Description</h4>
+            <Input
+              id="rquest-description"
+              value={requestDescription}
+              multiline
+              rows={3}
+              onChange={(e) => setRequestDescription(e.target.value)}
+              startAdornment={<InputAdornment position="start"></InputAdornment>}
+            />
+          </FormControl>
+          <br />
+          <br />
+          <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+            <h4>Amount</h4>
+            <Input
+              id="standard-adornment-amount"
+              value={requestAmount}
+              type="number"
+              onChange={(e) => setRequestAmount(e.target.value)}
+              startAdornment={<InputAdornment position="start">Eth</InputAdornment>}
+            />
+          </FormControl>
+          <br />
+          <br />
+          <br />
+
+          <StyledButton onClick={handleAddRequest} variant="contained" className={styles.formSubmitButton}>Create</StyledButton>
+        </Box>
+      </Modal>
       <div className={styles.titleArea}>
         <h2 style={{ marginBottom: "5px" }}>Withdrawal Requests</h2>
         <Button
           className={styles.withdrawRequestButton}
           variant="contained"
           // disableElevation=true
-          onClick={handleAddRequest}
+          // onClick={handleAddRequest}
+          onClick={handleOpen}
+
+
         >
           <b>Add Request</b>
         </Button>
