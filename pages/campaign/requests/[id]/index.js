@@ -260,21 +260,24 @@ const Requests = () => {
   const handleAddRequest = async () => {
     // handleOpen();
     if (
-      isAuthenticated &&
-      isInitialized &&
-      isWeb3Enabled &&
       requestDescription &&
       requestAmount > 0 &&
       requestAmount < 50
     ) {
-      const res = await createRequest(id, requestDescription, requestAmount);
-      if (res) {
-        setAlertServerity("success");
-      } else {
+      await Moralis.authenticate();
+      if (isAuthenticated) {
+        const res = await createRequest(id, requestDescription, requestAmount);
+        if (res) {
+          setAlertServerity("success");
+        } else {
+          setAlertServerity("error");
+        }
+      }
+      else {
         setAlertServerity("error");
       }
+
     } else {
-      setAlertServerity("error");
     }
     handleClose();
     setAlert(true);
@@ -430,16 +433,18 @@ const Requests = () => {
               </StyledButton>
             </Box>
           </Modal>
-
           <div className={styles.titleArea}>
             <h2 style={{ marginBottom: "5px" }}>Withdrawal Requests</h2>
-            <Button
-              className={styles.withdrawRequestButton}
-              variant="contained"
-              onClick={handleOpen}
-            >
-              <b>Add Request</b>
-            </Button>
+            {isAuthenticated ?
+              <Button
+                className={styles.withdrawRequestButton}
+                variant="contained"
+                onClick={handleOpen}
+              >
+                <b>Add Request</b>
+              </Button>
+              :
+              null}
           </div>
           <div className="table-wrapper">
             <TableContainer component={Paper}>
