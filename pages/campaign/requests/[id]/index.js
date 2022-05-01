@@ -10,10 +10,13 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import styles from "../../../../styles/Withdrawal.module.css";
 import DoneIcon from "@mui/icons-material/Done";
 import Button from "@mui/material/Button";
-
 import Nav from "../../../../components/Nav";
-
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
+import getCampaignRequest from "../../../../components/getCampaignRequests.server"
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import CampaignArtifact from "../../../../artifacts/contracts/Campaign.sol/Campaign.json";
+import { ethers } from "ethers";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -63,6 +66,8 @@ function createData(
     isFinalized,
   };
 }
+
+
 
 const rows = [
   createData(
@@ -123,9 +128,16 @@ const Requests = () => {
     isAuthenticated,
     isAuthenticating,
     isWeb3EnableLoading,
+    isInitialized
   } = useMoralis();
+  const [userAddress, setUserAddress] = useState(null);
+
+
   const { data, error, fetch, isFetching, isLoading } =
     useWeb3ExecuteFunction();
+
+  const router = useRouter();
+  const { id } = router.query;
 
   function ApproveRequests(id) {
     fetch({
@@ -147,7 +159,8 @@ const Requests = () => {
     console.log(data, error);
   }
 
-  function createRequest(id,des,amount) {
+  function createRequest(id, des, amount) {
+    // console.log("id now us", id);
     fetch({
       onComplete: (a) => console.log(a),
       onError: (a) => console.error(a.toString()),
@@ -168,6 +181,37 @@ const Requests = () => {
     console.log(data, error);
   }
 
+
+  const handleAddRequest = () => {
+    const des = "oiasndfn";
+    const amount = "0.0003";
+    createRequest(id, des, amount);
+  }
+
+  useEffect(async () => {
+
+    if (isAuthenticated) {
+      setUserAddress(user.attributes.accounts[0]);
+      // console.log(user.attributes.accounts[0]);
+    }
+
+    if (isInitialized && id) {
+      // console.log("id ", id);
+      const reqDetails = await getCampaignRequest(
+        Moralis,
+        id,
+        userAddress,
+        isWeb3Enabled,
+        isAuthenticating,
+        isWeb3EnableLoading,
+      );
+      console.log(reqDetails);
+
+
+    }
+
+  }, [isInitialized, id])
+
   return (
     <>
       <Nav />
@@ -176,7 +220,8 @@ const Requests = () => {
         <Button
           className={styles.withdrawRequestButton}
           variant="contained"
-          disableElevation="true"
+          // disableElevation=true
+          onClick={handleAddRequest}
         >
           <b>Add Request</b>
         </Button>
