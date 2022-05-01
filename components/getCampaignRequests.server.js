@@ -34,7 +34,7 @@ export default async (
       address: id,
       function_name: "requests",
       abi: CampaignArtifact.abi,
-      params: {"":""+i},
+      params: { "": "" + i },
     };
     let request = await Moralis.Web3API.native.runContractFunction(readOptions2);
     request = { ...request, index: i };
