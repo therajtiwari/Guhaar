@@ -70,6 +70,14 @@ const Profile = () => {
       setUsername(user.get("username"));
       setAddress(user.attributes.ethAddress);
       console.log("add here",address);
+      let final3 = await getCampaignsDonated(
+        Moralis,
+        address,
+        isWeb3Enabled,
+        isAuthenticating,
+        isWeb3EnableLoading
+        );
+      console.log("final3", final3);
     }
     // console.log(user)
     // console.log(user);
@@ -83,15 +91,15 @@ const Profile = () => {
       isWeb3EnableLoading
     );
 
-    if(address !== undefined && address !== null){
-        let final3 = await getCampaignsDonated(
-        Moralis,
-        address,
-        isWeb3Enabled,
-        isAuthenticating,
-        isWeb3EnableLoading
-        );
-    }
+    // if(address !== undefined && address !== null){
+    //     let final3 = await getCampaignsDonated(
+    //     Moralis,
+    //     address,
+    //     isWeb3Enabled,
+    //     isAuthenticating,
+    //     isWeb3EnableLoading
+    //     );
+    // }
     // console.log("adwdaw", final3);
 
     setCampaigns(final);
