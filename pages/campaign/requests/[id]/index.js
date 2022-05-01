@@ -10,10 +10,40 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import styles from "../../../../styles/Withdrawal.module.css";
 import DoneIcon from "@mui/icons-material/Done";
 import Button from "@mui/material/Button";
-
 import Nav from "../../../../components/Nav";
-
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
+import getCampaignRequest from "../../../../components/getCampaignRequests.server"
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import CampaignArtifact from "../../../../artifacts/contracts/Campaign.sol/Campaign.json";
+import { ethers } from "ethers";
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Input from '@mui/material/Input';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import TextField from '@mui/material/TextField';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import Stack from '@mui/material/Stack';
+
+
+import Divider from "@mui/material/Divider";
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '40%',
+  minWidth: '350px',
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+  borderRadius: 1,
+  outline: 'none',
+}
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -40,7 +70,6 @@ function createData(
   id,
   description,
   amount,
-  address,
   approved,
   totalApprovers,
   approve,
@@ -48,14 +77,14 @@ function createData(
   isApproved,
   isFinalized
 ) {
-  const approveRatio = approved
-    .toString()
-    .concat("/", totalApprovers.toString());
+  const approveRatio = "1/10";
+  // approved
+  //   .toString()
+  //   .concat("/", totalApprovers.toString());
   return {
     id,
     description,
     amount,
-    address,
     approveRatio,
     approve,
     finalize,
@@ -64,58 +93,70 @@ function createData(
   };
 }
 
-const rows = [
-  createData(
-    0,
-    "Request 1",
-    1,
-    "0x1234567890123456789012345678901234567890",
-    1,
-    20,
-    "Approve",
-    "Finalize",
-    true,
-    true
-  ),
-  createData(
-    1,
-    "Request 2",
-    2,
-    "0x1234567890123456789012345678901234567890",
-    11,
-    20,
-    "Approve",
-    "Finalize",
-    true,
-    true
-  ),
-  createData(
-    2,
-    "Request 3",
-    3,
-    "0x1234567890123456789012345678901234567890",
-    15,
-    20,
-    "Approve",
-    "Finalize",
-    true,
-    true
-  ),
-  createData(
-    3,
-    "Request 4",
-    4,
-    "0x1234567890123456789012345678901234567890",
-    6,
-    20,
-    "Approve",
-    "Finalize",
-    false,
-    false
-  ),
-];
 
+
+
+
+// createData(
+//   0,
+//   "Request 1",
+//   1,
+//   "0x1234567890123456789012345678901234567890",
+//   1,
+//   20,
+//   "Approve",
+//   "Finalize",
+//   true,
+//   true
+// ),
+//   createData(
+//     1,
+//     "Request 2",
+//     2,
+//     "0x1234567890123456789012345678901234567890",
+//     11,
+//     20,
+//     "Approve",
+//     "Finalize",
+//     true,
+//     true
+//   ),
+//   createData(
+//     2,
+//     "Request 3",
+//     3,
+//     "0x1234567890123456789012345678901234567890",
+//     15,
+//     20,
+//     "Approve",
+//     "Finalize",
+//     true,
+//     true
+//   ),
+//   createData(
+//     3,
+//     "Request 4",
+//     4,
+//     "0x1234567890123456789012345678901234567890",
+//     6,
+//     20,
+//     "Approve",
+//     "Finalize",
+//     false,
+//     false
+//   ),
+
+
+
+const StyledButton = styled(Button)`
+    &:hover {
+      background-color: #4acd8d;
+    }
+`;
 const Requests = () => {
+
+
+
   const {
     user,
     Moralis,
@@ -123,9 +164,40 @@ const Requests = () => {
     isAuthenticated,
     isAuthenticating,
     isWeb3EnableLoading,
+    isInitialized
   } = useMoralis();
+  const [userAddress, setUserAddress] = useState(null);
+
+
+
+
+  const [rows, setRows] = useState([]);
+
+
+
+  //MODAL
+
+  const [requestTitle, setRequestTitle] = useState("");
+  const [requestDescription, setRequestDescription] = useState("");
+  const [requestAmount, setRequestAmount] = useState("");
+  const [open, setOpen] = React.useState(false);
+  const [alert, setAlert] = useState(false);
+  const [alertServerity, setAlertServerity] = useState("success");
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setRequestAmount("");
+    setRequestDescription("");
+    setRequestTitle("");
+    setOpen(false);
+  }
+
+
   const { data, error, fetch, isFetching, isLoading } =
     useWeb3ExecuteFunction();
+
+  const router = useRouter();
+  const { id } = router.query;
 
   function ApproveRequests(id) {
     fetch({
@@ -147,11 +219,24 @@ const Requests = () => {
     console.log(data, error);
   }
 
-  function createRequest(id,des,amount) {
-    fetch({
-      onComplete: (a) => console.log(a),
-      onError: (a) => console.error(a.toString()),
-      onSuccess: (a) => console.log(JSON.stringify(a)),
+  const createRequest = async (id, des, amount) => {
+    let success = false;
+    await fetch({
+      onComplete: () => {
+        console.log("done");
+        success = true;
+      },
+      onError: (a) => {
+        console.log("eorrorrrrrrr")
+        console.error(a.toString())
+        // return false;
+        success = false;
+      },
+      onSuccess: (a) => {
+        console.log("sashiiiiiiiiiii");
+        console.log(JSON.stringify(a));
+        success = true;
+      },
       params: {
         contractAddress: id,
         functionName: "createRequest",
@@ -162,21 +247,138 @@ const Requests = () => {
         },
       },
     })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        success = true;
+        console.log("its doneeeeeeeeeeeeeeee", res);
+      })
+      .catch((err) => {
+        success = false;
+      });
 
-    console.log(data, error);
+
+    return success;
+
+    // console.log(data, error);
   }
+
+
+  const handleAddRequest = async () => {
+    // handleOpen();
+    if (isAuthenticated && isInitialized && isWeb3Enabled && requestDescription && requestAmount > 0 && requestAmount < 50) {
+      const res = await createRequest(id, requestDescription, requestAmount);
+      // console.log("response isssssssss", res);
+      if (res) {
+        setAlertServerity("success");
+      }
+      else {
+        setAlertServerity("error");
+
+      }
+
+    }
+    else {
+      setAlertServerity("error");
+    }
+    handleClose();
+    setAlert(true);
+    //  set timeout for 5sec
+    setTimeout(() => {
+      setAlert(false);
+    }, 5000);
+
+  }
+
+  useEffect(async () => {
+
+    if (isAuthenticated) {
+      setUserAddress(user.attributes.accounts[0]);
+    }
+
+    if (isInitialized && id) {
+      console.log("id ", id);
+      const reqDetails = await getCampaignRequest(
+        Moralis,
+        id,
+        userAddress,
+        isWeb3Enabled,
+        isAuthenticating,
+        isWeb3EnableLoading,
+      );
+      console.log("doneeee")
+      console.log(reqDetails);
+      const tempRows = [];
+      reqDetails.forEach(detail => {
+        const currData = (createData(
+          detail.index + 1,
+          detail.description,
+          detail.value / (10 ** 18),
+          detail.approvalCount,
+          true,
+          true,
+          true,
+          detail.complete
+        ));
+        // setRows([...rows, currData]);
+        // console.log(rows);
+        tempRows.push(currData);
+      });
+      setRows(tempRows);
+    }
+
+  }, [isInitialized, id])
 
   return (
     <>
       <Nav />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        outline="none"
+      >
+        <Box sx={style}>
+          <div className="temp" style={{ display: "flex", alignItems: "center" }}>
+            <AddCircleIcon fontSize="large" style={{ marginRight: "15px", color: "#6f49fd" }} />
+            <h2>Create a New Request</h2>
+          </div>
+          <Divider />
+          <FormControl fullWidth sx={{ m: 1 }} variant="filled">
+            <h4>Description</h4>
+            <Input
+              id="rquest-description"
+              value={requestDescription}
+              multiline
+              rows={3}
+              onChange={(e) => setRequestDescription(e.target.value)}
+              startAdornment={<InputAdornment position="start"></InputAdornment>}
+            />
+          </FormControl>
+          <br />
+          <br />
+          <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+            <h4>Amount</h4>
+            <Input
+              id="standard-adornment-amount"
+              value={requestAmount}
+              type="number"
+              onChange={(e) => setRequestAmount(e.target.value)}
+              startAdornment={<InputAdornment position="start">Eth</InputAdornment>}
+            />
+          </FormControl>
+          <br />
+          <br />
+
+          <StyledButton onClick={handleAddRequest} variant="contained" className={styles.formSubmitButton}>Create</StyledButton>
+        </Box>
+      </Modal>
+
       <div className={styles.titleArea}>
         <h2 style={{ marginBottom: "5px" }}>Withdrawal Requests</h2>
         <Button
           className={styles.withdrawRequestButton}
           variant="contained"
-          disableElevation="true"
+          onClick={handleOpen}
         >
           <b>Add Request</b>
         </Button>
@@ -194,9 +396,6 @@ const Requests = () => {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <b>Amount&nbsp;(Eth)</b>
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  <b>Recipient Wallet Address</b>
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <b>Approval Count</b>
@@ -224,7 +423,6 @@ const Requests = () => {
                     {row.description}
                   </StyledTableCell>
                   <StyledTableCell align="right">{row.amount}</StyledTableCell>
-                  <StyledTableCell align="right">{row.address}</StyledTableCell>
                   <StyledTableCell align="right">
                     {row.approveRatio}
                   </StyledTableCell>
@@ -258,6 +456,15 @@ const Requests = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        <div className="alertBox" style={{ position: "absolute", bottom: "40px", display: 'flex', width: "90%", margin: "auto", justifyContent: "center", zIndex: "1000" }}>
+          {alert ?
+            alertServerity === "success" ? (<Alert variant="filled" severity="success" style={{ backgroundColor: "#4acd8d !important" }}>
+              Success
+            </Alert>) : (<Alert variant="filled" severity="error" style={{ backgroundColor: "#eb5757 !important" }} >
+              Something went wrong. Please try again.
+            </Alert>)
+            : null}
+        </div>
       </div>
     </>
   );

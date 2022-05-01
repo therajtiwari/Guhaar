@@ -47,7 +47,7 @@ export default function Home() {
   useEffect(async () => {
     if (isAuthenticated) {
       var account = user.attributes.accounts;
-      console.log("account is", account);
+      // console.log("account is", account);
       setCurrUser(account);
       setWalletID(user.attributes.ethAddress);
       // console.log(user)
@@ -55,18 +55,19 @@ export default function Home() {
 
     setLoading(true);
 
-    let final = await getCampaigns(
+    const final = await getCampaigns(
       Moralis,
       isWeb3Enabled,
       isAuthenticating,
       isWeb3EnableLoading
     );
+    console.log(final);
     setLoading(false);
     setCampaigns(final);
   }, []);
 
   useEffect(() => {
-    if (searchQuery.length > 3) {
+    if (searchQuery.length > 2) {
       campaigns.map((campaign) => {
         if (
           campaign[2].toLowerCase().includes(searchQuery.toLowerCase()) &&

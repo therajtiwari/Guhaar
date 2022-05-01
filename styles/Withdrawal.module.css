@@ -14,8 +14,8 @@
 }
 .withdrawRequestButton {
   /* background-color: #1dc071; */
-  color: #8c6dfd;
-  background-color: #e2dbff !important;
+  background-color: #8c6dfd !important;
+  /* background-color: #e2dbff !important; */
   text-transform: none;
 }
 
@@ -26,5 +26,17 @@
 
 .approvalButton :hover {
   color: #1dc071;
-  background-color: red !important;
+}
+
+.formSubmitButton {
+  /* background-color: #1dc071; */
+  background-color: #6f49fd;
+  color: white;
+  font-weight: bold;
+  width: 100%;
+  min-height: 50px;
+}
+.formSubmitButton :hover {
+  color: #1dc071 !important;
+  background-color: #6f49fd !important;
 }

@@ -61,7 +61,7 @@ export default function HomeCard({ campaign }) {
           <div className={styles.addInfo}>
             <div className="moreInfo" style={{ marginRight: "auto" }}>
               <p
-                style={{ marginLeft: "80px", cursor: "pointer" }}
+                style={{ cursor: "pointer" }}
                 onClick={handleClick}
               >
                 {" "}

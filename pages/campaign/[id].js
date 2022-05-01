@@ -61,13 +61,15 @@ export default function Home(props) {
         // setFlag(true);
         setDetails(details);
       }
+      
     }
   }, [id]);
 
   const { data, error, fetch, isFetching, isLoading } =
     useWeb3ExecuteFunction();
 
-  function handlePayment() {
+  const handlePayment = async () =>{
+    await Moralis.authenticate()
     fetch({
       onComplete: (a) => console.log(a),
       onError: (a) => console.error(a.toString()),
@@ -86,7 +88,6 @@ export default function Home(props) {
       .catch((err) => console.log(err));
 
     console.log(data, error);
-    // functionArgs: [ethers.utils.parseEther(min.toString()), title, description, imgURL, ethers.utils.parseEther(goal.toString()), mcategory, tdate],
   }
 
   return details != null ? (

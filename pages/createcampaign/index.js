@@ -109,7 +109,6 @@ const create = () => {
       var account = user.attributes.accounts;
     }
     console.log(account);
-    // enableWeb3();
   }, []);
 
   const { data, error, fetch, isFetching, isLoading } =
@@ -128,7 +127,7 @@ const create = () => {
     function pp(a) {
       console.log(JSON.stringify(a));
     }
-
+    await Moralis.authenticate()
     fetch({
       onComplete: pp,
       onError: (a) => console.error(a.toString()),
