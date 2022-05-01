@@ -310,7 +310,7 @@ const Requests = () => {
   };
 
   const getAllCampaignRequests = async () => {
-    const { datalist, canapprove, numberodapprovers } = await getCampaignRequest(
+    const { datalist, canapprove, numberofapprovers } = await getCampaignRequest(
       Moralis,
       id,
       userAddress || "0x0000000000000000000000000000000000000000",
@@ -329,7 +329,7 @@ const Requests = () => {
           detail.description,
           detail.value / 10 ** 18,
           detail.approvalCount,
-          numberodapprovers,
+          numberofapprovers,
           true,
           detail.complete
         );

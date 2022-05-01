@@ -54,16 +54,20 @@ export default async (
     let request = await Moralis.Web3API.native.runContractFunction(
       readOptions2
     );
-    // const readOptions3 = {
-    //   chain: "rinkeby",
-    //   address: id,
-    //   function_name: "requests",
-    //   abi: CampaignArtifact.abi,
-    //   params: { "": "" + i },
-    // };
-    // requestapproved = await Moralis.Web3API.native.runContractFunction(
-    //   readOptions3
-    // );
+    const readOptions3 = {
+      chain: "rinkeby",
+      address: id,
+      function_name: "getRequestApproval",
+      abi: CampaignArtifact.abi,
+      params: {
+        "index": i,
+        "user": userAddress
+      },
+    };
+    requestapproved = await Moralis.Web3API.native.runContractFunction(
+      readOptions3
+    );
+    console.log("requestapproved: ", requestapproved);
     request = { ...request, index: i };
     datalist.push(request);
   }
@@ -73,10 +77,10 @@ export default async (
     function_name: "approversCount",
     abi: CampaignArtifact.abi
   };
-  var numberodapprovers = await Moralis.Web3API.native.runContractFunction(readOptions4);
+  var numberofapprovers = await Moralis.Web3API.native.runContractFunction(readOptions4);
 
   // return datalist, canapprove
-  return {datalist, canapprove, numberodapprovers}
+  return {datalist, canapprove, numberofapprovers}
   // }else{
   //   return false
   // }
