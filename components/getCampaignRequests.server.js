@@ -64,7 +64,7 @@ export default async (
         "user": userAddress,
       },
     };
-    requestapproved = await Moralis.Web3API.native.runContractFunction(
+    const requestapproved = await Moralis.Web3API.native.runContractFunction(
       readOptions3
     );
     console.log("requestapproved: ", requestapproved);
