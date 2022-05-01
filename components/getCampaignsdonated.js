@@ -21,6 +21,7 @@ export default async (
   isAuthenticating,
   isWeb3EnableLoading
 ) => {
+  if (useraddress!==undefined){
   const readOptions = {
     chain: "rinkeby",
     address: FactoryAddress,
@@ -47,9 +48,7 @@ export default async (
       address: add,
       function_name: "contributersMap",
       abi: CampaignArtifact.abi,
-      params: {
-        "": useraddress,
-      },
+      params: {"":useraddress},
     };
     const contributed = await Moralis.Web3API.native.runContractFunction(
       readOptions2
@@ -67,7 +66,8 @@ export default async (
     }
   }
   return datalist;
-  // }else{
-  //   return []
-  // }
+  
+}else{
+    return []
+  }
 };
