@@ -53,7 +53,7 @@ const Profile = () => {
   const getMyCampaigns = (campaigns) => {
     const campaign = [];
     for (let i = 0; i < campaigns.length; i++) {
-        console.log(campaigns[i][10], "And" , address);
+        // console.log(campaigns[i][10], "And" , address);
         if (campaigns[i][10].toLowerCase() == address) {
             // console.log("This is the campaign", campaigns[i]);
             campaign.push(campaigns[i]);
@@ -63,13 +63,13 @@ const Profile = () => {
     return campaign;
   };
   useEffect(async () => {
-    if(isAuthenticated) {
+    if(isAuthenticated && user) {
 
     if (isAuthenticated) {
       var account = user.attributes.accounts;
       setUsername(user.get("username"));
       setAddress(user.attributes.ethAddress);
-      console.log("add here",address);
+      // console.log("add here",address);
       let final3 = await getCampaignsDonated(
         Moralis,
         address,
@@ -77,9 +77,10 @@ const Profile = () => {
         isAuthenticating,
         isWeb3EnableLoading
         );
-      console.log("final3", final3);
+      setDonatedCampaigns(final3);
+      console.log("donated campaign", final3);
     }
-    // console.log(user)
+
     // console.log(user);
     if (username !== undefined) {
       setComponent(<ProfileCard username={username} address={address} />);
@@ -91,26 +92,12 @@ const Profile = () => {
       isWeb3EnableLoading
     );
 
-    // if(address !== undefined && address !== null){
-    //     let final3 = await getCampaignsDonated(
-    //     Moralis,
-    //     address,
-    //     isWeb3Enabled,
-    //     isAuthenticating,
-    //     isWeb3EnableLoading
-    //     );
-    // }
-    // console.log("adwdaw", final3);
-
     setCampaigns(final);
-    // setDonatedCampaigns(final2);
-    // console.log(final);
-    // console.log("donated",final2);
 
     let final2 = getMyCampaigns(final);
     setCreatedCampaigns(final2);
 
-  }}, [isAuthenticated]);
+  }}, [isAuthenticated,address]);
 
   return (
     <>
@@ -120,7 +107,7 @@ const Profile = () => {
       <CampaignList title="Campaigns" campaigns={createdCampaigns} />
       <CampaignList
         title="Supported Campaigns"
-        campaigns={campaigns.slice(campaigns.length / 2, campaigns.length)}
+        campaigns={donatedCampaigns}
       />
     </>
   );
