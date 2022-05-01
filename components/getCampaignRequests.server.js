@@ -29,16 +29,14 @@ export default async (
   const count = await Moralis.Web3API.native.runContractFunction(readOptions);
   console.log("count is", count);
   for (let i = 0; i < count; i++) {
-    const readOptions = {
+    const readOptions2 = {
       chain: "rinkeby",
       address: id,
       function_name: "requests",
       abi: CampaignArtifact.abi,
-      params: {
-        "": i,
-      },
+      params: {"":""+i},
     };
-    let request = await Moralis.Web3API.native.runContractFunction(readOptions);
+    let request = await Moralis.Web3API.native.runContractFunction(readOptions2);
     request = { ...request, index: i };
     datalist.push(request);
   }
