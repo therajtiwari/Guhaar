@@ -106,7 +106,7 @@ const create = () => {
       var account = user.attributes.accounts;
     }
     console.log(account);
-    enableWeb3();
+    // enableWeb3();
   }, []);
 
   const { data, error, fetch, isFetching, isLoading } =

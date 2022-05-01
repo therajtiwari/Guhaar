@@ -22,6 +22,14 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useMoralis } from "react-moralis";
 import Router from "next/router";
+import Button from "@mui/material/Button";
+
+
+
+const redirect=()=>{
+  Router.push('/createcampaign');
+}
+
 
 const appBarStyle = {
   bgcolor: "#fcfcfd",
@@ -114,7 +122,10 @@ export default function Nav(props) {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>{isAuthenticated ? <SignOut /> : <SignIn />}</MenuItem>
-      <MenuItem>
+      <MenuItem onClick={redirect}><Button variant="contained">
+              Create Campaign
+            </Button></MenuItem>
+      {/* <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="error">
             <MailIcon />
@@ -133,7 +144,7 @@ export default function Nav(props) {
           </Badge>
         </IconButton>
         <p>Notifications</p>
-      </MenuItem>
+      </MenuItem> */}
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -169,7 +180,11 @@ export default function Nav(props) {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {isAuthenticated ? <SignOut /> : <SignIn />}
-            <IconButton
+            <span style={{margin: '0px 5px'}}></span>
+            <Button variant="contained" onClick={redirect}>
+              Create Campaign
+            </Button>
+            {/* <IconButton
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
@@ -177,8 +192,8 @@ export default function Nav(props) {
               <Badge badgeContent={1} color="error">
                 <MailIcon />
               </Badge>
-            </IconButton>
-            <IconButton
+            </IconButton> */}
+            {/* <IconButton
               size="large"
               aria-label="show 1 new notifications"
               color="inherit"
@@ -186,7 +201,7 @@ export default function Nav(props) {
               <Badge badgeContent={1} color="error">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
+            </IconButton> */}
             <IconButton
               size="large"
               edge="end"
