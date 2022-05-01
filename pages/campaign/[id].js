@@ -153,7 +153,7 @@ export default function Home(props) {
                 <Typography className={styles.infoText} fontWeight={"bold"}>
                   Wallet Address of Campaign Creator
                 </Typography>
-                <Typography className={styles.infoText}>{id}</Typography>
+                <Typography className={styles.infoText}>{details[10]}</Typography>
               </Grid>
               <Divider mt={5} />
 
