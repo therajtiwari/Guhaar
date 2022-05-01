@@ -16,6 +16,8 @@ import CampaignList from "../../components/profile/camapaignList";
 
 import OProfileCard from "../../components/profile/oprofileCard";
 import getCampaigns from "../../components/getCampaigns.server";
+import getCampaignsDonated from "../../components/getCampaignsdonated";
+import getCreatedCampaigns from "../../components/getownerCampaigns";
 
 const Profile = () => {
   const {
@@ -28,10 +30,14 @@ const Profile = () => {
   } = useMoralis();
   const router = useRouter();
   const id = router.query.id;
-  console.log(id);
+  // const address = id.toString().toLowerCase();
+  console.log("id here",id);
   const [campaigns, setCampaigns] = useState([]);
   const [username, setUsername] = useState();
-  const [address, setAddress] = useState();
+  // const [address, setAddress] = useState("0x6a3f8927E7fA9d8C103B9344aAE8cAE044f73007");
+  const [donatedCampaigns, setDonatedCampaigns] = useState([]);
+  const [createdCampaigns, setCreatedCampaigns] = useState([]);
+
   const { fetch, data, error, isLoading } = useMoralisQuery(
     "_User",
     (query) => query.equalTo("ethAddress", id),
@@ -46,7 +52,7 @@ const Profile = () => {
         const Monster = Moralis.Object.extend("_User");
         const query = new Moralis.Query(Monster);
         query.equalTo("ethAddress", id.toLowerCase());
-        query.find().then(function (results) {
+        query.find({ useMasterKey: true }).then(function (results) {
           console.log("Res", results);
           console.log("username", results[0].attributes.username);
           console.log("eth", results[0].attributes.ethAddress);
@@ -79,7 +85,7 @@ const Profile = () => {
       // setAddress(user.attributes.ethAddress);
     }
 
-    await getUdata();
+    // await getUdata();
 
     console.log(user);
     // if(username !== undefined){
@@ -92,7 +98,7 @@ const Profile = () => {
     //   // setAddress(res.attributes.ethAddress);
     // });
 
-    await getUdata();
+    // await getUdata();
 
     console.log(user);
     // if (username !== undefined) {
@@ -107,17 +113,39 @@ const Profile = () => {
     );
     setCampaigns(final);
     // console.log(final)
-  }, []);
+
+    // let final2 = getMyCampaigns(final);
+    // setCreatedCampaigns(final2);
+    // console.log("created:",final2);
+
+    let final2 = await getCreatedCampaigns(
+      Moralis,
+      router.query.id,
+      isWeb3Enabled,
+      isAuthenticating,
+      isWeb3EnableLoading
+    );
+    setCreatedCampaigns(final2);
+    console.log("created",final2);
+
+    let final3 = await getCampaignsDonated(
+      Moralis,
+      router.query.id,
+      isWeb3Enabled,
+      isAuthenticating,
+      isWeb3EnableLoading
+    );
+    setDonatedCampaigns(final3);
+    console.log("donated",final3);
+  }, [router.query.id]);
+
 
   return (
     <>
       <Nav isAuthenticated={isAuthenticated} />
-      {username && <OProfileCard username={username} address={address} />}
-      <CampaignList title="Campaigns" campaigns={getMyCampaigns(campaigns)} />
-      <CampaignList
-        title="Supported Campaigns"
-        campaigns={campaigns.slice(campaigns.length / 2, campaigns.length)}
-      />
+      {router.query.id && <OProfileCard address={router.query.id} />}
+      <CampaignList title="Campaigns" campaigns={createdCampaigns} />
+      <CampaignList title="Supported Campaigns" campaigns={donatedCampaigns}/>
     </>
   );
 };

@@ -15,6 +15,7 @@ import ProfileCard from "../../components/profile/profileCard";
 import CampaignList from "../../components/profile/camapaignList";
 import getCampaigns from "../../components/getCampaigns.server";
 import getCampaignsDonated from "../../components/getCampaignsdonated";
+import Loading from "../../components/Loading";
 
 const Profile = () => {
   const {
@@ -105,6 +106,10 @@ const Profile = () => {
       {/* {component} */}
       <CampaignList title="Campaigns" campaigns={createdCampaigns} />
       <CampaignList title="Supported Campaigns" campaigns={donatedCampaigns} />
+      {/* {username && (address !== undefined) && <><ProfileCard username={username} address={address} /><CampaignList title="Campaigns" campaigns={createdCampaigns} /><CampaignList
+        title="Supported Campaigns"
+        campaigns={donatedCampaigns} /></>}
+      {(address === undefined) && <Loading />} */}
     </>
   );
 };

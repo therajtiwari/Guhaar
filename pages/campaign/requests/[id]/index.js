@@ -75,7 +75,7 @@ function createData(
   isApproved,
   isFinalizedByAll
 ) {
-  const approveRatio = "1/10";
+  const approveRatio = approved.toString()+'/'+totalApprovers.toString();
   // approved
   //   .toString()
   //   .concat("/", totalApprovers.toString());
@@ -313,7 +313,7 @@ const Requests = () => {
   };
 
   const getAllCampaignRequests = async () => {
-    const { datalist, canapprove } = await getCampaignRequest(
+    const { datalist, canapprove, numberodapprovers } = await getCampaignRequest(
       Moralis,
       id,
       userAddress || "0x0000000000000000000000000000000000000000",
@@ -332,7 +332,7 @@ const Requests = () => {
           detail.description,
           detail.value / 10 ** 18,
           detail.approvalCount,
-          10,
+          numberodapprovers,
           true,
           detail.complete
         );
