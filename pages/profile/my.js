@@ -14,7 +14,7 @@ import {
 import ProfileCard from "../../components/profile/profileCard";
 import CampaignList from "../../components/profile/camapaignList";
 import getCampaigns from "../../components/getCampaigns.server";
-// import getCampaignsDonated from "../../components/getCampaignsdonated";
+import getCampaignsDonated from "../../components/getCampaignsdonated";
 
 const Profile = () => {
   const {
@@ -52,12 +52,13 @@ const Profile = () => {
   const getMyCampaigns = (campaigns) => {
     const campaign = [];
     for (let i = 0; i < campaigns.length; i++) {
-        // console.log(campaigns[i][10], "And" , address);
-        if (campaigns[i][10] ==+ address.toUpperCase()) {
+        console.log(campaigns[i][10], "And" , address);
+        if (campaigns[i][10].toLowerCase() == address) {
             console.log("This is the campaign", campaigns[i]);
             campaign.push(campaigns[i]);
         }
     }
+
     return campaign;
   };
 
@@ -78,18 +79,19 @@ const Profile = () => {
       isAuthenticating,
       isWeb3EnableLoading
     );
-    setCampaigns(final);
-    console.log(final);
 
-    // let final2 = await getCampaignsDonated(
-    //     Moralis,
-    //     isWeb3Enabled,
-    //     isAuthenticating,
-    //     isWeb3EnableLoading
-    // );
-    
+    let final3 = await getCampaignsDonated(
+        Moralis,
+        address,
+        isWeb3Enabled,
+        isAuthenticating,
+        isWeb3EnableLoading
+    );
+    // console.log("adwdaw", final3);
+
+    setCampaigns(final);
     // setDonatedCampaigns(final2);
-    
+    console.log(final);
     // console.log("donated",final2);
 
     let final2 = getMyCampaigns(final);
