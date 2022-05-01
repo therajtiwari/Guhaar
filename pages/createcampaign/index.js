@@ -29,6 +29,9 @@ import FactoryArtifact from "../../artifacts/contracts/Campaign.sol/CampaignFact
 
 import { ethers } from "ethers";
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
+import swal from 'sweetalert';
+import Router from "next/router";
+
 
 // import { cloudinary } from "../api/utils/cloudinary";
 // import cloudinary from 'cloudinary';
@@ -128,7 +131,15 @@ const create = () => {
     fetch({
       onComplete: pp,
       onError: (a) => console.error(a.toString()),
-      onSuccess: (a) => console.log(JSON.stringify(a)),
+      onSuccess: (a) => swal({
+        title: "You Campaign is Successfully Created",
+        text: "It will take some time to reflect into system. Check your campaign after some time into system",
+        icon: "success",
+        button: {
+          text: "Ok",
+          onclick: Router.push('/'),
+        },
+      }),
       params: {
         contractAddress: process.env.FACTORY_ADDRESS,
         functionName: "createCampaign",
