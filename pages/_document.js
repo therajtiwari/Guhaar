@@ -13,7 +13,10 @@ export default function Document() {
           crossorigin="anonymous"
           referrerPolicy="no-referrer"
         />
-        <meta name="keywords" content="Guhaar guhaar crowdfunding blockchain blockchain-crowdfunding" />
+        <meta
+          name="keywords"
+          content="Guhaar guhaar crowdfunding blockchain blockchain-crowdfunding"
+        />
       </Head>
       <body>
         <Main />

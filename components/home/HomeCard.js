@@ -60,10 +60,7 @@ export default function HomeCard({ campaign }) {
           </div>
           <div className={styles.addInfo}>
             <div className="moreInfo" style={{ marginRight: "auto" }}>
-              <p
-                style={{ cursor: "pointer" }}
-                onClick={handleClick}
-              >
+              <p style={{ cursor: "pointer" }} onClick={handleClick}>
                 {" "}
                 <b>More info</b>
                 <ArrowForwardIosIcon

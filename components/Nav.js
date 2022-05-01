@@ -24,12 +24,9 @@ import { useMoralis } from "react-moralis";
 import Router from "next/router";
 import Button from "@mui/material/Button";
 
-
-
-const redirect=()=>{
-  Router.push('/createcampaign');
-}
-
+const redirect = () => {
+  Router.push("/createcampaign");
+};
 
 const appBarStyle = {
   bgcolor: "#fcfcfd",
@@ -122,9 +119,9 @@ export default function Nav(props) {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>{isAuthenticated ? <SignOut /> : <SignIn />}</MenuItem>
-      <MenuItem onClick={redirect}><Button variant="contained">
-              Create Campaign
-            </Button></MenuItem>
+      <MenuItem onClick={redirect}>
+        <Button variant="contained">Create Campaign</Button>
+      </MenuItem>
       {/* <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="error">
@@ -180,7 +177,7 @@ export default function Nav(props) {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {isAuthenticated ? <SignOut /> : <SignIn />}
-            <span style={{margin: '0px 5px'}}></span>
+            <span style={{ margin: "0px 5px" }}></span>
             <Button variant="contained" onClick={redirect}>
               Create Campaign
             </Button>
