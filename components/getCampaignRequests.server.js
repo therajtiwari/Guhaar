@@ -61,7 +61,7 @@ export default async (
       abi: CampaignArtifact.abi,
       params: {
         "index": i + "",
-        "user": userAddress
+        "user": userAddress,
       },
     };
     requestapproved = await Moralis.Web3API.native.runContractFunction(
