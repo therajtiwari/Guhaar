@@ -68,7 +68,7 @@ export default async (
       readOptions3
     );
     console.log("requestapproved: ", requestapproved);
-    request = { ...request, index: i };
+    request = { ...request, index: i, currApproved: requestapproved };
     datalist.push(request);
   }
   const readOptions4 = {
