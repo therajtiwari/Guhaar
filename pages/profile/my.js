@@ -14,6 +14,7 @@ import {
 import ProfileCard from "../../components/profile/profileCard";
 import CampaignList from "../../components/profile/camapaignList";
 import getCampaigns from "../../components/getCampaigns.server";
+// import getCampaignsDonated from "../../components/getCampaignsdonated";
 
 const Profile = () => {
   const {
@@ -29,6 +30,7 @@ const Profile = () => {
   const [username, setUsername] = useState();
   const [address, setAddress] = useState();
   const [component, setComponent] = useState(<></>);
+  const [donatedCampaigns, setDonatedCampaigns] = useState([]);
 
   async function _getCampaigns(contract) {
     let list = await contract.functions.getDeployedCampaigns();
@@ -50,9 +52,11 @@ const Profile = () => {
   const getMyCampaigns = (campaigns) => {
     const campaign = [];
     for (let i = 0; i < campaigns.length; i++) {
-      if (campaigns[i][10] === address) {
-        campaign.push(campaigns[i]);
-      }
+        // console.log(campaigns[i][10], "And" , address);
+        if (campaigns[i][10] ==+ address.toUpperCase()) {
+            console.log("This is the campaign", campaigns[i]);
+            campaign.push(campaigns[i]);
+        }
     }
     return campaign;
   };
@@ -76,6 +80,21 @@ const Profile = () => {
     );
     setCampaigns(final);
     console.log(final);
+
+    // let final2 = await getCampaignsDonated(
+    //     Moralis,
+    //     isWeb3Enabled,
+    //     isAuthenticating,
+    //     isWeb3EnableLoading
+    // );
+    
+    // setDonatedCampaigns(final2);
+    
+    // console.log("donated",final2);
+
+    let final2 = getMyCampaigns(final);
+    setDonatedCampaigns(final2);
+
   }, [isAuthenticated]);
 
   return (
@@ -83,7 +102,7 @@ const Profile = () => {
       <Nav />
       {username && <ProfileCard username={username} address={address} />}
       {/* {component} */}
-      <CampaignList title="Campaigns" campaigns={getMyCampaigns(campaigns)} />
+      <CampaignList title="Campaigns" campaigns={donatedCampaigns} />
       <CampaignList
         title="Supported Campaigns"
         campaigns={campaigns.slice(campaigns.length / 2, campaigns.length)}
