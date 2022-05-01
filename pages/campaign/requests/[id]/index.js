@@ -13,6 +13,8 @@ import Button from "@mui/material/Button";
 
 import Nav from "../../../../components/Nav";
 
+import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "#6f49fd",
@@ -114,6 +116,58 @@ const rows = [
 ];
 
 const Requests = () => {
+  const {
+    user,
+    Moralis,
+    isWeb3Enabled,
+    isAuthenticated,
+    isAuthenticating,
+    isWeb3EnableLoading,
+  } = useMoralis();
+  const { data, error, fetch, isFetching, isLoading } =
+    useWeb3ExecuteFunction();
+
+  function ApproveRequests(id) {
+    fetch({
+      onComplete: (a) => console.log(a),
+      onError: (a) => console.error(a.toString()),
+      onSuccess: (a) => console.log(JSON.stringify(a)),
+      params: {
+        contractAddress: id,
+        functionName: "approveRequest",
+        abi: CampaignArtifact.abi,
+        params: {
+          index: 0, // index fix
+        },
+      },
+    })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+
+    console.log(data, error);
+  }
+
+  function createRequest(id,des,amount) {
+    fetch({
+      onComplete: (a) => console.log(a),
+      onError: (a) => console.error(a.toString()),
+      onSuccess: (a) => console.log(JSON.stringify(a)),
+      params: {
+        contractAddress: id,
+        functionName: "createRequest",
+        abi: CampaignArtifact.abi,
+        params: {
+          description: des, // add actual description
+          value: ethers.utils.parseEther(amount.toString())
+        },
+      },
+    })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+
+    console.log(data, error);
+  }
+
   return (
     <>
       <Nav />
