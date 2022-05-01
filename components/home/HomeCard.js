@@ -11,8 +11,8 @@ export default function HomeCard({ campaign }) {
   // console.log(campaign[1].toString())
   const title = campaign[2];
   const description =
-    campaign[3].length > 100
-      ? campaign[3].substring(0, 100) + "..."
+    campaign[3].length > 20
+      ? campaign[3].substring(0, 20) + "..."
       : campaign[3];
   const imgURL = campaign[4];
   const target = ethers.utils.formatEther(campaign[5].toString());
@@ -59,11 +59,6 @@ export default function HomeCard({ campaign }) {
             </div>
           </div>
           <div className={styles.addInfo}>
-            <div className="campainger" style={{ marginRight: "auto" }}>
-              <p style={{ position: "relative", top: "6px" }}>
-                By <b>{creator}</b>
-              </p>
-            </div>
             <div className="moreInfo" style={{ marginRight: "auto" }}>
               <p
                 style={{ marginLeft: "80px", cursor: "pointer" }}
