@@ -14,9 +14,11 @@
 }
 .withdrawRequestButton {
   /* background-color: #1dc071; */
-  background-color: #8c6dfd !important;
+  background-color: #6f49fd !important;
   /* background-color: #e2dbff !important; */
   text-transform: none;
+  padding: 10px 15px;
+  margin-bottom: 1rem;
 }
 
 .approvalButton {
@@ -39,4 +41,9 @@
 .formSubmitButton :hover {
   color: #1dc071 !important;
   background-color: #6f49fd !important;
+}
+
+.remaining {
+  color: grey;
+  margin-right: 1rem;
 }
