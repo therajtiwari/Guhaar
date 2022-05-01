@@ -7,7 +7,9 @@ import {
   Grid,
   CardContent,
   TextField,
+  Button,
 } from "@mui/material";
+import Link from "next/link";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import InputLabel from "@mui/material/InputLabel";
@@ -104,6 +106,16 @@ const OProfileCard = ({ address }) => {
               />
             </Grid>
             {/* <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel> */}
+            <Grid xs={12} sm={12} item>
+              <Link href={`https://rinkeby.etherscan.io/address/${address}`}>
+                <Button variant="outlined" fullWidth style={{
+                  backgroundColor: "#00bcd4",
+                  color: "white",
+                }}>
+                  View on Etherscans
+                </Button>
+              </Link>
+            </Grid>
           </Grid>
         </div>
       </div>

@@ -7,7 +7,9 @@ import {
   Grid,
   CardContent,
   TextField,
+  Button,
 } from "@mui/material";
+import Link from "next/link";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import InputLabel from "@mui/material/InputLabel";
@@ -73,6 +75,8 @@ const ProfileCard = ({ username, address }) => {
                 label="Username"
                 variant="outlined"
                 value={uname}
+                // width="500px"
+                // maxWidth="500px"
                 fullWidth
                 inputMode="none"
                 disabled={true}
@@ -117,6 +121,16 @@ const ProfileCard = ({ username, address }) => {
               />
             </Grid>
             {/* <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel> */}
+            <Grid xs={12} sm={12} item>
+              <Link href={`https://rinkeby.etherscan.io/address/${address}`}>
+                <Button variant="outlined" fullWidth style={{
+                  backgroundColor: "#00bcd4",
+                  color: "white",
+                }}>
+                  View on Etherscans
+                </Button>
+              </Link>
+            </Grid>    
           </Grid>
         </div>
       </div>
