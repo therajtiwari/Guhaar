@@ -35,7 +35,7 @@ const CampaignCard = ({ campaign }) => {
   // const daysLeft = "2"
 
   const id = campaign["id"];
-  const raised = ethers.utils.formatEther(campaign[0].toString());
+  const raised = ethers.utils.formatEther(campaign[8].toString());
   const backers = campaign[1].toString();
   const name = campaign[2];
   const description = campaign[3];
