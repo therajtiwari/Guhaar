@@ -29,6 +29,10 @@ const redirect = () => {
   Router.push("/createcampaign");
 };
 
+const redirectprofile= () => {
+  Router.push("/profile/my");
+};
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -190,7 +194,7 @@ export default function PrimarySearchAppBar(props) {
         </IconButton>
         <p>Notifications</p>
       </MenuItem> */}
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem onClick={redirectprofile}>
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -271,7 +275,7 @@ export default function PrimarySearchAppBar(props) {
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              onClick={redirectprofile}
               color="inherit"
             >
               <AccountCircle />
