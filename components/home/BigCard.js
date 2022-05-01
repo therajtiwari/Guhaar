@@ -73,11 +73,6 @@ export default function BigCard({ campaign }) {
               </p>
             </div>
           </div>
-          <div className="campaigner">
-            <p style={{ fontSize: "18px" }}>
-              By <b>{creator}</b>
-            </p>
-          </div>
           <div className="more-info">
             <p
               style={{ marginRight: "auto", cursor: "pointer" }}
