@@ -75,7 +75,7 @@ function createData(
   isApproved,
   isFinalizedByAll
 ) {
-  const approveRatio = "1/10";
+  const approveRatio = approved.toString()+'/'+totalApprovers.toString();
   // approved
   //   .toString()
   //   .concat("/", totalApprovers.toString());
@@ -260,21 +260,24 @@ const Requests = () => {
   const handleAddRequest = async () => {
     // handleOpen();
     if (
-      isAuthenticated &&
-      isInitialized &&
-      isWeb3Enabled &&
       requestDescription &&
       requestAmount > 0 &&
       requestAmount < 50
     ) {
-      const res = await createRequest(id, requestDescription, requestAmount);
-      if (res) {
-        setAlertServerity("success");
-      } else {
+      await Moralis.authenticate();
+      if (isAuthenticated) {
+        const res = await createRequest(id, requestDescription, requestAmount);
+        if (res) {
+          setAlertServerity("success");
+        } else {
+          setAlertServerity("error");
+        }
+      }
+      else {
         setAlertServerity("error");
       }
+
     } else {
-      setAlertServerity("error");
     }
     handleClose();
     setAlert(true);
@@ -310,7 +313,7 @@ const Requests = () => {
   };
 
   const getAllCampaignRequests = async () => {
-    const { datalist, canapprove } = await getCampaignRequest(
+    const { datalist, canapprove, numberodapprovers } = await getCampaignRequest(
       Moralis,
       id,
       userAddress || "0x0000000000000000000000000000000000000000",
@@ -329,7 +332,7 @@ const Requests = () => {
           detail.description,
           detail.value / 10 ** 18,
           detail.approvalCount,
-          10,
+          numberodapprovers,
           true,
           detail.complete
         );
@@ -430,16 +433,18 @@ const Requests = () => {
               </StyledButton>
             </Box>
           </Modal>
-
           <div className={styles.titleArea}>
             <h2 style={{ marginBottom: "5px" }}>Withdrawal Requests</h2>
-            <Button
-              className={styles.withdrawRequestButton}
-              variant="contained"
-              onClick={handleOpen}
-            >
-              <b>Add Request</b>
-            </Button>
+            {isAuthenticated ?
+              <Button
+                className={styles.withdrawRequestButton}
+                variant="contained"
+                onClick={handleOpen}
+              >
+                <b>Add Request</b>
+              </Button>
+              :
+              null}
           </div>
           <div className="table-wrapper">
             <TableContainer component={Paper}>
