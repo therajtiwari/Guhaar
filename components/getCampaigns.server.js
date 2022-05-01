@@ -29,7 +29,7 @@ export default async (
 
   let datalist = [];
   const price = await INRPrice();
-  console.log(isWeb3Enabled, isAuthenticating, isWeb3EnableLoading);
+  // console.log(isWeb3Enabled, isAuthenticating, isWeb3EnableLoading);
   var campaignlist = await Moralis.Web3API.native.runContractFunction(
     readOptions
   );
