@@ -87,7 +87,6 @@ export default function Home(props) {
           icon: "success",
           button: {
             text: "Ok",
-            onclick: Router.push('/'),
           },
         }),
         params: {

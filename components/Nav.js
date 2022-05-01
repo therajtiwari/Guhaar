@@ -28,6 +28,10 @@ const redirect = () => {
   Router.push("/createcampaign");
 };
 
+const redirectprofile= () => {
+  Router.push("/profile/my");
+};
+
 const appBarStyle = {
   bgcolor: "#fcfcfd",
   marginTop: "3px",
@@ -142,7 +146,7 @@ export default function Nav(props) {
         </IconButton>
         <p>Notifications</p>
       </MenuItem> */}
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem onClick={redirectprofile}>
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -205,7 +209,7 @@ export default function Nav(props) {
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              onClick={redirectprofile}
               color="inherit"
             >
               <AccountCircle />
