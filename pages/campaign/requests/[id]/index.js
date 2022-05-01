@@ -75,7 +75,7 @@ function createData(
   isApproved,
   isFinalizedByAll
 ) {
-  const approveRatio = approved.toString()+'/'+totalApprovers.toString();
+  // const approveRatio = approved.toString() + '/' + totalApprovers.toString();
   // approved
   //   .toString()
   //   .concat("/", totalApprovers.toString());

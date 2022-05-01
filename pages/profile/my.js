@@ -33,6 +33,7 @@ const Profile = () => {
   const [component, setComponent] = useState(<></>);
   const [donatedCampaigns, setDonatedCampaigns] = useState([]);
   const [createdCampaigns, setCreatedCampaigns] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   async function _getCampaigns(contract) {
     let list = await contract.functions.getDeployedCampaigns();
@@ -51,26 +52,23 @@ const Profile = () => {
     const component = <ProfileCard username={username} address={address} />;
   }
 
-  const getMyCampaigns = (campaigns) => {
+  const getMyCampaigns = async (campaigns) => {
     const campaign = [];
     for (let i = 0; i < campaigns.length; i++) {
-      // console.log(campaigns[i][10], "And" , address);
       if (campaigns[i][10].toLowerCase() == address) {
-        // console.log("This is the campaign", campaigns[i]);
         campaign.push(campaigns[i]);
       }
     }
-
     return campaign;
   };
   useEffect(async () => {
     if (isAuthenticated && user) {
+      setLoading(true);
       if (isAuthenticated) {
-        var account = user.attributes.accounts;
         setUsername(user.get("username"));
         setAddress(user.attributes.ethAddress);
         // console.log("add here",address);
-        let final3 = await getCampaignsDonated(
+        const final3 = await getCampaignsDonated(
           Moralis,
           address,
           isWeb3Enabled,
@@ -85,6 +83,7 @@ const Profile = () => {
       if (username !== undefined) {
         setComponent(<ProfileCard username={username} address={address} />);
       }
+
       let final = await getCampaigns(
         Moralis,
         isWeb3Enabled,
@@ -93,23 +92,30 @@ const Profile = () => {
       );
 
       setCampaigns(final);
-
-      let final2 = getMyCampaigns(final);
-      setCreatedCampaigns(final2);
+      const temp = [];
+      for (let i = 0; i < final.length; i++) {
+        if (final[i][10].toLowerCase() == address) {
+          temp.push(final[i]);
+        }
+      }
+      setCreatedCampaigns(temp);
+      setLoading(false);
     }
   }, [isAuthenticated, address]);
 
   return (
     <>
       <Nav />
-      {username && <ProfileCard username={username} address={address} />}
-      {/* {component} */}
-      <CampaignList title="Campaigns" campaigns={createdCampaigns} />
-      <CampaignList title="Supported Campaigns" campaigns={donatedCampaigns} />
-      {/* {username && (address !== undefined) && <><ProfileCard username={username} address={address} /><CampaignList title="Campaigns" campaigns={createdCampaigns} /><CampaignList
+      {loading ? <Loading /> : <>
+        {username && <ProfileCard username={username} address={address} />}
+        {/* {component} */}
+        <CampaignList title="Campaigns" campaigns={createdCampaigns} />
+        <CampaignList title="Supported Campaigns" campaigns={donatedCampaigns} />
+        {/* {username && (address !== undefined) && <><ProfileCard username={username} address={address} /><CampaignList title="Campaigns" campaigns={createdCampaigns} /><CampaignList
         title="Supported Campaigns"
         campaigns={donatedCampaigns} /></>}
       {(address === undefined) && <Loading />} */}
+      </>}
     </>
   );
 };

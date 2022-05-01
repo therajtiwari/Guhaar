@@ -156,7 +156,7 @@ export default function Home(props) {
             >
               <Grid item>
                 <Typography fontWeight={"bold"} className={styles.infoText}>
-                  Minimum Contribution
+                  Minimum Contribution (to become Approver)
                 </Typography>
                 <Typography className={styles.infoText}>
                   {ethers.utils.formatEther(details[0])} ETH (₹
@@ -185,7 +185,7 @@ export default function Home(props) {
                   Number of Contributors
                 </Typography>
                 <Typography className={styles.infoText}>
-                  {parseFloat(ethers.utils.formatEther(details[9])).toFixed(0)}
+                  {details[9]}
                 </Typography>
               </Grid>
               <Divider mt={5} />
