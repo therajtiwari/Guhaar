@@ -41,14 +41,7 @@ export default async (
 
   for (let i = 0; i < campaignlist.length; i++) {
     let add = campaignlist[i];
-    const readOptions = {
-      chain: "rinkeby",
-      address: add,
-      function_name: "getDetails",
-      abi: CampaignArtifact.abi,
-    };
-    campaign = await Moralis.Web3API.native.runContractFunction(readOptions);
-    campaign = { ...campaign, id: add, price: price };
+    
     const readOptions2 = {
       chain: "rinkeby",
       address: add,
@@ -62,6 +55,14 @@ export default async (
       readOptions2
     );
     if (contributed) {
+      const readOptions = {
+        chain: "rinkeby",
+        address: add,
+        function_name: "getDetails",
+        abi: CampaignArtifact.abi,
+      };
+      campaign = await Moralis.Web3API.native.runContractFunction(readOptions);
+      campaign = { ...campaign, id: add, price: price };
       datalist.push(campaign);
     }
   }
