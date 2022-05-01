@@ -26,9 +26,12 @@ import fetch from "node-fetch";
 import { InputAdornment } from "@mui/material";
 import { Divider } from "@mui/material";
 import Router from "next/router";
-
+import Checkbox from "@mui/material/Checkbox";
 import getCampaigndetails from "../../components/getCampaigndetails.server";
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
+import FormControlLabel from '@mui/material/FormControlLabel';
+import swal from 'sweetalert';
+
 
 export default function Home(props) {
   const {
@@ -41,9 +44,14 @@ export default function Home(props) {
   } = useMoralis();
   const [convert, setConvert] = useState(null);
   const [details, setDetails] = useState(null);
+  const [wantToApprove, setwantToApprove] = useState(true);
+  // const wantToApprove=true;
   // const [flag, setFlag] = useState(false);
   const router = useRouter();
   const { id } = router.query;
+  const handleChange = (event) => {
+    setwantToApprove(event.target.checked);
+  };
 
   useEffect(async () => {
     if (id != undefined) {
@@ -68,25 +76,35 @@ export default function Home(props) {
     useWeb3ExecuteFunction();
 
   const handlePayment = async () => {
-    await Moralis.authenticate();
-    fetch({
-      onComplete: (a) => console.log(a),
-      onError: (a) => console.error(a.toString()),
-      onSuccess: (a) => console.log(JSON.stringify(a)),
-      params: {
-        contractAddress: id,
-        functionName: "contibute",
-        abi: CampaignArtifact.abi,
+    if (convert > 0) {
+      await Moralis.authenticate();
+      fetch({
+        onComplete: (a) => console.log(a),
+        onError: (a) => console.error(a.toString()),
+        onSuccess: (a) => swal({
+          title: "You Have Successfully Contributed",
+          text: "It may take some time to reflect into system. Check the campaign after some time into system",
+          icon: "success",
+          button: {
+            text: "Ok",
+            onclick: Router.push('/'),
+          },
+        }),
         params: {
-          wantToApprove: true, // option checkbox to approve
+          contractAddress: id,
+          functionName: "contibute",
+          abi: CampaignArtifact.abi,
+          params: {
+            wantToApprove: wantToApprove, // option checkbox to approve
+          },
+          msgValue: ethers.utils.parseEther(convert.toString()),
         },
-        msgValue: ethers.utils.parseEther(convert.toString()),
-      },
-    })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
 
-    console.log(data, error);
+      console.log(data, error);
+    }
   };
 
   return details != null ? (
@@ -138,7 +156,7 @@ export default function Home(props) {
             >
               <Grid item>
                 <Typography fontWeight={"bold"} className={styles.infoText}>
-                  Minimum Contribution
+                  Minimum Contribution (to become Approver)
                 </Typography>
                 <Typography className={styles.infoText}>
                   {ethers.utils.formatEther(details[0])} ETH (₹
@@ -167,7 +185,7 @@ export default function Home(props) {
                   Number of Contributors
                 </Typography>
                 <Typography className={styles.infoText}>
-                  {parseFloat(ethers.utils.formatEther(details[9])).toFixed(0)}
+                  {details[9]}
                 </Typography>
               </Grid>
               <Divider mt={5} />
@@ -190,8 +208,8 @@ export default function Home(props) {
                       <span className={styles.grey}>
                         {ethers.utils.formatEther(details[8]) > 0
                           ? "(₹ " +
-                            ethers.utils.formatEther(details[8]) *
-                              details["price"] +
+                            parseFloat(ethers.utils.formatEther(details[8]) *
+                              details["price"]).toFixed(2) +
                             " )"
                           : ""}
                       </span>
@@ -256,6 +274,17 @@ export default function Home(props) {
                         ) : null}
                       </form>
                       <br />
+                      {isAuthenticated ? (
+                        <FormControlLabel
+                        label='Become Approver'
+                          control={
+                            <Checkbox
+                              checked={wantToApprove}
+                              onChange={handleChange}
+                            />
+                          }
+                        />
+                      ) : null}
                       {isAuthenticated ? (
                         <Button
                           variant="contained"
