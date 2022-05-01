@@ -76,7 +76,6 @@ export default function Home(props) {
     useWeb3ExecuteFunction();
 
   const handlePayment = async () => {
-<<<<<<< HEAD
     if (convert > 0) {
       await Moralis.authenticate();
       fetch({
@@ -91,17 +90,6 @@ export default function Home(props) {
             onclick: Router.push('/'),
           },
         }),
-=======
-    await Moralis.authenticate();
-    fetch({
-      onComplete: (a) => console.log(a),
-      onError: (a) => console.error(a.toString()),
-      onSuccess: (a) => console.log(JSON.stringify(a)),
-      params: {
-        contractAddress: id,
-        functionName: "contibute",
-        abi: CampaignArtifact.abi,
->>>>>>> a03a33061de483329ab7deed3b9e76a6ad93b9a6
         params: {
           contractAddress: id,
           functionName: "contibute",
@@ -115,12 +103,8 @@ export default function Home(props) {
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
 
-<<<<<<< HEAD
       console.log(data, error);
     }
-=======
-    console.log(data, error);
->>>>>>> a03a33061de483329ab7deed3b9e76a6ad93b9a6
   };
 
   return details != null ? (
@@ -172,7 +156,7 @@ export default function Home(props) {
             >
               <Grid item>
                 <Typography fontWeight={"bold"} className={styles.infoText}>
-                  Minimum Contribution
+                  Minimum Contribution (to become Approver)
                 </Typography>
                 <Typography className={styles.infoText}>
                   {ethers.utils.formatEther(details[0])} ETH (₹
@@ -201,7 +185,7 @@ export default function Home(props) {
                   Number of Contributors
                 </Typography>
                 <Typography className={styles.infoText}>
-                  {parseFloat(ethers.utils.formatEther(details[9])).toFixed(0)}
+                  {details[9]}
                 </Typography>
               </Grid>
               <Divider mt={5} />
@@ -224,13 +208,8 @@ export default function Home(props) {
                       <span className={styles.grey}>
                         {ethers.utils.formatEther(details[8]) > 0
                           ? "(₹ " +
-<<<<<<< HEAD
                             parseFloat(ethers.utils.formatEther(details[8]) *
                               details["price"]).toFixed(2) +
-=======
-                            ethers.utils.formatEther(details[8]) *
-                              details["price"] +
->>>>>>> a03a33061de483329ab7deed3b9e76a6ad93b9a6
                             " )"
                           : ""}
                       </span>
