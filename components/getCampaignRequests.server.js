@@ -60,11 +60,11 @@ export default async (
       function_name: "getRequestApproval",
       abi: CampaignArtifact.abi,
       params: {
-        "index": i,
-        "user": userAddress
+        "index": i + "",
+        "user": userAddress,
       },
     };
-    requestapproved = await Moralis.Web3API.native.runContractFunction(
+    const requestapproved = await Moralis.Web3API.native.runContractFunction(
       readOptions3
     );
     console.log("requestapproved: ", requestapproved);
@@ -80,7 +80,7 @@ export default async (
   var numberofapprovers = await Moralis.Web3API.native.runContractFunction(readOptions4);
 
   // return datalist, canapprove
-  return {datalist, canapprove, numberofapprovers}
+  return { datalist, canapprove, numberofapprovers }
   // }else{
   //   return false
   // }

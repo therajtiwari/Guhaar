@@ -162,7 +162,7 @@ contract Campaign {
     }
 
     function getRequestApproval(uint256 index, address user) public view returns (bool) {
-        return requests[index].approvals[user];
+        return requests[index].approvals[address(user)];
     }
 
     function getDetails()

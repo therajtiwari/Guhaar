@@ -122,13 +122,15 @@ const ProfileCard = ({ username, address }) => {
             </Grid>
             {/* <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel> */}
             <Grid xs={12} sm={12} item>
-              <Link href={`https://rinkeby.etherscan.io/address/${address}`}>
-                <Button variant="outlined" fullWidth style={{
-                  backgroundColor: "#00bcd4",
-                  color: "white",
-                }}>
-                  View on Etherscans
-                </Button>
+              <Link passHref href={`https://rinkeby.etherscan.io/address/${address}`}>
+                <a target="_blank">
+                  <Button variant="outlined" fullWidth style={{
+                    backgroundColor: "#00bcd4",
+                    color: "white",
+                  }}>
+                    View on Etherscans
+                  </Button>
+                </a>
               </Link>
             </Grid>    
           </Grid>

@@ -75,7 +75,7 @@ function createData(
   isApproved,
   isFinalizedByAll
 ) {
-  // const approveRatio = approved.toString() + '/' + totalApprovers.toString();
+  const approveRatio = approved.toString() + '/' + totalApprovers.toString();
   // approved
   //   .toString()
   //   .concat("/", totalApprovers.toString());
@@ -324,6 +324,7 @@ const Requests = () => {
     setCanApprove(canapprove);
     console.log("datalist is", datalist);
     console.log("canapprove", canapprove);
+    console.log("numberofapprovers", numberofapprovers);
     const tempRows = [];
     if (datalist?.length > 0) {
       datalist.forEach((detail) => {
