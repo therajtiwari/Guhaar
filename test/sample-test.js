@@ -16,23 +16,19 @@ describe("CampaignFactory", function () {
   // });
 });
 
-
 describe("CampaignRequest", function () {
   it("Should create new request if address matches", async function () {
     const Greeter = await ethers.getContractFactory("CampaignFactory");
     const greeter = await Greeter.deploy();
     await greeter.deployed();
     await greeter.createCampaign(
-
-      minimum = 0,
-      name = "save_girl",
-      description = "nsaodfnoiasndc",
-      imageUrl = "http://oasndfosn.com",
-      target = 1,
-      category = "oas ndfcnf",
-      lastdate = 0,
-
-
+      (minimum = 0),
+      (name = "save_girl"),
+      (description = "nsaodfnoiasndc"),
+      (imageUrl = "http://oasndfosn.com"),
+      (target = 1),
+      (category = "oas ndfcnf"),
+      (lastdate = 0)
     );
 
     const details = await greeter.getDeployedCampaigns();
@@ -41,19 +37,20 @@ describe("CampaignRequest", function () {
     // console.log(CampaignArtifact);
     const [owner, addr1, addr2] = await ethers.getSigners();
 
-    const Campaign = new ethers.Contract(curr, CampaignArtifact.abi, ethers.getSigners[0]);
+    const Campaign = new ethers.Contract(
+      curr,
+      CampaignArtifact.abi,
+      ethers.getSigners[0]
+    );
     console.log(owner);
     await Campaign.connect(owner).createRequest(
-      description = "nsaodfnoiasndc",
-      value = ethers.utils.parseEther("0"),
-
-    )
+      (description = "nsaodfnoiasndc"),
+      (value = ethers.utils.parseEther("0"))
+    );
 
     // expect(await greeter.createRequest(
     //   {}
     // ))
-
-
 
     // const setGreetingTx = await greeter.setGreeting("Hola, mundo!");
     // // wait until the transaction is mined
@@ -61,5 +58,3 @@ describe("CampaignRequest", function () {
     // expect(await greeter.greet()).to.equal("Hola, mundo!");
   });
 });
-
-

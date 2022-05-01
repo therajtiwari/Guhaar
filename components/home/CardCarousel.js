@@ -58,7 +58,7 @@ export default function CardCarousel({ campaigns }) {
         removeArrowOnDeviceType={["tablet", "mobile", "desktop"]}
         itemClass="carousel-item-padding-4-px"
 
-      // deviceType={this.props.deviceType}
+        // deviceType={this.props.deviceType}
       >
         {/* <HomeCard imgURL={"https://preview.redd.it/kn1sczuqbp961.png?width=640&crop=smart&auto=webp&s=37ecfcefc65d92383e181d0883aaea5699bb13b0"} />
                 <HomeCard imgURL={"https://assets.hongkiat.com/uploads/minimalist-dekstop-wallpapers/4k/original/08.jpg"} />

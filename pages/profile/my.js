@@ -15,6 +15,7 @@ import ProfileCard from "../../components/profile/profileCard";
 import CampaignList from "../../components/profile/camapaignList";
 import getCampaigns from "../../components/getCampaigns.server";
 import getCampaignsDonated from "../../components/getCampaignsdonated";
+import Loading from "../../components/Loading";
 
 const Profile = () => {
   const {
@@ -53,51 +54,50 @@ const Profile = () => {
   const getMyCampaigns = (campaigns) => {
     const campaign = [];
     for (let i = 0; i < campaigns.length; i++) {
-        // console.log(campaigns[i][10], "And" , address);
-        if (campaigns[i][10].toLowerCase() == address) {
-            // console.log("This is the campaign", campaigns[i]);
-            campaign.push(campaigns[i]);
-        }
+      // console.log(campaigns[i][10], "And" , address);
+      if (campaigns[i][10].toLowerCase() == address) {
+        // console.log("This is the campaign", campaigns[i]);
+        campaign.push(campaigns[i]);
+      }
     }
 
     return campaign;
   };
   useEffect(async () => {
-    if(isAuthenticated && user) {
+    if (isAuthenticated && user) {
+      if (isAuthenticated) {
+        var account = user.attributes.accounts;
+        setUsername(user.get("username"));
+        setAddress(user.attributes.ethAddress);
+        // console.log("add here",address);
+        let final3 = await getCampaignsDonated(
+          Moralis,
+          address,
+          isWeb3Enabled,
+          isAuthenticating,
+          isWeb3EnableLoading
+        );
+        setDonatedCampaigns(final3);
+        console.log("donated campaign", final3);
+      }
 
-    if (isAuthenticated) {
-      var account = user.attributes.accounts;
-      setUsername(user.get("username"));
-      setAddress(user.attributes.ethAddress);
-      // console.log("add here",address);
-      let final3 = await getCampaignsDonated(
+      // console.log(user);
+      if (username !== undefined) {
+        setComponent(<ProfileCard username={username} address={address} />);
+      }
+      let final = await getCampaigns(
         Moralis,
-        address,
         isWeb3Enabled,
         isAuthenticating,
         isWeb3EnableLoading
-        );
-      setDonatedCampaigns(final3);
-      console.log("donated campaign", final3);
+      );
+
+      setCampaigns(final);
+
+      let final2 = getMyCampaigns(final);
+      setCreatedCampaigns(final2);
     }
-
-    // console.log(user);
-    if (username !== undefined) {
-      setComponent(<ProfileCard username={username} address={address} />);
-    }
-    let final = await getCampaigns(
-      Moralis,
-      isWeb3Enabled,
-      isAuthenticating,
-      isWeb3EnableLoading
-    );
-
-    setCampaigns(final);
-
-    let final2 = getMyCampaigns(final);
-    setCreatedCampaigns(final2);
-
-  }}, [isAuthenticated,address]);
+  }, [isAuthenticated, address]);
 
   return (
     <>
@@ -105,10 +105,11 @@ const Profile = () => {
       {username && <ProfileCard username={username} address={address} />}
       {/* {component} */}
       <CampaignList title="Campaigns" campaigns={createdCampaigns} />
-      <CampaignList
+      <CampaignList title="Supported Campaigns" campaigns={donatedCampaigns} />
+      {/* {username && (address !== undefined) && <><ProfileCard username={username} address={address} /><CampaignList title="Campaigns" campaigns={createdCampaigns} /><CampaignList
         title="Supported Campaigns"
-        campaigns={donatedCampaigns}
-      />
+        campaigns={donatedCampaigns} /></>}
+      {(address === undefined) && <Loading />} */}
     </>
   );
 };

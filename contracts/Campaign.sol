@@ -111,8 +111,6 @@ contract Campaign {
     }
 
     function createRequest(string memory description, uint256 value) public {
-        
-        
         require(
             msg.sender == recipient,
             "You can't create a request if you are not the recipient"
@@ -161,6 +159,10 @@ contract Campaign {
 
     function getRequestsCount() public view returns (uint256) {
         return requests.length;
+    }
+
+    function getRequestApproval(uint256 index, address user) public view returns (bool) {
+        return requests[index].approvals[user];
     }
 
     function getDetails()

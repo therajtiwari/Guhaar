@@ -11,6 +11,7 @@ import {
   Box,
 } from "@mui/material";
 import CampaignCard from "./campaignCard";
+import Loading from "../Loading";
 
 const CampaignList = ({ title, campaigns }) => {
   const campaign = [];
@@ -34,6 +35,9 @@ const CampaignList = ({ title, campaigns }) => {
 
       {/* <CampaignCard />
             <CampaignCard /> */}
+
+      {/* {(campaign.length === 0) && campaign}
+      {(campaign.length !== 0) && <Loading />} */}
 
       {campaign}
     </div>

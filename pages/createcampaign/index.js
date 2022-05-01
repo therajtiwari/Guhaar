@@ -127,7 +127,7 @@ const create = () => {
     function pp(a) {
       console.log(JSON.stringify(a));
     }
-    await Moralis.authenticate()
+    await Moralis.authenticate();
     fetch({
       onComplete: pp,
       onError: (a) => console.error(a.toString()),

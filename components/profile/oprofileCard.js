@@ -7,7 +7,9 @@ import {
   Grid,
   CardContent,
   TextField,
+  Button,
 } from "@mui/material";
+import Link from "next/link";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import InputLabel from "@mui/material/InputLabel";
@@ -21,9 +23,9 @@ import { useMoralis } from "react-moralis";
 
 const generator = new AvatarGenerator();
 
-const OProfileCard = ({ username, address }) => {
-  console.log("DAWADW", username);
-  const [uname, setUname] = useState(username);
+const OProfileCard = ({ address }) => {
+  // console.log("DAWADW", username);
+  // const [uname, setUname] = useState(username);
   // console.log(uname)
   const { isAuthenticated, user, Moralis } = useMoralis();
   const [showAddress, setShowAddress] = useState("password");
@@ -68,7 +70,7 @@ const OProfileCard = ({ username, address }) => {
         />
         <div className="Details">
           <Grid container spacing={5}>
-            <Grid xs={12} sm={12} item>
+            {/* <Grid xs={12} sm={12} item>
               <TextField
                 label="Username"
                 variant="outlined"
@@ -77,7 +79,7 @@ const OProfileCard = ({ username, address }) => {
                 inputMode="none"
                 disabled={true}
               />
-            </Grid>
+            </Grid> */}
             {/* <Grid xs={12} sm={12} item>
                                     <TextField label="Email" variant="outlined" value={email} fullWidth disabled={true}/>
                                 </Grid> */}
@@ -104,6 +106,16 @@ const OProfileCard = ({ username, address }) => {
               />
             </Grid>
             {/* <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel> */}
+            <Grid xs={12} sm={12} item>
+              <Link href={`https://rinkeby.etherscan.io/address/${address}`}>
+                <Button variant="outlined" fullWidth style={{
+                  backgroundColor: "#00bcd4",
+                  color: "white",
+                }}>
+                  View on Etherscans
+                </Button>
+              </Link>
+            </Grid>
           </Grid>
         </div>
       </div>

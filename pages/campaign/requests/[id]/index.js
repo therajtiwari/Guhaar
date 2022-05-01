@@ -12,38 +12,38 @@ import DoneIcon from "@mui/icons-material/Done";
 import Button from "@mui/material/Button";
 import Nav from "../../../../components/Nav";
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
-import getCampaignRequest from "../../../../components/getCampaignRequests.server"
+import getCampaignRequest from "../../../../components/getCampaignRequests.server";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import CampaignArtifact from "../../../../artifacts/contracts/Campaign.sol/Campaign.json";
 import { ethers } from "ethers";
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Input from '@mui/material/Input';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
-import Stack from '@mui/material/Stack';
-
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Input from "@mui/material/Input";
+import InputAdornment from "@mui/material/InputAdornment";
+import FormControl from "@mui/material/FormControl";
+import TextField from "@mui/material/TextField";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import Alert from "@mui/material/Alert";
+import HourglassTopIcon from "@mui/icons-material/HourglassTop";
+import { BounceLoader } from "react-spinners";
+import { css } from "@emotion/react";
 
 import Divider from "@mui/material/Divider";
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '40%',
-  minWidth: '350px',
-  bgcolor: 'background.paper',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "40%",
+  minWidth: "350px",
+  bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
   borderRadius: 1,
-  outline: 'none',
-}
+  outline: "none",
+};
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -72,12 +72,10 @@ function createData(
   amount,
   approved,
   totalApprovers,
-  approve,
-  finalize,
   isApproved,
-  isFinalized
+  isFinalizedByAll
 ) {
-  const approveRatio = "1/10";
+  const approveRatio = approved.toString()+'/'+totalApprovers.toString();
   // approved
   //   .toString()
   //   .concat("/", totalApprovers.toString());
@@ -86,16 +84,10 @@ function createData(
     description,
     amount,
     approveRatio,
-    approve,
-    finalize,
     isApproved,
-    isFinalized,
+    isFinalizedByAll,
   };
 }
-
-
-
-
 
 // createData(
 //   0,
@@ -146,17 +138,18 @@ function createData(
 //     false
 //   ),
 
-
-
 const StyledButton = styled(Button)`
-    &:hover {
-      background-color: #4acd8d;
-    }
+  &:hover {
+    background-color: #4acd8d;
+  }
+`;
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
 `;
 const Requests = () => {
-
-
-
   const {
     user,
     Moralis,
@@ -164,16 +157,12 @@ const Requests = () => {
     isAuthenticated,
     isAuthenticating,
     isWeb3EnableLoading,
-    isInitialized
+    isInitialized,
   } = useMoralis();
+  let [loading, setLoading] = useState(true);
   const [userAddress, setUserAddress] = useState(null);
 
-
-
-
   const [rows, setRows] = useState([]);
-
-
 
   //MODAL
 
@@ -183,6 +172,8 @@ const Requests = () => {
   const [open, setOpen] = React.useState(false);
   const [alert, setAlert] = useState(false);
   const [alertServerity, setAlertServerity] = useState("success");
+  const [canApprove, setCanApprove] = useState(false);
+  let [color, setColor] = useState("#6f49fd");
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -190,8 +181,7 @@ const Requests = () => {
     setRequestDescription("");
     setRequestTitle("");
     setOpen(false);
-  }
-
+  };
 
   const { data, error, fetch, isFetching, isLoading } =
     useWeb3ExecuteFunction();
@@ -199,11 +189,18 @@ const Requests = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  function ApproveRequests(id) {
-    fetch({
-      onComplete: (a) => console.log(a),
-      onError: (a) => console.error(a.toString()),
-      onSuccess: (a) => console.log(JSON.stringify(a)),
+  const ApproveRequests = async (id) => {
+    let success = false;
+    await fetch({
+      onComplete: (a) => {
+        success = true;
+      },
+      onError: (a) => {
+        success = false;
+      },
+      onSuccess: (a) => {
+        success = true;
+      },
       params: {
         contractAddress: id,
         functionName: "approveRequest",
@@ -213,27 +210,29 @@ const Requests = () => {
         },
       },
     })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        success = true;
+      })
+      .catch((err) => {
+        success = false;
+      });
 
-    console.log(data, error);
-  }
+    return success;
+  };
 
   const createRequest = async (id, des, amount) => {
     let success = false;
     await fetch({
       onComplete: () => {
         console.log("done");
-        success = true;
+        // success = true;
       },
       onError: (a) => {
-        console.log("eorrorrrrrrr")
-        console.error(a.toString())
-        // return false;
+        console.log("eorrorrrrrrr");
         success = false;
       },
       onSuccess: (a) => {
-        console.log("sashiiiiiiiiiii");
+        console.log("ho gaya");
         console.log(JSON.stringify(a));
         success = true;
       },
@@ -243,40 +242,66 @@ const Requests = () => {
         abi: CampaignArtifact.abi,
         params: {
           description: des, // add actual description
-          value: ethers.utils.parseEther(amount.toString())
+          value: ethers.utils.parseEther(amount.toString()),
         },
       },
     })
       .then((res) => {
-        success = true;
-        console.log("its doneeeeeeeeeeeeeeee", res);
+        console.log("success");
       })
       .catch((err) => {
+        console.log("eroor");
         success = false;
       });
 
-
     return success;
-
-    // console.log(data, error);
-  }
-
+  };
 
   const handleAddRequest = async () => {
     // handleOpen();
-    if (isAuthenticated && isInitialized && isWeb3Enabled && requestDescription && requestAmount > 0 && requestAmount < 50) {
-      const res = await createRequest(id, requestDescription, requestAmount);
-      // console.log("response isssssssss", res);
-      if (res) {
-        setAlertServerity("success");
+    if (
+      requestDescription &&
+      requestAmount > 0 &&
+      requestAmount < 50
+    ) {
+      await Moralis.authenticate();
+      if (isAuthenticated) {
+        const res = await createRequest(id, requestDescription, requestAmount);
+        if (res) {
+          setAlertServerity("success");
+        } else {
+          setAlertServerity("error");
+        }
       }
       else {
         setAlertServerity("error");
-
       }
 
+    } else {
     }
-    else {
+    handleClose();
+    setAlert(true);
+    // setTimeout(async () => {
+    //   setLoading(true);
+    //   await getAllCampaignRequests();
+    //   setLoading(false);
+    // }, 5000);
+
+    //  set timeout for 5sec
+    setTimeout(() => {
+      setAlert(false);
+    }, 5000);
+  };
+
+  const handleApproveRequest = async (id) => {
+    if (isAuthenticated && isInitialized && isWeb3Enabled) {
+      const res = await ApproveRequests(id);
+      if (res) {
+        setAlertServerity("success");
+      } else {
+        setAlertServerity("error");
+      }
+    } else {
       setAlertServerity("error");
     }
     handleClose();
@@ -285,187 +310,261 @@ const Requests = () => {
     setTimeout(() => {
       setAlert(false);
     }, 5000);
+  };
 
-  }
+  const getAllCampaignRequests = async () => {
+    const { datalist, canapprove, numberofapprovers } = await getCampaignRequest(
+      Moralis,
+      id,
+      userAddress || "0x0000000000000000000000000000000000000000",
+      isWeb3Enabled,
+      isAuthenticating,
+      isWeb3EnableLoading
+    );
+    setCanApprove(canapprove);
+    console.log("datalist is", datalist);
+    console.log("canapprove", canapprove);
+    const tempRows = [];
+    if (datalist?.length > 0) {
+      datalist.forEach((detail) => {
+        const currData = createData(
+          detail.index + 1,
+          detail.description,
+          detail.value / 10 ** 18,
+          detail.approvalCount,
+          numberofapprovers,
+          true,
+          detail.complete
+        );
+        tempRows.push(currData);
+      });
+      setRows(tempRows);
+    }
+  };
 
   useEffect(async () => {
-
     if (isAuthenticated) {
       setUserAddress(user.attributes.accounts[0]);
     }
 
     if (isInitialized && id) {
-      console.log("id ", id);
-      const reqDetails = await getCampaignRequest(
-        Moralis,
-        id,
-        userAddress,
-        isWeb3Enabled,
-        isAuthenticating,
-        isWeb3EnableLoading,
-      );
-      console.log("doneeee")
-      console.log(reqDetails);
-      const tempRows = [];
-      reqDetails.forEach(detail => {
-        const currData = (createData(
-          detail.index + 1,
-          detail.description,
-          detail.value / (10 ** 18),
-          detail.approvalCount,
-          true,
-          true,
-          true,
-          detail.complete
-        ));
-        // setRows([...rows, currData]);
-        // console.log(rows);
-        tempRows.push(currData);
-      });
-      setRows(tempRows);
+      await getAllCampaignRequests();
+      setLoading(false);
     }
-
-  }, [isInitialized, id])
+  }, [isInitialized, id]);
 
   return (
     <>
       <Nav />
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        outline="none"
-      >
-        <Box sx={style}>
-          <div className="temp" style={{ display: "flex", alignItems: "center" }}>
-            <AddCircleIcon fontSize="large" style={{ marginRight: "15px", color: "#6f49fd" }} />
-            <h2>Create a New Request</h2>
-          </div>
-          <Divider />
-          <FormControl fullWidth sx={{ m: 1 }} variant="filled">
-            <h4>Description</h4>
-            <Input
-              id="rquest-description"
-              value={requestDescription}
-              multiline
-              rows={3}
-              onChange={(e) => setRequestDescription(e.target.value)}
-              startAdornment={<InputAdornment position="start"></InputAdornment>}
-            />
-          </FormControl>
-          <br />
-          <br />
-          <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-            <h4>Amount</h4>
-            <Input
-              id="standard-adornment-amount"
-              value={requestAmount}
-              type="number"
-              onChange={(e) => setRequestAmount(e.target.value)}
-              startAdornment={<InputAdornment position="start">Eth</InputAdornment>}
-            />
-          </FormControl>
-          <br />
-          <br />
-
-          <StyledButton onClick={handleAddRequest} variant="contained" className={styles.formSubmitButton}>Create</StyledButton>
-        </Box>
-      </Modal>
-
-      <div className={styles.titleArea}>
-        <h2 style={{ marginBottom: "5px" }}>Withdrawal Requests</h2>
-        <Button
-          className={styles.withdrawRequestButton}
-          variant="contained"
-          onClick={handleOpen}
+      {loading ? (
+        <div
+          className="loader"
+          style={{
+            minHeight: "80vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          <b>Add Request</b>
-        </Button>
-      </div>
-      <div className="table-wrapper">
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <StyledTableRow style={{ height: 80 }}>
-                <StyledTableCell align="right">
-                  <b>ID</b>
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  <b>Description</b>
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  <b>Amount&nbsp;(Eth)</b>
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  <b>Approval Count</b>
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  <b>Approve</b>
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  <b>Finalize</b>
-                </StyledTableCell>
-              </StyledTableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <StyledTableRow
-                  style={{
-                    height: 70,
-                    backgroundColor: row.isFinalized ? "#f6f6f6" : "#fff",
-                  }}
-                  key={row.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <StyledTableCell align="right">{row.id}</StyledTableCell>
-                  <StyledTableCell align="right">
-                    {row.description}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">{row.amount}</StyledTableCell>
-                  <StyledTableCell align="right">
-                    {row.approveRatio}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {row.isApproved ? (
-                      <DoneIcon className={styles.success} />
-                    ) : (
-                      <Button
-                        variant="contained"
-                        className={styles.approvalButton}
-                      >
-                        Approve
-                      </Button>
-                    )}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {" "}
-                    {row.isFinalized ? (
-                      <DoneIcon className={styles.success} />
-                    ) : (
-                      <Button
-                        variant="contained"
-                        className={styles.approvalButton}
-                      >
-                        Finalize
-                      </Button>
-                    )}
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <div className="alertBox" style={{ position: "absolute", bottom: "40px", display: 'flex', width: "90%", margin: "auto", justifyContent: "center", zIndex: "1000" }}>
-          {alert ?
-            alertServerity === "success" ? (<Alert variant="filled" severity="success" style={{ backgroundColor: "#4acd8d !important" }}>
-              Success
-            </Alert>) : (<Alert variant="filled" severity="error" style={{ backgroundColor: "#eb5757 !important" }} >
-              Something went wrong. Please try again.
-            </Alert>)
-            : null}
+          <BounceLoader
+            color={color}
+            loading={loading}
+            css={override}
+            size={120}
+          />
         </div>
-      </div>
+      ) : (
+        <>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            outline="none"
+          >
+            <Box sx={style}>
+              <div
+                className="temp"
+                style={{ display: "flex", alignItems: "center" }}
+              >
+                <AddCircleIcon
+                  fontSize="large"
+                  style={{ marginRight: "15px", color: "#6f49fd" }}
+                />
+                <h2>Create a New Request</h2>
+              </div>
+              <Divider />
+              <FormControl fullWidth sx={{ m: 1 }} variant="filled">
+                <h4>Description</h4>
+                <Input
+                  id="rquest-description"
+                  value={requestDescription}
+                  multiline
+                  rows={3}
+                  onChange={(e) => setRequestDescription(e.target.value)}
+                  startAdornment={
+                    <InputAdornment position="start"></InputAdornment>
+                  }
+                />
+              </FormControl>
+              <br />
+              <br />
+              <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                <h4>Amount</h4>
+                <Input
+                  id="standard-adornment-amount"
+                  value={requestAmount}
+                  type="number"
+                  onChange={(e) => setRequestAmount(e.target.value)}
+                  startAdornment={
+                    <InputAdornment position="start">Eth</InputAdornment>
+                  }
+                />
+              </FormControl>
+              <br />
+              <br />
+
+              <StyledButton
+                onClick={handleAddRequest}
+                variant="contained"
+                className={styles.formSubmitButton}
+              >
+                Create
+              </StyledButton>
+            </Box>
+          </Modal>
+          <div className={styles.titleArea}>
+            <h2 style={{ marginBottom: "5px" }}>Withdrawal Requests</h2>
+            {isAuthenticated ?
+              <Button
+                className={styles.withdrawRequestButton}
+                variant="contained"
+                onClick={handleOpen}
+              >
+                <b>Add Request</b>
+              </Button>
+              :
+              null}
+          </div>
+          <div className="table-wrapper">
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
+                  <StyledTableRow style={{ height: 80 }}>
+                    <StyledTableCell align="right">
+                      <b>ID</b>
+                    </StyledTableCell>
+                    <StyledTableCell
+                      style={{ maxWidth: "300px" }}
+                      align="right"
+                    >
+                      <b>Description</b>
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      <b>Amount&nbsp;(Eth)</b>
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      <b>Approval Count</b>
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      <b>Approve</b>
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      <b>Finalize</b>
+                    </StyledTableCell>
+                  </StyledTableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.map((row) => (
+                    <StyledTableRow
+                      style={{
+                        height: 70,
+                        backgroundColor: row.isFinalizedByAll
+                          ? "#f6f6f6"
+                          : "#fff",
+                      }}
+                      key={row.id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <StyledTableCell align="right">{row.id}</StyledTableCell>
+                      <StyledTableCell
+                        style={{ maxWidth: "300px" }}
+                        align="right"
+                      >
+                        {row.description}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {row.amount}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {row.approveRatio}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {row.isApproved ? (
+                          <DoneIcon className={styles.success} />
+                        ) : (
+                          <Button
+                            variant="contained"
+                            className={styles.approvalButton}
+                          >
+                            Approve
+                          </Button>
+                        )}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {" "}
+                        {row.isFinalized ? (
+                          <DoneIcon className={styles.success} />
+                        ) : (
+                          // <Button
+                          //   variant="contained"
+                          //   className={styles.approvalButton}
+                          // >
+                          //   Finalize
+                          // </Button>
+                          <HourglassTopIcon className={styles.remaining} />
+                        )}
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <div
+              className="alertBox"
+              style={{
+                position: "fixed",
+                bottom: "40px",
+                display: "flex",
+                width: "90%",
+                margin: "auto",
+                justifyContent: "center",
+                zIndex: "1000",
+              }}
+            >
+              {alert ? (
+                alertServerity === "success" ? (
+                  <Alert
+                    variant="filled"
+                    severity="success"
+                    style={{ backgroundColor: "#4acd8d !important" }}
+                  >
+                    Success
+                  </Alert>
+                ) : (
+                  <Alert
+                    variant="filled"
+                    severity="error"
+                    style={{ backgroundColor: "#eb5757 !important" }}
+                  >
+                    Something went wrong. Please try again.
+                  </Alert>
+                )
+              ) : null}
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 };

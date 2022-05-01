@@ -21,53 +21,54 @@ export default async (
   isAuthenticating,
   isWeb3EnableLoading
 ) => {
-  if (useraddress!==undefined){
-  const readOptions = {
-    chain: "rinkeby",
-    address: FactoryAddress,
-    function_name: "getDeployedCampaigns",
-    abi: FactoryArtifact.abi,
-  };
-
-  let datalist = [];
-  const price = await INRPrice();
-  // console.log(isWeb3Enabled, isAuthenticating, isWeb3EnableLoading);
-  // if (!isAuthenticating && !isWeb3Enabled && !isWeb3EnableLoading){
-  //     await Moralis.enableWeb3()
-
-  var campaignlist = await Moralis.Web3API.native.runContractFunction(
-    readOptions
-  );
-  var campaign;
-
-  for (let i = 0; i < campaignlist.length; i++) {
-    let add = campaignlist[i];
-    
-    const readOptions2 = {
+  if (useraddress !== undefined) {
+    const readOptions = {
       chain: "rinkeby",
-      address: add,
-      function_name: "contributersMap",
-      abi: CampaignArtifact.abi,
-      params: {"":useraddress},
+      address: FactoryAddress,
+      function_name: "getDeployedCampaigns",
+      abi: FactoryArtifact.abi,
     };
-    const contributed = await Moralis.Web3API.native.runContractFunction(
-      readOptions2
+
+    let datalist = [];
+    const price = await INRPrice();
+    // console.log(isWeb3Enabled, isAuthenticating, isWeb3EnableLoading);
+    // if (!isAuthenticating && !isWeb3Enabled && !isWeb3EnableLoading){
+    //     await Moralis.enableWeb3()
+
+    var campaignlist = await Moralis.Web3API.native.runContractFunction(
+      readOptions
     );
-    if (contributed) {
-      const readOptions = {
+    var campaign;
+
+    for (let i = 0; i < campaignlist.length; i++) {
+      let add = campaignlist[i];
+
+      const readOptions2 = {
         chain: "rinkeby",
         address: add,
-        function_name: "getDetails",
+        function_name: "contributersMap",
         abi: CampaignArtifact.abi,
+        params: { "": useraddress },
       };
-      campaign = await Moralis.Web3API.native.runContractFunction(readOptions);
-      campaign = { ...campaign, id: add, price: price };
-      datalist.push(campaign);
+      const contributed = await Moralis.Web3API.native.runContractFunction(
+        readOptions2
+      );
+      if (contributed) {
+        const readOptions = {
+          chain: "rinkeby",
+          address: add,
+          function_name: "getDetails",
+          abi: CampaignArtifact.abi,
+        };
+        campaign = await Moralis.Web3API.native.runContractFunction(
+          readOptions
+        );
+        campaign = { ...campaign, id: add, price: price };
+        datalist.push(campaign);
+      }
     }
-  }
-  return datalist;
-  
-}else{
-    return []
+    return datalist;
+  } else {
+    return [];
   }
 };
