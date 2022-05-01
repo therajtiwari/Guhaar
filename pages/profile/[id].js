@@ -33,7 +33,7 @@ const Profile = () => {
   const [username, setUsername] = useState();
   const [address, setAddress] = useState();
   const { fetch, data, error, isLoading } = useMoralisQuery(
-    "Users",
+    "_User",
     (query) => query.equalTo("ethAddress", id),
     [],
     { autoFetch: false }
@@ -45,8 +45,8 @@ const Profile = () => {
       if (id !== undefined) {
         const Monster = Moralis.Object.extend("_User");
         const query = new Moralis.Query(Monster);
-        await query.equalTo("ethAddress", id);
-        const results = await query.find().then(function (results) {
+        query.equalTo("ethAddress", id.toLowerCase());
+        query.find().then(function (results) {
           console.log("Res", results);
           console.log("username", results[0].attributes.username);
           console.log("eth", results[0].attributes.ethAddress);
@@ -86,16 +86,18 @@ const Profile = () => {
     //     setComponent(<ProfileCard username={username} address={address}/>)
     // }
 
-    await getUdata().then((res) => {
-      console.log("res", res);
-      // setUsername(res.get("username"));
-      // setAddress(res.attributes.ethAddress);
-    });
+    // await getUdata().then((res) => {
+    //   console.log("res", res);
+    //   // setUsername(res.get("username"));
+    //   // setAddress(res.attributes.ethAddress);
+    // });
+
+    await getUdata();
 
     console.log(user);
-    if (username !== undefined) {
-      setComponent(<ProfileCard username={username} address={address} />);
-    }
+    // if (username !== undefined) {
+    //   setComponent(<ProfileCard username={username} address={address} />);
+    // }
 
     let final = await getCampaigns(
       Moralis,

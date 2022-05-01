@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import * as React from "react";
+import Link from "next/link";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid"; 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { FormControl } from "@mui/material";
@@ -150,10 +151,13 @@ export default function Home(props) {
               <Divider mt={5} />
 
               <Grid item xs zeroMinWidth>
-                <Typography className={styles.infoText} fontWeight={"bold"}>
-                  Wallet Address of Campaign Creator
-                </Typography>
-                <Typography className={styles.infoText}>{id}</Typography>
+                
+                  <Typography className={styles.infoText} fontWeight={"bold"}>
+                    Wallet Address of Campaign Creator
+                  </Typography>
+                  <Link href={ `/profile/${details[10]}`}>
+                  <Typography className={styles.infoText}>{details[10]}</Typography>
+                </Link>
               </Grid>
               <Divider mt={5} />
 
