@@ -236,11 +236,11 @@ export default function Home(props) {
                               </InputAdornment>
                             }
                             onChange={(e) => {
-                              setConvert(Math.abs(e.target.value));
+                              setConvert(e.target.value);
                             }}
                           />
                         </FormControl>
-                        {convert ? (
+                        {convert>0 ? (
                           <FormHelperText>
                             <span className={styles.grey}>
                               {parseFloat(convert * details["price"]).toFixed(
