@@ -79,6 +79,7 @@ export default function Home(props) {
     useWeb3ExecuteFunction();
 
   const handlePayment = async () => {
+    console.log("want", wantToApprove);
     if (convert > 0) {
       await Moralis.authenticate();
       fetch({
@@ -204,15 +205,15 @@ export default function Home(props) {
                     <Typography
                       variant="h5"
                       fontWeight={"bold"}
-                      // component="div"
+                    // component="div"
                     >
                       {ethers.utils.formatEther(details[8])} ETH{" "}
                       <span className={styles.grey}>
                         {ethers.utils.formatEther(details[8]) > 0
                           ? "(₹ " +
-                            parseFloat(ethers.utils.formatEther(details[8]) *
-                              details["price"]).toFixed(2) +
-                            " )"
+                          parseFloat(ethers.utils.formatEther(details[8]) *
+                            details["price"]).toFixed(2) +
+                          " )"
                           : ""}
                       </span>
                     </Typography>
@@ -223,8 +224,8 @@ export default function Home(props) {
                       {ethers.utils.formatEther(details[5]).split(".")[1] > 0
                         ? ethers.utils.formatEther(details[5])
                         : ethers.utils
-                            .formatEther(details[5])
-                            .split(".")[0]}{" "}
+                          .formatEther(details[5])
+                          .split(".")[0]}{" "}
                       ETH (₹
                       {parseFloat(
                         ethers.utils.formatEther(details[5]) * details["price"]
@@ -278,24 +279,24 @@ export default function Home(props) {
                       <br />
                       {isAuthenticated ? (
                         <div>
-                        <FormControlLabel
-                        label='Become Approver'
-                          control={
-                            <Checkbox
-                              checked={wantToApprove}
-                              onChange={handleChange}
-                            />
-                          }
-                        />
-                        <Tooltip title="You Become an approver for each request of the campaign creator">
-                          <IconButton
-                            size="small"                        
-                            color="inherit"
-                          >
-                            <QuestionMarkIcon style={{height: '16px'}} />
-                          </IconButton>
-                      </Tooltip>
-                      </div>
+                          <FormControlLabel
+                            label='Become Approver'
+                            control={
+                              <Checkbox
+                                checked={wantToApprove}
+                                onChange={handleChange}
+                              />
+                            }
+                          />
+                          <Tooltip title="You Become an approver for each request of the campaign creator">
+                            <IconButton
+                              size="small"
+                              color="inherit"
+                            >
+                              <QuestionMarkIcon style={{ height: '16px' }} />
+                            </IconButton>
+                          </Tooltip>
+                        </div>
                       ) : null}
                       {isAuthenticated ? (
                         <Button
