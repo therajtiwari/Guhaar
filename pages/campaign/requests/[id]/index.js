@@ -460,7 +460,7 @@ const Requests = () => {
                         {row.isApproved ? (
                           <DoneIcon className={styles.success} />
                         ) : (
-                          canApprove ?
+                          canApprove && !row.isFinalizedByAll ?
                             <Button
                               variant="contained"
                               className={styles.approvalButton}

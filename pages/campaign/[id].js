@@ -280,7 +280,7 @@ export default function Home(props) {
                       {isAuthenticated ? (
                         <div>
                           <FormControlLabel
-                            label='Become Approver'
+                            label='Approve Manually'
                             control={
                               <Checkbox
                                 checked={wantToApprove}
