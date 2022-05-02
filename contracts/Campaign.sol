@@ -92,6 +92,11 @@ contract Campaign {
             msg.sender != recipient,
             "You cannot contribute to your own campaign"
         );
+        // require(
+        //     block.timestamp < campaignLastDate,
+        //     "Campaign has ended already"
+        // );
+
         collectedAmount += msg.value;
         if (!contributersMap[msg.sender]) {
             contributers.push(msg.sender);
@@ -127,7 +132,10 @@ contract Campaign {
         Request storage newRequest = requests.push();
         newRequest.description = description;
         newRequest.value = value;
-        if (approversCount == 0) {
+        // if ( (approversCount - alwaysApproved) == 0) {
+        //     finalizeRequest(requests.length - 1);
+        // }
+        if ( alwaysApproved >= approversCount/2 ) {
             finalizeRequest(requests.length - 1);
         }
     }

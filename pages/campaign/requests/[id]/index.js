@@ -313,7 +313,7 @@ const Requests = () => {
   };
 
   const getAllCampaignRequests = async () => {
-    const { datalist, canapprove, numberofapprovers } = await getCampaignRequest(
+    const { datalist, canapprove, numberofapprovers, alwaysApproved } = await getCampaignRequest(
       Moralis,
       id,
       userAddress || "0x0000000000000000000000000000000000000000",
@@ -325,6 +325,7 @@ const Requests = () => {
     console.log("datalist is", datalist);
     console.log("canapprove", canapprove);
     console.log("numberofapprovers", numberofapprovers);
+
     const tempRows = [];
     if (datalist?.length > 0) {
       datalist.forEach((detail) => {
@@ -332,7 +333,7 @@ const Requests = () => {
           detail.index + 1,
           detail.description,
           detail.value / 10 ** 18,
-          detail.approvalCount,
+          detail.approvalCount + alwaysApproved,
           numberofapprovers,
           true,
           detail.complete
