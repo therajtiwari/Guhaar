@@ -28,7 +28,7 @@ const responsive = {
   },
 };
 export default function BigCardCarousel({ campaigns }) {
-  // console.log(campaigns)
+  // console.log("here",campaigns)
 
   const campaign = [];
 
@@ -39,6 +39,8 @@ export default function BigCardCarousel({ campaigns }) {
       campaign.push(<BigCard key={campaigns[i][0]} campaign={campaigns[i]} />);
     }
   }
+
+  // console.log(campaign);
 
   return (
     <div>
@@ -58,7 +60,7 @@ export default function BigCardCarousel({ campaigns }) {
         removeArrowOnDeviceType={["tablet", "tablet2", "mobile", "desktop"]}
         itemClass="carousel-item-padding-4-px"
       >
-        {campaign}
+        {campaign.splice(0, 3)}
       </Carousel>
     </div>
   );
