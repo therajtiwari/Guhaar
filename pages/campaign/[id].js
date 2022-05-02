@@ -286,12 +286,16 @@ export default function Home(props) {
                               onChange={handleChange}
                             />
                           }
-                        /><Tooltip title="You Become an approver for each request of the campaign creator"><IconButton
-                        size="small"                        
-                        color="inherit"
-                      >
-                        <QuestionMarkIcon style={{height: '16px', marginLeft: '-25px'}} />
-                      </IconButton></Tooltip></div>
+                        />
+                        <Tooltip title="You Become an approver for each request of the campaign creator">
+                          <IconButton
+                            size="small"                        
+                            color="inherit"
+                          >
+                            <QuestionMarkIcon style={{height: '16px'}} />
+                          </IconButton>
+                      </Tooltip>
+                      </div>
                       ) : null}
                       {isAuthenticated ? (
                         <Button
