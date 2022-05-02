@@ -137,7 +137,7 @@ contract Campaign {
         // if ( (approversCount - alwaysApproved) == 0) {
         //     finalizeRequest(requests.length - 1);
         // }
-        if ( alwaysApproved >= approversCount/2 ) {
+        if ( alwaysApproved >= ((approversCount+1)/2) ) {
             finalizeRequest(requests.length - 1);
         }
     }
@@ -153,7 +153,7 @@ contract Campaign {
         requests[index].approvals[msg.sender] = true;
         requests[index].approvalCount++;
         if (
-            requests[index].approvalCount + alwaysApproved >= approversCount / 2
+            (requests[index].approvalCount + alwaysApproved) >= ((approversCount+1)/2)
         ) {
             finalizeRequest(index);
         }
