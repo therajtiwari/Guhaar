@@ -30,6 +30,9 @@ import Checkbox from "@mui/material/Checkbox";
 import getCampaigndetails from "../../components/getCampaigndetails.server";
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Tooltip from '@mui/material/Tooltip';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import IconButton from '@mui/material/IconButton';
 import swal from 'sweetalert';
 
 
@@ -87,7 +90,6 @@ export default function Home(props) {
           icon: "success",
           button: {
             text: "Ok",
-            onclick: Router.push('/'),
           },
         }),
         params: {
@@ -275,6 +277,7 @@ export default function Home(props) {
                       </form>
                       <br />
                       {isAuthenticated ? (
+                        <div>
                         <FormControlLabel
                         label='Become Approver'
                           control={
@@ -283,7 +286,12 @@ export default function Home(props) {
                               onChange={handleChange}
                             />
                           }
-                        />
+                        /><Tooltip title="You Become an approver for each request of the campaign creator"><IconButton
+                        size="small"                        
+                        color="inherit"
+                      >
+                        <QuestionMarkIcon style={{height: '16px', marginLeft: '-25px'}} />
+                      </IconButton></Tooltip></div>
                       ) : null}
                       {isAuthenticated ? (
                         <Button
