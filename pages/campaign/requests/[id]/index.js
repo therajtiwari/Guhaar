@@ -70,9 +70,9 @@ function createData(
   id,
   description,
   amount,
-  approved,
+  approved, // num of peeps who have approved
   totalApprovers,
-  isApproved,
+  isApproved, //current user has appraoved or not
   isFinalizedByAll
 ) {
   const approveRatio = approved.toString() + '/' + totalApprovers.toString();
@@ -88,55 +88,6 @@ function createData(
     isFinalizedByAll,
   };
 }
-
-// createData(
-//   0,
-//   "Request 1",
-//   1,
-//   "0x1234567890123456789012345678901234567890",
-//   1,
-//   20,
-//   "Approve",
-//   "Finalize",
-//   true,
-//   true
-// ),
-//   createData(
-//     1,
-//     "Request 2",
-//     2,
-//     "0x1234567890123456789012345678901234567890",
-//     11,
-//     20,
-//     "Approve",
-//     "Finalize",
-//     true,
-//     true
-//   ),
-//   createData(
-//     2,
-//     "Request 3",
-//     3,
-//     "0x1234567890123456789012345678901234567890",
-//     15,
-//     20,
-//     "Approve",
-//     "Finalize",
-//     true,
-//     true
-//   ),
-//   createData(
-//     3,
-//     "Request 4",
-//     4,
-//     "0x1234567890123456789012345678901234567890",
-//     6,
-//     20,
-//     "Approve",
-//     "Finalize",
-//     false,
-//     false
-//   ),
 
 const StyledButton = styled(Button)`
   &:hover {
@@ -189,8 +140,10 @@ const Requests = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const ApproveRequests = async (id) => {
+  const ApproveRequests = async (index) => {
     let success = false;
+    console.log("oisndoisndovns");
+    console.log("upar", index);
     await fetch({
       onComplete: (a) => {
         success = true;
@@ -206,7 +159,7 @@ const Requests = () => {
         functionName: "approveRequest",
         abi: CampaignArtifact.abi,
         params: {
-          index: 0, // index fix
+          index: index, // index fix
         },
       },
     })
@@ -293,9 +246,11 @@ const Requests = () => {
     }, 5000);
   };
 
-  const handleApproveRequest = async (id) => {
-    if (isAuthenticated && isInitialized && isWeb3Enabled) {
-      const res = await ApproveRequests(id);
+  const handleApproveRequest = async (index) => {
+    console.log(index);
+    await Moralis.authenticate();
+    if (isAuthenticated) {
+      const res = await ApproveRequests(index);
       if (res) {
         setAlertServerity("success");
       } else {
@@ -334,7 +289,7 @@ const Requests = () => {
           detail.value / 10 ** 18,
           detail.approvalCount,
           numberofapprovers,
-          true,
+          detail.currApproved,
           detail.complete
         );
         tempRows.push(currData);
@@ -471,7 +426,7 @@ const Requests = () => {
                       <b>Approve</b>
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      <b>Finalize</b>
+                      <b>Finalized</b>
                     </StyledTableCell>
                   </StyledTableRow>
                 </TableHead>
@@ -481,7 +436,7 @@ const Requests = () => {
                       style={{
                         height: 70,
                         backgroundColor: row.isFinalizedByAll
-                          ? "#f6f6f6"
+                          ? "#f0f0f0"
                           : "#fff",
                       }}
                       key={row.id}
@@ -504,25 +459,30 @@ const Requests = () => {
                         {row.isApproved ? (
                           <DoneIcon className={styles.success} />
                         ) : (
-                          <Button
-                            variant="contained"
-                            className={styles.approvalButton}
-                          >
-                            Approve
-                          </Button>
+                          canApprove ?
+                            <Button
+                              variant="contained"
+                              className={styles.approvalButton}
+                              onClick={() => handleApproveRequest(row.id - 1)}
+
+                            >
+                              Approve
+                            </Button> :
+                            <Button
+                              variant="contained"
+                              // className={styles.approvalButton}
+                              // color="primary"
+                              disabled
+                            >
+                              Approve
+                            </Button>
                         )}
                       </StyledTableCell>
                       <StyledTableCell align="right">
                         {" "}
-                        {row.isFinalized ? (
+                        {row.isFinalizedByAll ? (
                           <DoneIcon className={styles.success} />
                         ) : (
-                          // <Button
-                          //   variant="contained"
-                          //   className={styles.approvalButton}
-                          // >
-                          //   Finalize
-                          // </Button>
                           <HourglassTopIcon className={styles.remaining} />
                         )}
                       </StyledTableCell>
