@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import { useMoralis } from "react-moralis";
 import styles from "../styles/Home.module.css";
-
+import moment from "moment";
 import getCampaigns from "../components/getCampaigns.server";
 import BigCardCarousel from "../components/home/BigCardCarousel";
 import { Divider } from "@mui/material";
@@ -27,6 +27,9 @@ export default function Home() {
 
   const [walletID, setWalletID] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [trendingCampaigns, setTrendingCampaigns] = useState([]);
+  const [popularCampaigns, setPopularCampaigns] = useState([]);
+  const [workingCampaigns, setWorkingCampaigns] = useState([]);
   const handleSearch = (e) => {
     // console.log(e.target.value);
     setSearchQuery(e.target.value);
@@ -34,6 +37,36 @@ export default function Home() {
 
   let [loading, setLoading] = useState(true);
   let [color, setColor] = useState("#6f49fd");
+
+  // const sortFunction = (a, b, i) => {
+  //   if (a[i] === b[i]) {
+  //       return 0;
+  //   }
+  //   else {
+  //       return (a[i] < b[i]) ? -1 : 1;
+  //   }
+  // }
+
+  // function sortFunction(a, b) {
+  //   if (a[8] === b[8]) {
+  //       return 0;
+  //   }
+  //   else {
+  //       return (a[8] < b[8]) ? -1 : 1;
+  //   }
+  // }
+
+  const getWorking = (campaigns) => {
+    let c = [];
+    for (let i = 0; i < campaigns.length; i++) {
+      const lastDay = new Date(campaigns[i][7] * 1000);
+      const daysLeft = moment(lastDay).diff(moment(), "days");
+      if (daysLeft > 0) {
+          c.push(campaigns[i]);
+        }
+      }
+    return c;
+  };
 
   const {
     Moralis,
@@ -64,6 +97,18 @@ export default function Home() {
     console.log(final);
     setLoading(false);
     setCampaigns(final);
+
+    const trending = final.sort((a, b) => {
+      return b[8] - a[8];
+    });
+    console.log("sorted",trending.slice(0,2));
+    setTrendingCampaigns(trending);
+
+    const popular = final.sort((a, b) => {
+      return b[9] - a[9];
+    });
+    setPopularCampaigns(popular);
+
   }, []);
 
   useEffect(() => {
@@ -119,14 +164,17 @@ export default function Home() {
           ) : (
             <>
               <div className={styles.sectionWrapper}>
-                <h2>Popular campaigns</h2>
+                <h2>Trending campaigns</h2>
 
-                <BigCardCarousel campaigns={campaigns} />
+                {/* <BigCardCarousel campaigns={campaigns.sort(function(a,b){
+                  return b[8] - a[8];
+                }).slice(0, campaigns.length/2+1)} /> */}
+                <BigCardCarousel campaigns={trendingCampaigns} />
               </div>
               <div className={styles.sectionWrapper}>
-                <h2>Recent Campaigns</h2>
+                <h2>Popular Campaigns</h2>
                 <CardCarousel
-                  campaigns={campaigns}
+                  campaigns={trendingCampaigns}
                   style={{ margin: "auto" }}
                 />
               </div>
