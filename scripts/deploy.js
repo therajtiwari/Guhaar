@@ -64,7 +64,7 @@ async function main() {
 
   await campaignFactory.createCampaign(
     ethers.utils.parseEther("0.01"),
-    "Funds for preserving nature in India",
+    "Funds for preserving nature",
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
     "https://science.oregonstate.edu/sites/science.oregonstate.edu/files/styles/882_x_662/public/2021-02/int-students-osu.png?h=232d5ff5&itok=ES5zN9eJ",
     ethers.utils.parseEther("2"),
@@ -74,7 +74,7 @@ async function main() {
 
   await campaignFactory.createCampaign(
     ethers.utils.parseEther("0.01"),
-    "Funds to save tthe forests in Mumbai",
+    "Funds to save the forests ",
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
     "https://wallpaperaccess.com/full/1261630.jpg",
     ethers.utils.parseEther("1"),
@@ -99,8 +99,6 @@ async function main() {
   console.log("campaignFactory deployed to:", campaignFactory.address);
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
