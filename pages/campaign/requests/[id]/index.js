@@ -279,7 +279,7 @@ const Requests = () => {
     setCanApprove(canapprove);
     console.log("datalist is", datalist);
     console.log("canapprove", canapprove);
-    console.log("numberofapprovers", numberofapprovers);
+    console.log("numberofapprovers", numberofapprovers, alwaysApproved);
 
     const tempRows = [];
     if (datalist?.length > 0) {
@@ -288,7 +288,7 @@ const Requests = () => {
           detail.index + 1,
           detail.description,
           detail.value / 10 ** 18,
-          detail.approvalCount + alwaysApproved,
+          parseInt(detail.approvalCount) + parseInt(alwaysApproved),
           numberofapprovers,
           detail.currApproved,
           detail.complete

@@ -102,9 +102,11 @@ contract Campaign {
             contributers.push(msg.sender);
         }
         contributersMap[msg.sender] = true;
-        if (!approvers[msg.sender] && msg.value > minimunContribution) {
-            approvers[msg.sender] = true;
-            approversCount++;
+        if (msg.value > minimunContribution) {
+            if (!approvers[msg.sender]) {
+                approvers[msg.sender] = true;
+                approversCount++;
+            }
             if (!wantToApprove) {
                 alwaysApproved += 1;
                 alwaysApprovedMap[msg.sender] = true;
