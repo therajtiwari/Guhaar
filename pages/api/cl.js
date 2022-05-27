@@ -14,12 +14,12 @@ cloudinary.uploader
   .upload("./test.jpg", {
     resource_type: "image",
     function(error, result) {
-      console.log(result, error);
+      // console.log(result, error);
     },
   })
   .then((result) => {
-    console.log("Success", JSON.stringify(result, null, 2));
+    // console.log("Success", JSON.stringify(result, null, 2));
   })
   .catch((error) => {
-    console.log("Error", JSON.stringify(error, null, 2));
+    // console.log("Error", JSON.stringify(error, null, 2));
   });

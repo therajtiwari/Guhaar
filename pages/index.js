@@ -215,6 +215,6 @@ const INRPrice = async () => {
     const value = await response.json();
     return value["tickers"][0]["price"];
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 };

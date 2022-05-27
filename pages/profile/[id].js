@@ -31,7 +31,7 @@ const Profile = () => {
   const router = useRouter();
   const id = router.query.id;
   // const address = id.toString().toLowerCase();
-  console.log("id here",id);
+  // console.log("id here",id);
   const [campaigns, setCampaigns] = useState([]);
   const [username, setUsername] = useState();
   // const [address, setAddress] = useState("0x6a3f8927E7fA9d8C103B9344aAE8cAE044f73007");
@@ -53,9 +53,9 @@ const Profile = () => {
         const query = new Moralis.Query(Monster);
         query.equalTo("ethAddress", id.toLowerCase());
         query.find({ useMasterKey: true }).then(function (results) {
-          console.log("Res", results);
-          console.log("username", results[0].attributes.username);
-          console.log("eth", results[0].attributes.ethAddress);
+          // console.log("Res", results);
+          // console.log("username", results[0].attributes.username);
+          // console.log("eth", results[0].attributes.ethAddress);
           setUsername(results[0].get("username"));
           setAddress(results[0].get("ethAddress"));
           // return results[0];
@@ -87,7 +87,7 @@ const Profile = () => {
 
     // await getUdata();
 
-    console.log(user);
+    // console.log(user);
     // if(username !== undefined){
     //     setComponent(<ProfileCard username={username} address={address}/>)
     // }
@@ -100,7 +100,7 @@ const Profile = () => {
 
     // await getUdata();
 
-    console.log(user);
+    // console.log(user);
     // if (username !== undefined) {
     //   setComponent(<ProfileCard username={username} address={address} />);
     // }
@@ -126,7 +126,7 @@ const Profile = () => {
       isWeb3EnableLoading
     );
     setCreatedCampaigns(final2);
-    console.log("created",final2);
+    // console.log("created", final2);
 
     let final3 = await getCampaignsDonated(
       Moralis,
@@ -136,7 +136,7 @@ const Profile = () => {
       isWeb3EnableLoading
     );
     setDonatedCampaigns(final3);
-    console.log("donated",final3);
+    // console.log("donated", final3);
   }, [router.query.id]);
 
 
@@ -145,7 +145,7 @@ const Profile = () => {
       <Nav isAuthenticated={isAuthenticated} />
       {router.query.id && <OProfileCard address={router.query.id} />}
       <CampaignList title="Campaigns" campaigns={createdCampaigns} />
-      <CampaignList title="Supported Campaigns" campaigns={donatedCampaigns}/>
+      <CampaignList title="Supported Campaigns" campaigns={donatedCampaigns} />
     </>
   );
 };

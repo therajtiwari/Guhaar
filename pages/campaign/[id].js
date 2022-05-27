@@ -34,6 +34,12 @@ import Tooltip from '@mui/material/Tooltip';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import IconButton from '@mui/material/IconButton';
 import swal from 'sweetalert';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Alert from '@mui/material/Alert';
 
 
 export default function Home(props) {
@@ -54,6 +60,15 @@ export default function Home(props) {
   const { id } = router.query;
   const handleChange = (event) => {
     setwantToApprove(event.target.checked);
+  };
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   useEffect(async () => {
@@ -79,8 +94,12 @@ export default function Home(props) {
     useWeb3ExecuteFunction();
 
   const handlePayment = async () => {
-    console.log("want", wantToApprove);
-    if (convert > 0) {
+    // console.log(convert);
+    if (
+      parseFloat(convert * details["price"]).toFixed(2) < 100) {
+      handleClickOpen();
+    }
+    else {
       await Moralis.authenticate();
       fetch({
         onComplete: (a) => console.log(a),
@@ -106,13 +125,41 @@ export default function Home(props) {
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
 
-      console.log(data, error);
     }
   };
 
   return details != null ? (
+
     <div>
       <Nav />
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              minWidth: "400px",  // Set your width here
+            },
+          },
+        }}
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Invalid Amount"}
+        </DialogTitle>
+        <DialogContent>
+          {/* <DialogContentText id="alert-dialog-description">
+            Let Google help apps determine location. This means sending anonymous
+            location data to Google, even when no apps are running.
+          </DialogContentText> */}
+          <Alert variant="filled" severity="error">
+            Minimum Contribution is Rs 100.
+          </Alert>
+        </DialogContent>
+
+      </Dialog>
       <Box sx={{ flexGrow: 1 }} className={styles.boxer}>
         <Grid
           container
@@ -269,9 +316,9 @@ export default function Home(props) {
                         {convert > 0 ? (
                           <FormHelperText>
                             <span className={styles.grey}>
-                              {parseFloat(convert * details["price"]).toFixed(
+                              <div style={{ fontSize: "18px" }}>Rs {parseFloat(convert * details["price"]).toFixed(
                                 2
-                              )}
+                              )}</div>
                             </span>
                           </FormHelperText>
                         ) : null}

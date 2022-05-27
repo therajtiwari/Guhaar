@@ -1,5 +1,5 @@
 export default function Loader() {
-  console.log("in Loader");
+  // console.log("in Loader");
   return (
     <div
       className="loader"

@@ -42,7 +42,7 @@ describe("CampaignRequest", function () {
       CampaignArtifact.abi,
       ethers.getSigners[0]
     );
-    console.log(owner);
+    // console.log(owner);
     await Campaign.connect(owner).createRequest(
       (description = "nsaodfnoiasndc"),
       (value = ethers.utils.parseEther("0"))

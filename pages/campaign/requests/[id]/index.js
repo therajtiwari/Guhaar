@@ -142,8 +142,6 @@ const Requests = () => {
 
   const ApproveRequests = async (index) => {
     let success = false;
-    console.log("oisndoisndovns");
-    console.log("upar", index);
     await fetch({
       onComplete: (a) => {
         success = true;
@@ -177,16 +175,12 @@ const Requests = () => {
     let success = false;
     await fetch({
       onComplete: () => {
-        console.log("done");
         // success = true;
       },
       onError: (a) => {
-        console.log("eorrorrrrrrr");
         success = false;
       },
       onSuccess: (a) => {
-        console.log("ho gaya");
-        console.log(JSON.stringify(a));
         success = true;
       },
       params: {
@@ -203,7 +197,7 @@ const Requests = () => {
         console.log("success");
       })
       .catch((err) => {
-        console.log("eroor");
+        console.log("error");
         success = false;
       });
 
@@ -277,9 +271,6 @@ const Requests = () => {
       isWeb3EnableLoading
     );
     setCanApprove(canapprove);
-    console.log("datalist is", datalist);
-    console.log("canapprove", canapprove);
-    console.log("numberofapprovers", numberofapprovers, alwaysApproved);
 
     const tempRows = [];
     if (datalist?.length > 0) {
