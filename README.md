@@ -60,19 +60,24 @@ npx hardhat run --network localhost scripts/deploy.js && npm run dev
     <img width=500px src="public/assets/Guhaar.svg"></img>
 <p>
 
+
+## To get test eth in rinkeby testnet click [here](https://faucets.chain.link/rinkeby)
+
 ## Important commands
 
+### start frontend
 ```
-
-# start frontend
 npm run dev
-
-# compile contract
-npx hardhat compile
-
-# redeploy on rinkeby (make sure to have private key in env and note new contract address)
-npx hardhat run --network rinkeby scripts/deploy.js
-
 ```
 
-To get test eth in rinkeby testnet click [here](https://faucets.chain.link/rinkeby)
+### compile contract
+```
+npx hardhat compile
+```
+
+### redeploy on rinkeby (make sure to have private key in env and note new contract address)
+```
+npx hardhat run --network rinkeby scripts/deploy.js
+```
+
+
