@@ -60,6 +60,15 @@ npx hardhat run --network localhost scripts/deploy.js && npm run dev
     <img width=500px src="public/assets/Guhaar.svg"></img>
 <p>
 
+## Contributors
+| Sr No. | Name              | e-mail                 | git-profile    | git-profile-link    |
+| ------ | ----------------- | ---------------------- | -------------- | -------------- |
+| 1.     | Shreyans Mulkutkar| s.mulkutkar@somaiya.edu  | AxonBlAzE  |https://github.com/AxonBlAzE|
+| 2.     | Ramavtar Yadav| ramavtar.y@somaiya.edu | ramavtarofficial   |https://github.com/ramavtarofficial|
+| 3.     |Raj Tiwari| therajtiwari254@somaiya.edu| therajtiwari   |https://github.com/therajtiwari| 
+| 4.     |Huzaifa Khilawala| huzaifa.k@somaiya.edu| ReadHeadpone   |https://github.com/RedHeadphone| 
+    
+
 ## Important commands
 
 ```
