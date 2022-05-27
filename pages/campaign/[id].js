@@ -227,7 +227,7 @@ export default function Home(props) {
                   Wallet Address of Campaign Creator
                 </Typography>
                 <Link href={`/profile/${details[10]}`}>
-                  <Typography className={styles.infoText}>
+                  <Typography style={{ cursor: "pointer" }} className={styles.infoText}>
                     {details[10]}
                   </Typography>
                 </Link>

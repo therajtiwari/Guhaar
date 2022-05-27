@@ -180,11 +180,29 @@ export default function Nav(props) {
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            {isAuthenticated ? <SignOut /> : <SignIn />}
-            <span style={{ margin: "0px 5px" }}></span>
+            {isAuthenticated ? <> <SignOut />
+              <span style={{ margin: "0px 5px" }}></span>
+
+              <Button style={{ backgroundColor: "#6f49fd " }} variant="contained" onClick={redirect}>
+                Create Campaign
+              </Button>
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={redirectprofile}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            </> : <SignIn />}
+            {/* <span style={{ margin: "0px 5px" }}></span>
+
             <Button style={{ backgroundColor: "#6f49fd " }} variant="contained" onClick={redirect}>
               Create Campaign
-            </Button>
+            </Button> */}
             {/* <IconButton
               size="large"
               aria-label="show 4 new mails"
@@ -203,17 +221,7 @@ export default function Nav(props) {
                 <NotificationsIcon />
               </Badge>
             </IconButton> */}
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={redirectprofile}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
