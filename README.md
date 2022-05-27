@@ -56,6 +56,10 @@ npx hardhat run --network localhost scripts/deploy.js && npm run dev
 
 ``` -->
 
+<center>
+    <img width=500px src="public/assets/Guhaar.svg"></img>
+</center>
+
 ## Important commands
 
 ```
