@@ -28,7 +28,7 @@ const responsive = {
   },
 };
 export default function BigCardCarousel({ campaigns }) {
-  // console.log("here",campaigns)
+  console.log("here", campaigns)
 
   const campaign = [];
 

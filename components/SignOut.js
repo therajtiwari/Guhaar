@@ -12,7 +12,7 @@ export const SignOut = () => {
       const options = { chain: Moralis.Chains.ETH_RINKBEY };
       const balance = await Moralis.Web3API.account.getNativeBalance(options);
       setBalance(balance.balance / 10 ** 18);
-    } catch {}
+    } catch { }
   };
   useEffect(() => {
     fetchBalance();
@@ -28,7 +28,7 @@ export const SignOut = () => {
         alert("sucesfully transfered");
       });
       await fetchBalance();
-    } catch {}
+    } catch { }
   };
 
   return (
@@ -54,7 +54,7 @@ export const SignOut = () => {
     //     <button className={styles.loginButton} onClick={handleTransfer}>
     //       Test Transfer
     //     </button>
-    <Button variant="contained" onClick={logout}>
+    <Button style={{ backgroundColor: "#eb5757 " }} variant="contained" onClick={logout}>
       Sign Out
     </Button>
     //  </div>

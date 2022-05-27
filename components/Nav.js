@@ -28,7 +28,7 @@ const redirect = () => {
   Router.push("/createcampaign");
 };
 
-const redirectprofile= () => {
+const redirectprofile = () => {
   Router.push("/profile/my");
 };
 
@@ -182,7 +182,7 @@ export default function Nav(props) {
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {isAuthenticated ? <SignOut /> : <SignIn />}
             <span style={{ margin: "0px 5px" }}></span>
-            <Button variant="contained" onClick={redirect}>
+            <Button style={{ backgroundColor: "#6f49fd " }} variant="contained" onClick={redirect}>
               Create Campaign
             </Button>
             {/* <IconButton
@@ -232,6 +232,6 @@ export default function Nav(props) {
       {renderMobileMenu}
       {renderMenu}
       <Divider variant="fullWidth" sx={{ borderBottomWidth: 2 }} />
-    </Box>
+    </Box >
   );
 }

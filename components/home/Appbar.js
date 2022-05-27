@@ -29,7 +29,7 @@ const redirect = () => {
   Router.push("/createcampaign");
 };
 
-const redirectprofile= () => {
+const redirectprofile = () => {
   Router.push("/profile/my");
 };
 
@@ -172,7 +172,7 @@ export default function PrimarySearchAppBar(props) {
     >
       <MenuItem>{isAuthenticated ? <SignOut /> : <SignIn />}</MenuItem>
       <MenuItem onClick={redirect}>
-        <Button variant="contained">Create Campaign</Button>
+        <Button style={{ backgroundColor: "#6f49fd " }} variant="contained">Create Campaign</Button>
       </MenuItem>
       {/* <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
@@ -248,7 +248,7 @@ export default function PrimarySearchAppBar(props) {
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {isAuthenticated ? <SignOut /> : <SignIn />}
             <span style={{ margin: "0px 5px" }}></span>
-            <Button variant="contained" onClick={redirect}>
+            <Button style={{ backgroundColor: "#6f49fd " }} variant="contained" onClick={redirect}>
               Create Campaign
             </Button>
             {/* <IconButton

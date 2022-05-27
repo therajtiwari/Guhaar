@@ -24,7 +24,7 @@ export default function SignIn() {
     //     <p className={styles.error}>{JSON.stringify(authError.message)}</p>
     //   )}
     //   <div className={styles.buttonCard}>
-    <Button variant="contained" onClick={handleCustomLogin}>
+    <Button style={{ backgroundColor: "#6f49fd " }} variant="contained" onClick={handleCustomLogin}>
       Login with Web3Auth
     </Button>
     // </div>

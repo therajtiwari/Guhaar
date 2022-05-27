@@ -62,9 +62,9 @@ export default function Home() {
       const lastDay = new Date(campaigns[i][7] * 1000);
       const daysLeft = moment(lastDay).diff(moment(), "days");
       if (daysLeft > 0) {
-          c.push(campaigns[i]);
-        }
+        c.push(campaigns[i]);
       }
+    }
     return c;
   };
 
@@ -76,6 +76,15 @@ export default function Home() {
     isAuthenticating,
     isWeb3EnableLoading,
   } = useMoralis();
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      let temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+  }
 
   useEffect(async () => {
     if (isAuthenticated) {
@@ -94,20 +103,28 @@ export default function Home() {
       isAuthenticating,
       isWeb3EnableLoading
     );
-    console.log(final);
+    console.log("final is", final);
     setLoading(false);
-    setCampaigns(final);
+    // setCampaigns(final);
 
     const trending = final.sort((a, b) => {
       return b[8] - a[8];
     });
-    console.log("sorted",trending.slice(0,2));
-    setTrendingCampaigns(trending);
+    // console.log("trending sorted", trending.slice(0, 1));
+    setTrendingCampaigns(trending.slice(0, 4));
 
     const popular = final.sort((a, b) => {
       return b[9] - a[9];
     });
-    setPopularCampaigns(popular);
+    // console.log("popular sorted", popular);
+
+    const temp = popular;
+    setPopularCampaigns(temp.slice(0, temp.length));
+
+
+    shuffleArray(final);
+    setCampaigns(final);
+
 
   }, []);
 
@@ -125,6 +142,9 @@ export default function Home() {
       setSearchedCampaigns([]);
     }
   }, [searchQuery]);
+
+
+
 
   return (
     <div>
@@ -165,16 +185,12 @@ export default function Home() {
             <>
               <div className={styles.sectionWrapper}>
                 <h2>Trending campaigns</h2>
-
-                {/* <BigCardCarousel campaigns={campaigns.sort(function(a,b){
-                  return b[8] - a[8];
-                }).slice(0, campaigns.length/2+1)} /> */}
                 <BigCardCarousel campaigns={trendingCampaigns} />
               </div>
               <div className={styles.sectionWrapper}>
                 <h2>Popular Campaigns</h2>
                 <CardCarousel
-                  campaigns={trendingCampaigns}
+                  campaigns={popularCampaigns}
                   style={{ margin: "auto" }}
                 />
               </div>
