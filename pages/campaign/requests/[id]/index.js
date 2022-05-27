@@ -217,7 +217,14 @@ const Requests = () => {
       requestAmount > 0 &&
       requestAmount < 50
     ) {
-      await Moralis.authenticate();
+      // await Moralis.authenticate();
+      if (!Moralis.isWeb3Enabled){
+        await Moralis.enableWeb3({
+          provider: "web3Auth",
+          clientId: process.env.CLIENT_ID,
+          chainId: Moralis.Chains.ETH_RINKBEY
+        })
+    }
       if (isAuthenticated) {
         const res = await createRequest(id, requestDescription, requestAmount);
         if (res) {
@@ -248,7 +255,14 @@ const Requests = () => {
 
   const handleApproveRequest = async (index) => {
     console.log(index);
-    await Moralis.authenticate();
+    // await Moralis.authenticate();
+    if (!Moralis.isWeb3Enabled){
+      await Moralis.enableWeb3({
+        provider: "web3Auth",
+        clientId: process.env.CLIENT_ID,
+        chainId: Moralis.Chains.ETH_RINKBEY
+      })
+  }
     if (isAuthenticated) {
       const res = await ApproveRequests(index);
       if (res) {

@@ -81,7 +81,14 @@ export default function Home(props) {
   const handlePayment = async () => {
     console.log("want", wantToApprove);
     if (convert > 0) {
-      await Moralis.authenticate();
+      // await Moralis.authenticate();
+      if (!Moralis.isWeb3Enabled){
+        await Moralis.enableWeb3({
+          provider: "web3Auth",
+          clientId: process.env.CLIENT_ID,
+          chainId: Moralis.Chains.ETH_RINKBEY
+        })
+    }
       fetch({
         onComplete: (a) => console.log(a),
         onError: (a) => console.error(a.toString()),
