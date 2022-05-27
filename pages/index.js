@@ -201,11 +201,7 @@ export default function Home() {
               </div>
 
               <div>
-                <h2>This is the footer</h2>
-                <div class="footer-content" style={{ textAlign: "center" }}>
-                  <h3 style={{ color: "white" }}> Made with <span style={{ color: "red" }}>&#10084;&#65039</span>  By Raj Tiwari &
-                    Archi Mamaniya</h3>
-                </div>
+
               </div>
             </>
           )}
