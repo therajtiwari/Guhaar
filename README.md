@@ -61,7 +61,44 @@ npx hardhat run --network localhost scripts/deploy.js && npm run dev
 <p>
 
 
+
+## About Guhaar
+Guhaar is an Blockchain based Crowdfunding Web Application.
+    
+## Technologies Used:
+### Frontend
+1. HTML, CSS and Javascript
+2. NextJS
+3. Material UI
+
+### Blockchain
+1. Moralis
+2. HardHat
+3. Ethers
+4. Web3Auth
+5. Solidity
+    
+### Other Dependencies:
+1. NEXT - PVWA
+2. Cloudinary
+
+    
+## Features
+1. Any person who either wants to donate to an NGO or who wants to raise funds for a particular social cause can participate without any hassle.
+2. The user who wants to raise funds can create a campaign by providing certain details such as name of campaign, details, target of funds, etc.
+3. The user who wants to donate must have to connect the ethereum wallet before donation.
+4. If the NGO needs some money they can make a withdrawal request and explain the cause of withdrawal. The users approve or disapprove the request after reviewing. If around 50% of the user approves then the specified money will be transferred to the NGO’s wallet.
+
 ## To get test eth in rinkeby testnet click [here](https://faucets.chain.link/rinkeby)
+    
+## Contributors
+| Sr No. | Name              | e-mail                 | git-profile    | git-profile-link    |
+| ------ | ----------------- | ---------------------- | -------------- | -------------- |
+| 1.     | Shreyans Mulkutkar| s.mulkutkar@somaiya.edu  | AxonBlAzE  |https://github.com/AxonBlAzE|
+| 2.     | Ramavtar Yadav| ramavtar.y@somaiya.edu | ramavtarofficial   |https://github.com/ramavtarofficial|
+| 3.     |Raj Tiwari| therajtiwari254@somaiya.edu| therajtiwari   |https://github.com/therajtiwari| 
+| 4.     |Huzaifa Khilawala| huzaifa.k@somaiya.edu| ReadHeadpone   |https://github.com/RedHeadphone| 
+    
 
 ## Important commands
 
