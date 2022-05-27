@@ -36,7 +36,7 @@ const UserModal = ({ value, onChangeUsername }) => {
     // re render parent component
   };
   const handleSave = () => {
-    console.log(username);
+    // console.log(username);
     setOpen(false);
   };
 

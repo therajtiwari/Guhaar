@@ -93,7 +93,7 @@ async function main() {
   );
 
   var deplist = await campaignFactory.getDeployedCampaigns();
-  console.log(deplist);
+  // console.log(deplist);
   // end testing
 
   console.log("campaignFactory deployed to:", campaignFactory.address);

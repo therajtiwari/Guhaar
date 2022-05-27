@@ -28,7 +28,7 @@ export default async (
   canapprove =
     canapprove &&
     !(await Moralis.Web3API.native.runContractFunction(readOptions3));
-  console.log("count is", count);
+  // console.log("count is", count);
   const readOptions = {
     chain: "rinkeby",
     address: id,
@@ -38,18 +38,18 @@ export default async (
   // console.log(readOptions)
   // console.log(isWeb3Enabled, isAuthenticating, isWeb3EnableLoading);
   // if (!isAuthenticating && !isWeb3Enabled && !isWeb3EnableLoading){
-    //   await Moralis.enableWeb3()
-    let datalist = [];
-    const readOptions5 = {
-      chain: "rinkeby",
-      address: id,
-      function_name: "alwaysApproved",
-      abi: CampaignArtifact.abi
-    };
-    var alwaysApproved = await Moralis.Web3API.native.runContractFunction(readOptions5);
-    
+  //   await Moralis.enableWeb3()
+  let datalist = [];
+  const readOptions5 = {
+    chain: "rinkeby",
+    address: id,
+    function_name: "alwaysApproved",
+    abi: CampaignArtifact.abi
+  };
+  var alwaysApproved = await Moralis.Web3API.native.runContractFunction(readOptions5);
+
   const count = await Moralis.Web3API.native.runContractFunction(readOptions);
-  console.log("count is", count);
+  // console.log("count is", count);
   for (let i = 0; i < count; i++) {
     const readOptions2 = {
       chain: "rinkeby",

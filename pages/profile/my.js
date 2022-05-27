@@ -76,7 +76,7 @@ const Profile = () => {
           isWeb3EnableLoading
         );
         setDonatedCampaigns(final3);
-        console.log("donated campaign", final3);
+        // console.log("donated campaign", final3);
       }
 
       // console.log(user);

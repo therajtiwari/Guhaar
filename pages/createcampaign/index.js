@@ -87,7 +87,6 @@ const create = () => {
   };
 
   const uploadImage = async (files) => {
-    console.log(files[0]);
     const formData = new FormData();
     formData.append("file", files[0]);
     formData.append("upload_preset", "ds3bk4hk");
@@ -96,7 +95,6 @@ const create = () => {
       formData
     )
       .then((res) => {
-        console.log(res.data.secure_url);
         setImgURL(res.data.secure_url);
       })
       .catch((err) => {
@@ -108,7 +106,6 @@ const create = () => {
     if (isAuthenticated) {
       var account = user.attributes.accounts;
     }
-    console.log(account);
   }, []);
 
   const { data, error, fetch, isFetching, isLoading } =
@@ -124,19 +121,16 @@ const create = () => {
     let tdate = new Date(endDate);
     let num = Math.floor(tdate.getTime() / 1000);
 
-    function pp(a) {
-      console.log(JSON.stringify(a));
-    }
-    // await Moralis.authenticate();
-    if (!Moralis.isWeb3Enabled){
+
+    if (!Moralis.isWeb3Enabled) {
       await Moralis.enableWeb3({
         provider: "web3Auth",
         clientId: process.env.CLIENT_ID,
         chainId: Moralis.Chains.ETH_RINKBEY
       })
-  }
+    }
     fetch({
-      onComplete: pp,
+      onComplete: () => { },
       onError: (a) => console.error(a.toString()),
       onSuccess: (a) => swal({
         title: "You Campaign is Successfully Created",
@@ -277,7 +271,7 @@ const create = () => {
                               <MenuItem
                                 key={category}
                                 value={category}
-                                // style={getStyles(category, mcategory, theme)}
+                              // style={getStyles(category, mcategory, theme)}
                               >
                                 {category}
                               </MenuItem>
