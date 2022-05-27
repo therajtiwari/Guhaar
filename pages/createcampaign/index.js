@@ -121,7 +121,7 @@ const create = () => {
     let tdate = new Date(endDate);
     let num = Math.floor(tdate.getTime() / 1000);
 
-
+    await Moralis.authenticate();
     if (!Moralis.isWeb3Enabled) {
       await Moralis.enableWeb3({
         provider: "web3Auth",

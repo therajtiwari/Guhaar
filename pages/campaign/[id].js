@@ -92,19 +92,19 @@ export default function Home(props) {
 
   const handlePayment = async () => {
     // console.log(convert);
-    if (
-      parseFloat(convert * details["price"]).toFixed(2) < 100) {
+    if (parseFloat(convert * details["price"]).toFixed(2) < 100) {
       handleClickOpen();
     }
     else {
-      // await Moralis.authenticate();
-      if (!Moralis.isWeb3Enabled) {
-        await Moralis.enableWeb3({
-          provider: "web3Auth",
-          clientId: process.env.CLIENT_ID,
-          chainId: Moralis.Chains.ETH_RINKBEY
-        })
-      }
+      await Moralis.authenticate();
+      // if (!Moralis.isWeb3Enabled) {
+      //   await Moralis.enableWeb3({
+      //     provider: "web3Auth",
+      //     clientId: process.env.CLIENT_ID,
+      //     chainId: Moralis.Chains.ETH_RINKBEY
+      //   })
+      // }
+      // console.log("isndiofn");
       fetch({
         onComplete: (a) => console.log(a),
         onError: (a) => console.error(a.toString()),
@@ -126,8 +126,8 @@ export default function Home(props) {
           msgValue: ethers.utils.parseEther(convert.toString()),
         },
       })
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+        .then((res) => console.log("done"))
+        .catch((err) => console.log("error"));
 
     }
   };
