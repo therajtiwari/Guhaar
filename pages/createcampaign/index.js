@@ -122,7 +122,13 @@ const create = () => {
     let num = Math.floor(tdate.getTime() / 1000);
 
 
-    await Moralis.authenticate();
+    if (!Moralis.isWeb3Enabled) {
+      await Moralis.enableWeb3({
+        provider: "web3Auth",
+        clientId: process.env.CLIENT_ID,
+        chainId: Moralis.Chains.ETH_RINKBEY
+      })
+    }
     fetch({
       onComplete: () => { },
       onError: (a) => console.error(a.toString()),
